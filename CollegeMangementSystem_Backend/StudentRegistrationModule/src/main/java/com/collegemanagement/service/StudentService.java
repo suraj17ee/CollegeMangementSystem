@@ -1,5 +1,8 @@
 package com.collegemanagement.service;
 
-public interface StudentService {
+import com.collegemanagement.entity.Student;
+import com.collegemanagement.entity.dao.StudentDao;
 
+public interface StudentService {
+	public Student registerStudent(StudentDao studentDeatils);
 }
