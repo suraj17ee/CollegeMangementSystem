@@ -1,5 +1,7 @@
 package com.collegemanagement.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,12 @@ public class StudentServiceImpl implements StudentService {
 		student.setAddress(studentDeatils.getAddress());
 		Student dbStudent = studentDataRepo.save(student);
 		return dbStudent;
+	}
+
+	@Override
+	public List<Student> fetchStudents() {
+		List<Student> students = studentDataRepo.findAll();
+		return students;
 	}
 
 }
