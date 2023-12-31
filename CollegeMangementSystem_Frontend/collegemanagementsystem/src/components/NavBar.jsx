@@ -16,9 +16,6 @@ function NavBar() {
                         <li className="nav-item">
                             <Link to='registeruser' className="nav-link active" aria-current="page" href="#">Register</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link to='edituser' className="nav-link active" aria-current="page" href="#">EditUser</Link>
-                        </li>
                     </ul>
                 </div>
             </div>
