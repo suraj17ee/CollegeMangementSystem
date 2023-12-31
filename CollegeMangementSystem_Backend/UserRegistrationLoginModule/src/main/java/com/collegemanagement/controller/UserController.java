@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,6 +19,7 @@ import com.collegemanagement.entity.dao.UserDao;
 import com.collegemanagement.service.UserService;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/user")
 public class UserController {
 
@@ -25,21 +27,27 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping
-	private ResponseEntity<User> saveStudent(@RequestBody UserDao user) {
+	private ResponseEntity<User> saveUser(@RequestBody UserDao user) {
 		User registeredUser = userService.registerUser(user);
 		return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
 	}
 	
-	@PatchMapping("/update/{email}")
-	private ResponseEntity<User> updateUser(@PathVariable String email, @RequestBody UserDao user){
-		User updatedUserDetails = userService.updateUserDetails(email, user);
-		return ResponseEntity.ok(updatedUserDetails);
+	@GetMapping("/all")
+	private ResponseEntity<List<User>> getUsers() {
+		List<User> dbUsers = userService.fetchUsers();
+		return new ResponseEntity<>(dbUsers, HttpStatus.OK);
 	}
 	
-	@GetMapping("/all")
-	private ResponseEntity<List<User>> getStudents() {
-		 List<User> dbUsers = userService.fetchUsers();
-		return new ResponseEntity<>(dbUsers, HttpStatus.OK);
+	@GetMapping("/{id}")
+	private ResponseEntity<User> getUser(@PathVariable Long id){
+		User user = userService.fetchUserById(id);
+		return ResponseEntity.ok(user);
+	}
+	
+	@PatchMapping("/update/{id}")
+	private ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserDao user){
+		User updatedUserDetails = userService.updateUserDetails(id, user);
+		return ResponseEntity.ok(updatedUserDetails);
 	}
 	
 	@DeleteMapping("/delete/{email}")

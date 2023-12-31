@@ -35,8 +35,8 @@ public class StudentServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateUserDetails(String email, UserDao userDeatils) {
-		User oldUserData = userDataRepo.findByUserEmail(email).get();
+	public User updateUserDetails(Long id, UserDao userDeatils) {
+		User oldUserData = userDataRepo.findById(id).get();
 		oldUserData.setUserName(userDeatils.getUserName());
 		oldUserData.setUserPassword(userDeatils.getUserPassword());
 		oldUserData.setUserEmail(userDeatils.getUserEmail());
@@ -56,6 +56,11 @@ public class StudentServiceImpl implements UserService {
 			userDataRepo.delete(usr);
 			return usr.getUserEmail() + " user details deleted";
 		}
+	}
+
+	@Override
+	public User fetchUserById(Long id) {
+		return userDataRepo.findById(id).get();
 	}
 
 }

@@ -7,6 +7,7 @@ import com.collegemanagement.entity.dao.UserDao;
 public interface UserService {
 	public User registerUser(UserDao userDeatils);
 	public List<User> fetchUsers();
-	public User updateUserDetails(String email, UserDao userDeatils);
+	public User updateUserDetails(Long id, UserDao userDeatils);
 	public String deleteUserDetails(String email);
+	public User fetchUserById(Long id);
 }
