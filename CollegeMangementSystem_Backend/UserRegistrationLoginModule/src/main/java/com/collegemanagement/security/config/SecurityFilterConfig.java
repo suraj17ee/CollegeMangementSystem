@@ -29,7 +29,8 @@ public class SecurityFilterConfig {
                 .authorizeHttpRequests(
                 		auth -> 
 	                		auth.requestMatchers("/authenticate").permitAll()
-	                		.requestMatchers("/user").hasRole("FACULTY")
+	                		.requestMatchers("/user").permitAll()
+	                		.requestMatchers("/user/**").hasRole("FACULTY")
 	                        .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
