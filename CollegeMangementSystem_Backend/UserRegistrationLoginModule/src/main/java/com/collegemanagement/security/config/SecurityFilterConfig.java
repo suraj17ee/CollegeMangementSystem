@@ -7,10 +7,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import com.collegemanagement.security.jwt.JwtAuthenticationEntryPoint;
 import com.collegemanagement.security.jwt.JwtAuthenticationFilter;
-
 import lombok.AllArgsConstructor;
 
 @Configuration
@@ -29,7 +27,7 @@ public class SecurityFilterConfig {
                 .authorizeHttpRequests(
                 		auth -> 
 	                		auth.requestMatchers("/authenticate").permitAll()
-	                		.requestMatchers("/user").permitAll()
+	                		.requestMatchers("/v1/user").permitAll()
 	                		.requestMatchers("/user/**").hasRole("FACULTY")
 	                        .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
