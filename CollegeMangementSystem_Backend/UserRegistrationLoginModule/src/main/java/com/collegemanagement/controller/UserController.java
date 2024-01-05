@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -61,6 +62,12 @@ public class UserController {
 	@DeleteMapping("/delete/{email}")
 	private ResponseEntity<String> deleteUser(@PathVariable String email){
 		String msg = userService.deleteUserDetails(email);
+		return ResponseEntity.ok(msg);
+	}
+	
+	@DeleteMapping("/delete")
+	private ResponseEntity<String> deleteAll(){
+		String msg = userService.deleteAllUsersData();
 		return ResponseEntity.ok(msg);
 	}
 }

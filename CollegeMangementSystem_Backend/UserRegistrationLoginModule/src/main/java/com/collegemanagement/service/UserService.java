@@ -10,4 +10,5 @@ public interface UserService {
 	public User updateUserDetails(Long id, UserDao userDeatils);
 	public String deleteUserDetails(String email);
 	public User fetchUserById(Long id);
+	public String deleteAllUsersData();
 }

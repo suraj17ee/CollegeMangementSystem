@@ -61,7 +61,7 @@ import org.springframework.security.web.SecurityFilterChain;
 //    }
 //}
 //=====================================================================
-//JWT Authentication with roles
+//JWT Authentication with roles using InMemoryUserDetailsManager
 @Configuration
 public class SecurityConfig {
 

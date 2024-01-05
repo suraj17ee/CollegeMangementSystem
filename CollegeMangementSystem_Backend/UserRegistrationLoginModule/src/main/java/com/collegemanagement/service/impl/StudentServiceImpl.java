@@ -63,4 +63,10 @@ public class StudentServiceImpl implements UserService {
 		return userDataRepo.findById(id).get();
 	}
 
+	@Override
+	public String deleteAllUsersData() {
+		userDataRepo.deleteAllInBatch();
+		return "all users details removed";
+	}
+
 }

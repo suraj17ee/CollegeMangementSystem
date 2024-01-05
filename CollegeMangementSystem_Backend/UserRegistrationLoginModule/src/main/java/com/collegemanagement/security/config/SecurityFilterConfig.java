@@ -28,7 +28,7 @@ public class SecurityFilterConfig {
                 		auth -> 
 	                		auth.requestMatchers("/authenticate").permitAll()
 	                		.requestMatchers("/v1/user").permitAll()
-	                		.requestMatchers("/user/**").hasRole("FACULTY")
+	                		.requestMatchers("/v1/user/delete","/v1/user/delete/**").hasRole("FACULTY")
 	                        .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
