@@ -2,11 +2,10 @@ package com.collegemanagement.service.impl;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.collegemanagement.entity.User;
-import com.collegemanagement.entity.dao.UserDao;
+import com.collegemanagement.entity.dao.UserDto;
 import com.collegemanagement.repository.UserDataRepository;
 import com.collegemanagement.service.UserService;
 
@@ -17,7 +16,7 @@ public class StudentServiceImpl implements UserService {
 	private UserDataRepository userDataRepo;
 
 	@Override
-	public User registerUser(UserDao userDetails) {
+	public User registerUser(UserDto userDetails) {
 		User user = new User();
 		user.setUserName(userDetails.getUserName());
 		user.setUserPassword(userDetails.getUserPassword());
@@ -35,7 +34,7 @@ public class StudentServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateUserDetails(Long id, UserDao userDeatils) {
+	public User updateUserDetails(Long id, UserDto userDeatils) {
 		User oldUserData = userDataRepo.findById(id).get();
 		oldUserData.setUserName(userDeatils.getUserName());
 		oldUserData.setUserPassword(userDeatils.getUserPassword());
@@ -66,7 +65,7 @@ public class StudentServiceImpl implements UserService {
 	@Override
 	public String deleteAllUsersData() {
 		userDataRepo.deleteAllInBatch();
-		return "all users details removed";
+		return "All users details removed";
 	}
 
 }

@@ -32,6 +32,7 @@ public class User {
 	private String userEmail;
 	private String userAddress;
 	
+//	using element roles collection 
 	@ElementCollection
 	@CollectionTable(
 			name="rolestab",

@@ -72,19 +72,31 @@ public class SecurityConfig {
 
 	@Bean
 	public UserDetailsService userDetailsService() {
-		UserDetails normalRole = User.builder()
+		UserDetails student = User.builder()
 				.username("student")
 				.password(passwordEncoder()
 				.encode("student"))
 				.roles("STUDENT").build();
 
-		UserDetails adminRole = User.builder()
+		UserDetails faculty = User.builder()
 				.username("faculty")
 				.password(passwordEncoder()
 				.encode("faculty"))
 				.roles("FACULTY").build();
+		
+		UserDetails admin = User.builder()
+				.username("admin")
+				.password(passwordEncoder()
+						.encode("admin"))
+				.roles("ADMIN").build();
+		
+		UserDetails dev = User.builder()
+				.username("dev")
+				.password(passwordEncoder()
+						.encode("dev"))
+				.roles("DEV").build();
 
-		return new InMemoryUserDetailsManager(normalRole, adminRole);
+		return new InMemoryUserDetailsManager(student, faculty,admin,dev);
 	}
 
 	@Bean

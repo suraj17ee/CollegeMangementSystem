@@ -2,6 +2,7 @@ package com.collegemanagement.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -28,7 +29,9 @@ public class SecurityFilterConfig {
                 		auth -> 
 	                		auth.requestMatchers("/authenticate").permitAll()
 	                		.requestMatchers("/v1/user").permitAll()
-	                		.requestMatchers("/v1/user/delete","/v1/user/delete/**").hasRole("FACULTY")
+	                		.requestMatchers("/v1/user/update/**").hasAnyRole("STUDENT","FACULTY","ADMIN")
+	                		.requestMatchers("/v1/user/delete","/v1/user/delete/**").hasRole("ADMIN")
+	                		.requestMatchers(HttpMethod.GET).hasRole("ADMIN")
 	                        .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
