@@ -17,5 +17,8 @@ class UserService {
     updateUser(id, user) {
         return axios.patch(API_URL + "/update/" + id, user);
     }
+    deleteAllUsers() {
+        return axios.patch(API_URL + "/delete");
+    }
 }
 export default new UserService;

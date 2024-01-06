@@ -31,6 +31,17 @@ const Home = () => {
             })
     }
 
+    const deleteAllUserDetails = () => {
+        userservice.deleteAllUsers(userEmail)
+            .then((res) => {
+                setMsg("All user details removed successfully!");
+                init();
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
     return (
         <div className="container mt-3">
             <div className="row">
@@ -69,6 +80,11 @@ const Home = () => {
                                         )
                                     }
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                    <button onClick={(e) => (deleteAllUserDetails())} className="btn btn-sm btn-danger m-1">Clear All</button>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                     </div>
