@@ -75,28 +75,28 @@ public class SecurityConfig {
 		UserDetails student = User.builder()
 				.username("student")
 				.password(passwordEncoder()
-				.encode("student"))
+						.encode("student"))
 				.roles("STUDENT").build();
 
 		UserDetails faculty = User.builder()
 				.username("faculty")
 				.password(passwordEncoder()
-				.encode("faculty"))
+						.encode("faculty"))
 				.roles("FACULTY").build();
-		
+
 		UserDetails admin = User.builder()
 				.username("admin")
 				.password(passwordEncoder()
 						.encode("admin"))
 				.roles("ADMIN").build();
-		
+
 		UserDetails dev = User.builder()
 				.username("dev")
 				.password(passwordEncoder()
 						.encode("dev"))
 				.roles("DEV").build();
 
-		return new InMemoryUserDetailsManager(student, faculty,admin,dev);
+		return new InMemoryUserDetailsManager(student, faculty, admin, dev);
 	}
 
 	@Bean
