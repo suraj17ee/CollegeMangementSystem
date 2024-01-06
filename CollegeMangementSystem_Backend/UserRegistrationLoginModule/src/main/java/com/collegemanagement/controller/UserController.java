@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.collegemanagement.entity.User;
-import com.collegemanagement.entity.dao.UserDto;
+import com.collegemanagement.entity.dto.UserDto;
 import com.collegemanagement.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 

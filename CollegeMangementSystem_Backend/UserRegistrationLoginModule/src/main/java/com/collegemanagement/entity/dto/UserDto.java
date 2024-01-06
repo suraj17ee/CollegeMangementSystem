@@ -1,4 +1,4 @@
-package com.collegemanagement.entity.dao;
+package com.collegemanagement.entity.dto;
 
 import java.util.Set;
 

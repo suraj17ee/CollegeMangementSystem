@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.collegemanagement.entity.User;
-import com.collegemanagement.entity.dao.UserDto;
+import com.collegemanagement.entity.dto.UserDto;
 import com.collegemanagement.repository.UserDataRepository;
 import com.collegemanagement.service.UserService;
 

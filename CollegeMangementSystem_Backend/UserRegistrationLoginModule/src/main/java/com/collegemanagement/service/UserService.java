@@ -2,7 +2,7 @@ package com.collegemanagement.service;
 
 import java.util.List;
 import com.collegemanagement.entity.User;
-import com.collegemanagement.entity.dao.UserDto;
+import com.collegemanagement.entity.dto.UserDto;
 
 public interface UserService {
 	public User registerUser(UserDto userDeatils);
