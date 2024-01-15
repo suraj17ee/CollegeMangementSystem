@@ -20,5 +20,8 @@ class UserService {
     deleteAllUsers() {
         return axios.patch(API_URL + "/delete");
     }
+    generateToken(UserObject){
+        return axios.post("http://localhost:8001/authenticate",UserObject);
+    }
 }
 export default new UserService;
