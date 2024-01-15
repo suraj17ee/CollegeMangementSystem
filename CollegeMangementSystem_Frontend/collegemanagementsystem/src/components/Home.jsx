@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import userservice from "../service/userservice";
-import { Link, button } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Home = () => {
 
@@ -32,7 +32,7 @@ const Home = () => {
     }
 
     const deleteAllUserDetails = () => {
-        userservice.deleteAllUsers(userEmail)
+        userservice.deleteAllUsers()
             .then((res) => {
                 setMsg("All user details removed successfully!");
                 init();
@@ -82,7 +82,7 @@ const Home = () => {
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                    <button onClick={(e) => (deleteAllUserDetails())} className="btn btn-sm btn-danger m-1">Clear All</button>
+                                    <button onClick={(e) => (deleteAllUserDetails())} className="btn btn-warning m-1 text-dark fw-bold">Clear All</button>
                                     </tr>
                                 </tfoot>
                             </table>

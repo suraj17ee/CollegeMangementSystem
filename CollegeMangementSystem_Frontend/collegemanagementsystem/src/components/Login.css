@@ -1,5 +1,5 @@
-Form{
-    border: 1px solid gray;
+form{
+    border: 2px solid gray;
     border-radius: 10px;
     padding: 20px;
     font-family: Arial;
@@ -10,5 +10,5 @@ Form{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 600px;
+    height: 300px;
 }

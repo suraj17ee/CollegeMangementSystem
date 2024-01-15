@@ -58,7 +58,7 @@ const UserRegistrationFom = () => {
     }
 
     return (
-        <div className='conrtainer'>
+        <div className='container'>
             <form onSubmit={UserRegister}>
                 <h3><span className="bi bi-person-fill"></span> User Registration</h3>
                 <p className='text-success fs-5 fw-bold'>{msg}</p>
