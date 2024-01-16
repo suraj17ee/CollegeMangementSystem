@@ -59,67 +59,69 @@ const UserRegistrationFom = () => {
 
     return (
         <div className='container'>
-            <form onSubmit={UserRegister}>
-                <h3><span className="bi bi-person-fill"></span> User Registration</h3>
-                <p className='text-success fs-5 fw-bold'>{msg}</p>
-                <div className="form-group">
-                    <label className="form-label">User Name</label>
-                    <div>
-                        <input type="text"
-                            name="userName"
-                            className='form-control'
-                            onChange={VerifyUserName}
-                            value={user.userName}
-                        />
+            <div className="reg-box">
+                <form onSubmit={UserRegister} id='reg-form'>
+                    <h3><span className="bi bi-person-fill"></span> User Registration</h3>
+                    <p className='text-success fs-5 fw-bold'>{msg}</p>
+                    <div className="form-group">
+                        <label className="form-label">User Name</label>
+                        <div>
+                            <input type="text"
+                                name="userName"
+                                className='form-control'
+                                onChange={VerifyUserName}
+                                value={user.userName}
+                            />
+                        </div>
                     </div>
-                </div>
 
-                <div className="form-group">
-                    <label className="form-label">Password</label>
-                    <div>
-                        <input type="text"
-                            name="password"
-                            className='form-control'
-                            onChange={VerifyUserPassword}
-                            value={user.userPassword}
-                        />
+                    <div className="form-group">
+                        <label className="form-label">Password</label>
+                        <div>
+                            <input type="text"
+                                name="password"
+                                className='form-control'
+                                onChange={VerifyUserPassword}
+                                value={user.userPassword}
+                            />
+                        </div>
                     </div>
-                </div>
 
-                <div className="form-group">
-                    <label className="form-label">Email</label>
-                    <div>
-                        <input type="text"
-                            name="email"
-                            className='form-control'
-                            onChange={VerifyUserEmail}
-                            value={user.userEmail}
-                        />
+                    <div className="form-group">
+                        <label className="form-label">Email</label>
+                        <div>
+                            <input type="text"
+                                name="email"
+                                className='form-control'
+                                onChange={VerifyUserEmail}
+                                value={user.userEmail}
+                            />
+                        </div>
                     </div>
-                </div>
 
-                <div className="form-group">
-                    <label className="form-label">Address</label>
-                    <div>
-                        <input type="text"
-                            name="address"
-                            className='form-control'
-                            onChange={VerifyUserAddress}
-                            value={user.userAddress}
-                        />
+                    <div className="form-group">
+                        <label className="form-label">Address</label>
+                        <div>
+                            <input type="text"
+                                name="address"
+                                className='form-control'
+                                onChange={VerifyUserAddress}
+                                value={user.userAddress}
+                            />
+                        </div>
                     </div>
-                </div>
 
-                <select className='form-select mt-3' onChange={VerifyRole}>
-                    <option value="norole">Please select a role</option>
-                    <option value="STUDENT">Student</option>
-                    <option value="FACULTY">Faculty</option>
-                </select>
+                    <select className='form-select mt-3' onChange={VerifyRole}>
+                        <option value="norole">Please select a role</option>
+                        <option value="STUDENT">Student</option>
+                        <option value="FACULTY">Faculty</option>
+                    </select>
 
-                <div className="form-group">
-                    <button className='btn btn-primary mt-3 col-12'>Register</button>
-                </div>
-            </form>
+                    <div className="form-group">
+                        <button className='btn btn-primary mt-3 col-12'>Register</button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };
