@@ -1,4 +1,4 @@
-Form{
+#reg-form{
     border: 1px solid gray;
     border-radius: 10px;
     padding: 20px;
@@ -6,7 +6,7 @@ Form{
     width: 20%;
 }
 
-.container{
+.reg-box{
     display: flex;
     justify-content: center;
     align-items: center;
