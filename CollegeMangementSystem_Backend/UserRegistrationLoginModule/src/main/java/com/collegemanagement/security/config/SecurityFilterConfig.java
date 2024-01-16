@@ -8,11 +8,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
-
 import com.collegemanagement.security.jwt.JwtAuthenticationEntryPoint;
 import com.collegemanagement.security.jwt.JwtAuthenticationFilter;
 import lombok.AllArgsConstructor;
@@ -30,10 +25,10 @@ public class SecurityFilterConfig {
     public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
         return security
         		.csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+//                .cors(cors -> cors.disable()) // while connecting backend app with frontend react app this cors has to be enable, for that reason it should be commented out
                 .authorizeHttpRequests(
                 		auth -> 
-	                		auth.requestMatchers("/authenticate").permitAll()
+	                		auth.requestMatchers("/v1/user/authenticate").permitAll()
 	                		.requestMatchers("/v1/user").permitAll()
 	                		.requestMatchers("/v1/user/update/**").hasAnyRole("STUDENT","FACULTY","ADMIN")
 	                		.requestMatchers("/v1/user/delete","/v1/user/delete/**").hasRole("ADMIN")
@@ -43,21 +38,5 @@ public class SecurityFilterConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
-    }
-    
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("http://localhost:3000"); // Replace with your React app's domain
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
-    
-    @Bean
-    public CorsFilter corsFilter() {
-        return new CorsFilter(corsConfigurationSource());
     }
 }
