@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Login.css';
 import userservice from '../service/userservice';
+import { toast } from 'react-toastify';
 
 const Login = () => {
 
@@ -10,7 +11,7 @@ const Login = () => {
     });
 
     const [msg, setMsg] = useState("");
-    const [responseData, setResponseData] = useState('');
+    const [responseData, setResponseData] = useState();
 
     const VerifyUserName = (e) => {
         setUserObject({ ...userObject, username: e.target.value });
@@ -19,21 +20,22 @@ const Login = () => {
         setUserObject({ ...userObject, password: e.target.value });
     }
 
-    const LoginClick =() => {
+    const LoginClick = (e) => {
         // var username = document.getElementById("username").value;
         // var password = document.getElementById("password").value;
         // window.localStorage.setItem("username",username);
-        // window.localStorage.setItem("userName",userObject.username);
-        // window.localStorage.setItem("userPassword",userObject.password);
+        e.preventDefault();
         userservice.generateToken(userObject)
-        .then((res) => {
-            setMsg("User credentials sent successfully!!");
-            console.log(res.data);
-            setResponseData(res.data);
-        })
-        .catch((error) => {
-            console.log(error);
-        })
+            .then((res) => {
+                setMsg("User credentials sent successfully!!");
+                toast("User credentials sent successfully!!");
+                console.log(res.data);
+                setResponseData(res.data);
+            })
+            .catch((error) => {
+                toast("Error while connecting to server!!");
+                console.log(error);
+            })
     }
 
     return (

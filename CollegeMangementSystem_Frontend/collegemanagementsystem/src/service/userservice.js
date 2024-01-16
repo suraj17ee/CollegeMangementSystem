@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8001/user";
+const API_URL = "http://localhost:8001/v1/user";
 class UserService {
     registerUser(user) {
         return axios.post(API_URL, user);
@@ -20,8 +20,8 @@ class UserService {
     deleteAllUsers() {
         return axios.patch(API_URL + "/delete");
     }
-    generateToken(UserObject){
-        return axios.post("http://localhost:8001/authenticate",UserObject);
+    generateToken(userObject){
+        return axios.post(API_URL+"/authenticate",userObject);
     }
 }
 export default new UserService;

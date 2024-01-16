@@ -4,10 +4,13 @@ import { Route, Routes } from 'react-router-dom';
 import UserRegistrationFom from './components/UserRegistrationFom';
 import EditUserDetails from './components/EditUserDetails';
 import Login from './components/Login';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 
 function App() {
     return (
         <>
+        <ToastContainer/>
             <NavBar />
             <Routes>
                 <Route path='/' element={<Login />}></Route>
