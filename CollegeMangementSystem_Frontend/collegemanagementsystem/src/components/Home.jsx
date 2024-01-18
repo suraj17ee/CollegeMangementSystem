@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import userservice from "../service/userservice";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Home = () => {
 
     const [userList, setUserList] = useState([]);
-    const [msg, setMsg] = useState("");
+    // const [msg, setMsg] = useState("");// instead of using msg now using toasts
     useEffect(() => {
         init();
     }, [])
@@ -16,29 +17,47 @@ const Home = () => {
                 setUserList(res.data);
             })
             .catch((error) => {
-                console.log(error);
+                if (error.response.status == 400 | error.response.status == 401) {
+                    toast.error(error.response.data);
+                    toast.error("Please Login first with valid credentials!");
+                } else {
+                    toast.error("Error while connecting to server!!");
+                    console.log(error);
+                }
             })
     }
 
     const deleteUserDetails = (userEmail) => {
         userservice.deleteUser(userEmail)
             .then((res) => {
-                setMsg("User details removed successfully!");
+                // setMsg("User details removed successfully!");
+                toast.success("User details removed successfully!");
                 init();
             })
             .catch((error) => {
-                console.log(error);
+                if (error.response.status == 400 | error.response.status == 401) {
+                    toast.error(error.response.data);
+                } else {
+                    toast.error("Error while connecting to server!!");
+                    console.log(error);
+                }
             })
     }
 
     const deleteAllUserDetails = () => {
         userservice.deleteAllUsers()
             .then((res) => {
-                setMsg("All user details removed successfully!");
+                // setMsg("All user details removed successfully!");
+                toast.success("All user details removed successfully!");
                 init();
             })
             .catch((error) => {
-                console.log(error);
+                if (error.response.status == 400 | error.response.status == 401) {
+                    toast.error(error.response.data);
+                } else {
+                    toast.error("Error while connecting to server!!");
+                    console.log(error);
+                }
             })
     }
 
@@ -50,7 +69,7 @@ const Home = () => {
                         <div className="card">
                             <div className="card-header text-center fw-bold fs-5">
                                 User Details
-                                <p className='text-success'>{msg}</p>
+                                {/* <p className='text-success'>{msg}</p> */}
                             </div>
                             <div className="card-body">
                                 <table className="table">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './UserRegistrationFom.css';
 import userservice from '../service/userservice';
+import { toast } from 'react-toastify';
 
 const UserRegistrationFom = () => {
 
@@ -12,7 +13,7 @@ const UserRegistrationFom = () => {
         roles: []
     });
 
-    const [msg, setMsg] = useState("");
+    // const [msg, setMsg] = useState("");// instead of using msg now using toasts
 
     const VerifyUserName = (e) => {
         setUser({ ...user, userName: e.target.value });
@@ -43,7 +44,8 @@ const UserRegistrationFom = () => {
         // console.log(user);
         userservice.registerUser(user)
             .then((res) => {
-                setMsg("User registered successfully!!");
+                // setMsg("User registered successfully!!");
+                toast.success("User registered successfully!!");
                 setUser({
                     userName: "",
                     userPassword: "",
@@ -58,11 +60,13 @@ const UserRegistrationFom = () => {
     }
 
     return (
-        <div className='container'>
-            <div className="reg-box">
+        <div className='container mt-3'>
+            <div className='reg-box'>
                 <form onSubmit={UserRegister} id='reg-form'>
+                    <div className="formhead">
                     <h3><span className="bi bi-person-fill"></span> User Registration</h3>
-                    <p className='text-success fs-5 fw-bold'>{msg}</p>
+                    {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
+                    </div>
                     <div className="form-group">
                         <label className="form-label">User Name</label>
                         <div>
@@ -113,12 +117,11 @@ const UserRegistrationFom = () => {
 
                     <select className='form-select mt-3' onChange={VerifyRole}>
                         <option value="norole">Please select a role</option>
-                        <option value="STUDENT">Student</option>
-                        <option value="FACULTY">Faculty</option>
+                        <option value="STUDENT">User</option>
                     </select>
 
                     <div className="form-group">
-                        <button className='btn btn-primary mt-3 col-12'>Register</button>
+                        <button className='btn btn-primary mt-3 col-12'>SignUp</button>
                     </div>
                 </form>
             </div>
