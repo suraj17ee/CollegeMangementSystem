@@ -9,8 +9,11 @@ import com.collegemanagement.entity.dto.UserDto;
 import com.collegemanagement.repository.UserDataRepository;
 import com.collegemanagement.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service("userService")
-public class StudentServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDataRepository userDataRepo;
@@ -24,12 +27,14 @@ public class StudentServiceImpl implements UserService {
 		user.setUserAddress(userDetails.getUserAddress());
 		user.setRoles(userDetails.getRoles());
 		User dbUser = userDataRepo.save(user);
+		log.info("User service register user : {}", dbUser.getUserId());
 		return dbUser;
 	}
 
 	@Override
-	public List<User> fetchUsers() {
+	public List<User> fetchAllUsers() {
 		List<User> users = userDataRepo.findAll();
+		log.info("User service fetch all users : {}", users.size());
 		return users;
 	}
 
@@ -42,6 +47,7 @@ public class StudentServiceImpl implements UserService {
 		oldUserData.setUserAddress(userDeatils.getUserAddress());
 		oldUserData.setRoles(userDeatils.getRoles());
 		User updatedUserData = userDataRepo.save(oldUserData);
+		log.info("User service update user by id: {}", updatedUserData.getUserId());
 		return updatedUserData;
 	}
 
@@ -49,22 +55,26 @@ public class StudentServiceImpl implements UserService {
 	public String deleteUserDetails(String email) {
 		Optional<User> user = userDataRepo.findByUserEmail(email);
 		if (user.isEmpty()) {
+			log.error("Error occured while calling User service delete user by email");
 			return "User Not Present!";
 		} else {
 			User usr = user.get();
 			userDataRepo.delete(usr);
+			log.info("User service delete user by email: {}", usr.getUserEmail());
 			return usr.getUserEmail() + " user details deleted";
 		}
 	}
 
 	@Override
 	public User fetchUserById(Long id) {
+		log.info("User service fetch by user id: {}", id);
 		return userDataRepo.findById(id).get();
 	}
 
 	@Override
 	public String deleteAllUsersData() {
 		userDataRepo.deleteAllInBatch();
+		log.info("User service delete all users");
 		return "All users details removed";
 	}
 

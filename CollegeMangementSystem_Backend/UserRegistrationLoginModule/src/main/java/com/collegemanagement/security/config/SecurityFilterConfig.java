@@ -29,9 +29,9 @@ public class SecurityFilterConfig {
                 .authorizeHttpRequests(
                 		auth -> 
 	                		auth.requestMatchers("/v1/user/authenticate").permitAll()
-	                		.requestMatchers("/v1/user").permitAll()
-	                		.requestMatchers("/v1/user/update/**").hasAnyRole("STUDENT","FACULTY","ADMIN")
-	                		.requestMatchers("/v1/user/delete","/v1/user/delete/**").hasRole("ADMIN")
+	                		.requestMatchers("/v1/user/signup").permitAll()
+	                		.requestMatchers("/v1/user/update/**").hasAnyRole("USER","ADMIN")
+	                		.requestMatchers("/v1/user/delete","/v1/user/delete/**","/v1/user/all").hasRole("ADMIN")
 	                		.requestMatchers(HttpMethod.GET).hasRole("ADMIN")
 	                        .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(point))

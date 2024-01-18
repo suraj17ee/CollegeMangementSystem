@@ -28,7 +28,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@PostMapping
+	@PostMapping("/signup")
 	private ResponseEntity<User> saveUser(@RequestBody UserDto user) {
 		var stopWatch = new StopWatch(Thread.currentThread().getName());
         log.info("User Post API called");
@@ -41,11 +41,11 @@ public class UserController {
 	}
 	
 	@GetMapping("/all")
-	private ResponseEntity<List<User>> getUsers() {
+	private ResponseEntity<List<User>> getAllUsers() {
 		var stopWatch = new StopWatch(Thread.currentThread().getName());
         log.info("User Get all API called");
         stopWatch.start();
-		List<User> dbUsers = userService.fetchUsers();
+		List<User> dbUsers = userService.fetchAllUsers();
 		stopWatch.stop();
         log.info("Total time taken by User GET All API : {}", 
         		stopWatch.getTotalTimeSeconds()+" seconds");

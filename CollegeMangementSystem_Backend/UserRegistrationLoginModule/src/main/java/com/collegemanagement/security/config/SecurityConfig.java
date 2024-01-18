@@ -72,17 +72,11 @@ public class SecurityConfig {
 
 	@Bean
 	public UserDetailsService userDetailsService() {
-		UserDetails student = User.builder()
-				.username("student")
+		UserDetails user = User.builder()
+				.username("user")
 				.password(passwordEncoder()
-						.encode("student"))
-				.roles("STUDENT").build();
-
-		UserDetails faculty = User.builder()
-				.username("faculty")
-				.password(passwordEncoder()
-						.encode("faculty"))
-				.roles("FACULTY").build();
+						.encode("user"))
+				.roles("USER").build();
 
 		UserDetails admin = User.builder()
 				.username("admin")
@@ -96,7 +90,7 @@ public class SecurityConfig {
 						.encode("dev"))
 				.roles("DEV").build();
 
-		return new InMemoryUserDetailsManager(student, faculty, admin, dev);
+		return new InMemoryUserDetailsManager(user, admin, dev);
 	}
 
 	@Bean
