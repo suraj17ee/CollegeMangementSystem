@@ -117,7 +117,7 @@ const UserRegistrationFom = () => {
 
                     <select className='form-select mt-3' onChange={VerifyRole}>
                         <option value="norole">Please select a role</option>
-                        <option value="STUDENT">User</option>
+                        <option value="USER">User</option>
                     </select>
 
                     <div className="form-group">

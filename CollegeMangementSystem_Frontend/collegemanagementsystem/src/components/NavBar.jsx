@@ -14,7 +14,7 @@ function NavBar() {
                             <Link to='/' className="nav-link active" aria-current="page" href="#">Login</Link>
                         </li>
                         <li className="nav-item">
-                            <Link to='/home' className="nav-link active" aria-current="page" href="#">Home</Link>
+                            <Link to='/dashboard' className="nav-link active" aria-current="page" href="#">Dashboard</Link>
                         </li>
                         <li className="nav-item">
                             <Link to='registeruser' className="nav-link active" aria-current="page" href="#">Register</Link>
