@@ -76,6 +76,7 @@ const Dashboard = () => {
                                     <thead>
                                         <tr>
                                             <th scope="col">Sl No</th>
+                                            <th scope="col">User Id</th>
                                             <th scope="col">User Name</th>
                                             <th scope="col">Email</th>
                                             <th scope="col">Address</th>
@@ -88,6 +89,7 @@ const Dashboard = () => {
                                             userList.map((user, num) =>
                                                 <tr key={num}>
                                                     <td>{num + 1}</td>
+                                                    <td>{user.userId}</td>
                                                     <td>{user.userName}</td>
                                                     <td>{user.userEmail}</td>
                                                     <td>{user.userAddress}</td>
