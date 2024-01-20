@@ -31,72 +31,66 @@ public class UserController {
 	@PostMapping("/signup")
 	private ResponseEntity<User> saveUser(@RequestBody UserDto user) {
 		var stopWatch = new StopWatch(Thread.currentThread().getName());
-        log.info("User Post API called");
-        stopWatch.start();
+		log.info("User Post API called");
+		stopWatch.start();
 		User registeredUser = userService.registerUser(user);
-		 stopWatch.stop();
-	        log.info("Total time taken by User POST API : {}", 
-	        		stopWatch.getTotalTimeSeconds()+" seconds");
+		stopWatch.stop();
+		log.info("Total time taken by User POST API : {}", stopWatch.getTotalTimeSeconds() + " seconds");
 		return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping("/all")
 	private ResponseEntity<List<User>> getAllUsers() {
 		var stopWatch = new StopWatch(Thread.currentThread().getName());
-        log.info("User Get all API called");
-        stopWatch.start();
+		log.info("User Get all API called");
+		stopWatch.start();
 		List<User> dbUsers = userService.fetchAllUsers();
 		stopWatch.stop();
-        log.info("Total time taken by User GET All API : {}", 
-        		stopWatch.getTotalTimeSeconds()+" seconds");
+		log.info("Total time taken by User GET All API : {}", stopWatch.getTotalTimeSeconds() + " seconds");
 		return new ResponseEntity<>(dbUsers, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/{id}")
-	private ResponseEntity<User> getUser(@PathVariable Long id){
+	private ResponseEntity<User> getUser(@PathVariable String id) {
 		var stopWatch = new StopWatch(Thread.currentThread().getName());
-        log.info("User Get by id API called");
-        stopWatch.start();
+		log.info("User Get by id API called");
+		stopWatch.start();
 		User user = userService.fetchUserById(id);
 		stopWatch.stop();
-        log.info("Total time taken by User GET BY ID API : {}", 
-        		stopWatch.getTotalTimeSeconds()+" seconds");
+		log.info("Total time taken by User GET BY ID API : {}", stopWatch.getTotalTimeSeconds() + " seconds");
 		return ResponseEntity.ok(user);
 	}
-	
+
 	@PatchMapping("/update/{id}")
-	private ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserDto user){
+	private ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody UserDto user) {
 		var stopWatch = new StopWatch(Thread.currentThread().getName());
-        log.info("User Updat by id API called");
-        stopWatch.start();
+		log.info("User Updat by id API called");
+		stopWatch.start();
 		User updatedUserDetails = userService.updateUserDetails(id, user);
 		stopWatch.stop();
-        log.info("Total time taken by User UPDATE BY ID API : {}", 
-        		stopWatch.getTotalTimeSeconds()+" seconds");
+		log.info("Total time taken by User UPDATE BY ID API : {}", stopWatch.getTotalTimeSeconds() + " seconds");
 		return ResponseEntity.ok(updatedUserDetails);
 	}
-	
+
 	@DeleteMapping("/delete/{email}")
-	private ResponseEntity<String> deleteUser(@PathVariable String email){
+	private ResponseEntity<String> deleteUser(@PathVariable String email) {
 		var stopWatch = new StopWatch(Thread.currentThread().getName());
-        log.info("User Delete by email API called");
-        stopWatch.start();
+		log.info("User Delete by email API called");
+		stopWatch.start();
 		String msg = userService.deleteUserDetails(email);
 		stopWatch.stop();
-        log.info("Total time taken by User DELETE BY EMAIL API : {}", 
-        		stopWatch.getTotalTimeSeconds()+" seconds");
+		log.info("Total time taken by User DELETE BY EMAIL API : {}", stopWatch.getTotalTimeSeconds() + " seconds");
 		return ResponseEntity.ok(msg);
 	}
-	
+
 	@DeleteMapping("/delete")
-	private ResponseEntity<String> deleteAll(){
+	private ResponseEntity<String> deleteAll() {
 		var stopWatch = new StopWatch(Thread.currentThread().getName());
-        log.info("User Delete all API called");
-        stopWatch.start();
+		log.info("User Delete all API called");
+		stopWatch.start();
 		String msg = userService.deleteAllUsersData();
 		stopWatch.stop();
-        log.info("Total time taken by User DELETE All API : {}", 
-        		stopWatch.getTotalTimeSeconds()+" seconds");
+		log.info("Total time taken by User DELETE All API : {}", stopWatch.getTotalTimeSeconds() + " seconds");
 		return ResponseEntity.ok(msg);
 	}
 }

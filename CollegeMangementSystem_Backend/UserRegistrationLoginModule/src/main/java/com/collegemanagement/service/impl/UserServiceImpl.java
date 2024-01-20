@@ -8,7 +8,6 @@ import com.collegemanagement.entity.User;
 import com.collegemanagement.entity.dto.UserDto;
 import com.collegemanagement.repository.UserDataRepository;
 import com.collegemanagement.service.UserService;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -39,7 +38,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateUserDetails(Long id, UserDto userDeatils) {
+	public User updateUserDetails(String id, UserDto userDeatils) {
 		User oldUserData = userDataRepo.findById(id).get();
 		oldUserData.setUserName(userDeatils.getUserName());
 		oldUserData.setUserPassword(userDeatils.getUserPassword());
@@ -66,7 +65,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User fetchUserById(Long id) {
+	public User fetchUserById(String id) {
 		log.info("User service fetch by user id: {}", id);
 		return userDataRepo.findById(id).get();
 	}

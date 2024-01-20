@@ -1,7 +1,6 @@
 package com.collegemanagement.entity.dto;
 
 import java.util.Set;
-
 import lombok.Data;
 
 @Data
