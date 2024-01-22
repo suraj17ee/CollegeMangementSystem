@@ -49,7 +49,7 @@ const EditUserDetails = () => {
         // console.log(user);
         userservice.updateUser(id, user)
             .then((res) => {
-                navigate("/");
+                navigate("/dashboard");
             })
             .catch((error) => {
                 console.log(error);

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import userservice from "../service/userservice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { doLogout } from "./auth";
 
 const Dashboard = () => {
 
@@ -61,6 +62,14 @@ const Dashboard = () => {
             })
     }
 
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        doLogout();
+        console.log("logout clicked");
+        navigate("/login");
+    }
+
     return (
         <div className="container mt-3">
             <div className="dashboard">
@@ -70,6 +79,9 @@ const Dashboard = () => {
                             <div className="card-header text-center fw-bold fs-5">
                                 User Details
                                 {/* <p className='text-success'>{msg}</p> */}
+                                <div className="d-flex justify-content-md-end">
+                                    <button onClick={handleLogout} className="btn btn-warning m-1 text-dark fw-bold">Logout</button>
+                                </div>
                             </div>
                             <div className="card-body">
                                 <table className="table">

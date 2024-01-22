@@ -6,17 +6,19 @@ import Login from './components/Login';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 import Dashboard from './components/Dashboard';
+import UserDashboard from './components/UserDashboard';
 
 function App() {
     return (
         <>
-        <ToastContainer/>
+        <ToastContainer position='bottom-center'autoClose={2000}/>
             <NavBar />
             <Routes>
-                <Route path='/' element={<Login />}></Route>
+                <Route path='/login' element={<Login />}></Route>
                 <Route path='/dashboard' element={<Dashboard />}></Route>
-                <Route path='/registeruser' element={<UserRegistrationFom />}></Route>
+                <Route path='/user' element={<UserRegistrationFom />}></Route>
                 <Route path='/edituser/:id' element={<EditUserDetails />}></Route>
+                <Route path='/profile' element={<UserDashboard />}></Route>
             </Routes>
         </>
     );

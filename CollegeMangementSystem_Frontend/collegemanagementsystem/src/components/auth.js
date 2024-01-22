@@ -1,6 +1,6 @@
 // is loggedin
 export const isLoggedIn = () => {
-    let data = localStorage.getItem("data")
+    let data = localStorage.getItem("token")
     if (data != null) {
         return true;
     } else {
@@ -9,16 +9,16 @@ export const isLoggedIn = () => {
 }
 
 //do login - set to local storage
-export const doLogin = (data,next) => {
+export const doLogin = (data, next) => {
     localStorage.setItem("username", data.username);
-    localStorage.setItem("jwttoken", data.jwtToken);
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("userrole", data.userrole);
     next();
 }
 
 //do logout - remove from local storage
-export const doLogout = (next) => {
-    localStorage.removeItem("data");
-    next();
+export const doLogout = () => {
+    localStorage.clear();
 }
 
 //get current user details

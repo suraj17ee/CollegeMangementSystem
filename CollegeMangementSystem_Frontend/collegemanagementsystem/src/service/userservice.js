@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API_URL = "http://localhost:8001/v1/user";
-var token = localStorage.getItem("jwttoken");
+var token = localStorage.getItem("token");
 class UserService {
     registerUser(user) {
         return axios.post(API_URL+"/signup", user,{

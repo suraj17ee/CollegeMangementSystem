@@ -3,6 +3,7 @@ import './Login.css';
 import userservice from '../service/userservice';
 import { toast } from 'react-toastify';
 import { doLogin } from './auth';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
@@ -13,6 +14,7 @@ const Login = () => {
 
     // const [msg, setMsg] = useState(""); // instead of using msg now using toasts
     const [responseData, setResponseData] = useState();
+    const navigate = useNavigate();
 
     const VerifyUserName = (e) => {
             setUserObject({ ...userObject, username: e.target.value.trim() });
@@ -29,13 +31,23 @@ const Login = () => {
             userservice.generateToken(userObject)
                 .then((res) => {
                     // setMsg("User credentials sent successfully!!");
-                    toast.success("User credentials sent successfully!!");
+                    toast.success("User Logged in as "+res.data.username.toUpperCase());
                     console.log(res.data);
                     //save the data to localstorage
                     doLogin(res.data,()=>{
                         console.log("login details saved in local storage!");
                     })
                     setResponseData(res.data);
+                    // setUserObject({
+                    //     username: "",
+                    //     password: "",
+                    // });
+                    if(localStorage.getItem("userrole")=="ROLE_ADMIN"){
+                        navigate("/dashboard");
+                    }else{
+                        navigate("/profile")
+                    }
+                    
                 })
                 .catch((error) => {
                     if (error.response.status == 400 | error.response.status == 401) {
