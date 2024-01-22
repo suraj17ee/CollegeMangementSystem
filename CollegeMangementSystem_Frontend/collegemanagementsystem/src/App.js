@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 import Dashboard from './components/Dashboard';
 import UserDashboard from './components/UserDashboard';
+import Home from './components/Home';
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
         <ToastContainer position='bottom-center'autoClose={2000}/>
             <NavBar />
             <Routes>
+                <Route path='/' element={<Home/>}></Route>
                 <Route path='/login' element={<Login />}></Route>
                 <Route path='/dashboard' element={<Dashboard />}></Route>
                 <Route path='/user' element={<UserRegistrationFom />}></Route>
