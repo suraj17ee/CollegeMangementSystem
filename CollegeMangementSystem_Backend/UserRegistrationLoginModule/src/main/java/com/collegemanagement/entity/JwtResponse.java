@@ -13,5 +13,6 @@ import lombok.Setter;
 @Builder
 public class JwtResponse {
 	private String username;
-    private String jwtToken;
+    private String token;
+    private String userrole;
 }

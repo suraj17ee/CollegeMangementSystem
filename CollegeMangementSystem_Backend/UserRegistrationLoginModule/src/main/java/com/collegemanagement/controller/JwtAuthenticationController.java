@@ -1,10 +1,13 @@
 package com.collegemanagement.controller;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -41,9 +44,14 @@ public class JwtAuthenticationController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         String token = this.helper.generateToken(userDetails);
 
+        //fetch role from user details
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+        String role = authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()).get(0);
+        
         JwtResponse response = JwtResponse.builder()
-                .jwtToken(token)
-                .username(userDetails.getUsername()).build();
+        		.username(userDetails.getUsername())
+                .token(token)
+                .userrole(role).build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
