@@ -1,5 +1,6 @@
 package com.collegemanagement.entity;
 
+import java.util.Date;
 import java.util.Set;
 import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.CollectionTable;
@@ -11,6 +12,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +37,10 @@ public class User {
 	private String userPassword;
 	private String userEmail;
 	private String userAddress;
+	private String userMobile;
+	private String userGender;
+	@Temporal(TemporalType.DATE)
+	private String userDob;
 
 //	using element roles collection 
 	@ElementCollection

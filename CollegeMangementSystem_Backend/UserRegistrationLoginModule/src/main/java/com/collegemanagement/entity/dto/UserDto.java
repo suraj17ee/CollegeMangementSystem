@@ -1,6 +1,9 @@
 package com.collegemanagement.entity.dto;
 
 import java.util.Set;
+
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Data;
 
 @Data
@@ -9,5 +12,8 @@ public class UserDto {
 	private String userPassword;
 	private String userEmail;
 	private String userAddress;
+	private String userMobile;
+	private String userGender;
+	private String userDob;
 	private Set<String> roles;
 }
