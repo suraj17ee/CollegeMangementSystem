@@ -4,12 +4,7 @@ const API_URL = "http://localhost:8001/v1/user";
 var token = localStorage.getItem("token");
 class UserService {
     registerUser(user) {
-        return axios.post(API_URL+"/signup", user,{
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-              }
-        });
+        return axios.post(API_URL+"/signup", user);
     }
     getAllUsers() {
         return axios.get(API_URL + "/all",{headers: {

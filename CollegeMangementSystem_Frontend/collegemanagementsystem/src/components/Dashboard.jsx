@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import userservice from "../service/userservice";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { doLogout } from "./auth";
+import { doLogout } from "../service/auth";
 
 const Dashboard = () => {
 

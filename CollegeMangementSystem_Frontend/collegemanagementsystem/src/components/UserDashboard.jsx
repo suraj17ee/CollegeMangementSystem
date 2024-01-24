@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, useNavigate } from "react-router-dom";
-import { isLoggedIn, doLogout } from './auth';
+import { isLoggedIn, doLogout } from "../service/auth";
 
 const UserDashboard = () => {
 

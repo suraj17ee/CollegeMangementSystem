@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Login.css';
 import userservice from '../service/userservice';
 import { toast } from 'react-toastify';
-import { doLogin } from './auth';
+import { doLogin } from "../service/auth";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {

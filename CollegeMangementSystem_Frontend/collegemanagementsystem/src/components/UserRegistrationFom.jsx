@@ -10,6 +10,9 @@ const UserRegistrationFom = () => {
         userPassword: "",
         userEmail: "",
         userAddress: "",
+        userMobile:"",
+        userDob:"",
+        userGender:"",
         roles: []
     });
 
@@ -26,6 +29,15 @@ const UserRegistrationFom = () => {
     }
     const VerifyUserAddress = (e) => {
         setUser({ ...user, userAddress: e.target.value });
+    }
+    const VerifyUserGender = (e) => {
+        setUser({ ...user, userGender: e.target.value });
+    }
+    const VerifyUserDob = (e) => {
+        setUser({ ...user, userDob: e.target.value });
+    }
+    const VerifyUserMobile = (e) => {
+        setUser({ ...user, userMobile: e.target.value });
     }
 
     function VerifyRole(e) {
@@ -51,6 +63,9 @@ const UserRegistrationFom = () => {
                     userPassword: "",
                     userEmail: "",
                     userAddress: "",
+                    userMobile:"",
+                    userDob:"",
+                    userGender:"",
                     roles: []
                 });
             })
@@ -68,51 +83,108 @@ const UserRegistrationFom = () => {
                     {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
                     </div>
                     <div className="form-group">
-                        <label className="form-label">User Name</label>
+                        {/* <label className="form-label">User Name</label> */}
                         <div>
                             <input type="text"
                                 name="userName"
                                 className='form-control'
                                 onChange={VerifyUserName}
                                 value={user.userName}
+                                placeholder='Enter User Name'
                             />
                         </div>
                     </div>
 
                     <div className="form-group">
-                        <label className="form-label">Password</label>
+                        {/* <label className="form-label">Password</label> */}
                         <div>
                             <input type="text"
                                 name="password"
                                 className='form-control'
                                 onChange={VerifyUserPassword}
                                 value={user.userPassword}
+                                placeholder='Enter Password'
                             />
                         </div>
                     </div>
 
                     <div className="form-group">
-                        <label className="form-label">Email</label>
+                        {/* <label className="form-label">Email</label> */}
                         <div>
                             <input type="text"
                                 name="email"
                                 className='form-control'
                                 onChange={VerifyUserEmail}
                                 value={user.userEmail}
+                                placeholder='Enter Your Email'
                             />
                         </div>
                     </div>
 
                     <div className="form-group">
-                        <label className="form-label">Address</label>
+                        {/* <label className="form-label">Address</label> */}
                         <div>
                             <input type="text"
                                 name="address"
                                 className='form-control'
                                 onChange={VerifyUserAddress}
                                 value={user.userAddress}
+                                placeholder='Enter Your Address'
                             />
                         </div>
+                    </div>
+
+                    <div className="form-group">
+                        {/* <label className="form-label">Mobile</label> */}
+                        <div>
+                            <input type="text"
+                                name="mobile"
+                                className='form-control'
+                                onChange={VerifyUserMobile}
+                                value={user.userMobile}
+                                placeholder='Enter Phone Number:'
+                            />
+                        </div>
+                    </div>
+
+                    <div className="form-group">
+                        {/* <label className="form-label">DOB</label> */}
+                        <div>
+                            <input type="date"
+                                name="dob"
+                                className='form-control'
+                                onChange={VerifyUserDob}
+                                value={user.userDob}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="form-group">
+                    <label className="form-label">Gender</label>
+                    <div className="form-check">
+                        <input className="form-check-input"
+                         type="radio" 
+                         name="gender" 
+                         id="radi1" 
+                         value="male"
+                         onChange={VerifyUserGender} />
+                            <label className="form-check-label">
+                                Male
+                            </label>
+                    </div>
+
+                    <div className="form-check">
+                    <input className="form-check-input"
+                     type="radio" 
+                     name="gender" 
+                     id="radio2" 
+                     value="female"
+                     onChange={VerifyUserGender}
+                     />
+                            <label className="form-check-label">
+                                Female
+                            </label>
+                    </div>
                     </div>
 
                     <select className='form-select mt-3' onChange={VerifyRole}>
@@ -121,7 +193,7 @@ const UserRegistrationFom = () => {
                     </select>
 
                     <div className="form-group">
-                        <button className='btn btn-primary mt-3 col-12'>SignUp</button>
+                        <button className='btn btn-primary mt-3 col-12'>Sign Up</button>
                     </div>
                 </form>
             </div>
