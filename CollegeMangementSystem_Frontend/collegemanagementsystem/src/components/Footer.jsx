@@ -18,20 +18,9 @@ const Footer = () => {
                 <div className="footer-title">SUPPORT</div>
                 <div>Contacts</div>
                 <div>FAQS</div>
-                <div>Size Guide</div>
-                <div>Shipping & Returns</div>
-            </div>
-            <div>
-                <div className="footer-title">SHOP</div>
-                <div>Men's Shopping</div>
-                <div>Women's Shopping</div>
-                <div>Kid's Shopping</div>
-                <div>Discounts</div>
             </div>
             <div>
                 <div className="footer-title">COMPANY</div>
-                <div>Our Story</div>
-                <div>Careers</div>
                 <div>Terms & Conditions</div>
                 <div>Privacy & Cookie Policy</div>
             </div>
@@ -40,7 +29,7 @@ const Footer = () => {
                 <address>
                     <div>1-202-555-0105</div>
                     <div>1-202-555-0106</div>
-                    <div>help@shopper.com</div>
+                    <div>help@cms.com</div>
                 </address>
             </div>
         </div>
