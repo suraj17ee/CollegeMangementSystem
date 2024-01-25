@@ -3,6 +3,7 @@ package com.collegemanagement.service.impl;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.collegemanagement.entity.User;
 import com.collegemanagement.entity.dto.UserDto;
@@ -15,13 +16,16 @@ import lombok.extern.slf4j.Slf4j;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	@Autowired
 	private UserDataRepository userDataRepo;
 
 	@Override
 	public User registerUser(UserDto userDetails) {
 		User user = new User();
 		user.setUserName(userDetails.getUserName());
-		user.setUserPassword(userDetails.getUserPassword());
+		user.setUserPassword(passwordEncoder.encode(userDetails.getUserPassword()));
 		user.setUserEmail(userDetails.getUserEmail());
 		user.setUserAddress(userDetails.getUserAddress());
 		user.setUserMobile(userDetails.getUserMobile());
