@@ -1,8 +1,10 @@
 package com.collegemanagement.security.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -17,10 +19,15 @@ import lombok.AllArgsConstructor;
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = false)
 public class SecurityFilterConfig {
 	
+    @Autowired
     private JwtAuthenticationEntryPoint point;
     
+    @Autowired
     private JwtAuthenticationFilter filter;
 
+    @Autowired
+    private SecurityConfig securityConfig;
+    
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
         return security
@@ -37,6 +44,7 @@ public class SecurityFilterConfig {
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+                .authenticationProvider(securityConfig.daoAuthenticationProvider())//for authentication using database we have to add this line
                 .build();
     }
 }

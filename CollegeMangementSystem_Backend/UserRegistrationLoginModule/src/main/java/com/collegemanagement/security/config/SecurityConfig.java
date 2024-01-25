@@ -1,8 +1,10 @@
 package com.collegemanagement.security.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -62,37 +64,63 @@ import org.springframework.security.web.SecurityFilterChain;
 //}
 //=====================================================================
 //JWT Authentication with roles using InMemoryUserDetailsManager
+//@Configuration
+//public class SecurityConfig {
+//
+//	@Bean
+//	public PasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//	}
+//
+//	@Bean
+//	public UserDetailsService userDetailsService() {
+//		UserDetails user = User.builder()
+//				.username("user")
+//				.password(passwordEncoder()
+//						.encode("user"))
+//				.roles("USER").build();
+//
+//		UserDetails admin = User.builder()
+//				.username("admin")
+//				.password(passwordEncoder()
+//						.encode("admin"))
+//				.roles("ADMIN").build();
+//
+//		UserDetails dev = User.builder()
+//				.username("dev")
+//				.password(passwordEncoder()
+//						.encode("dev"))
+//				.roles("DEV").build();
+//
+//		return new InMemoryUserDetailsManager(user, admin, dev);
+//	}
+//
+//	@Bean
+//	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+//		return configuration.getAuthenticationManager();
+//	}
+//}
+//=====================================================================
+//JWT Authentication with roles using database
 @Configuration
 public class SecurityConfig {
-
+	
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
+	
 	@Bean
-	public UserDetailsService userDetailsService() {
-		UserDetails user = User.builder()
-				.username("user")
-				.password(passwordEncoder()
-						.encode("user"))
-				.roles("USER").build();
-
-		UserDetails admin = User.builder()
-				.username("admin")
-				.password(passwordEncoder()
-						.encode("admin"))
-				.roles("ADMIN").build();
-
-		UserDetails dev = User.builder()
-				.username("dev")
-				.password(passwordEncoder()
-						.encode("dev"))
-				.roles("DEV").build();
-
-		return new InMemoryUserDetailsManager(user, admin, dev);
+	public DaoAuthenticationProvider daoAuthenticationProvider() {
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		provider.setUserDetailsService(customUserDetailsService);
+		provider.setPasswordEncoder(passwordEncoder());
+		return provider;
 	}
-
+	
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
 		return configuration.getAuthenticationManager();
