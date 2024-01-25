@@ -2,6 +2,7 @@ package com.collegemanagement.controller;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,10 +30,13 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/v1/user")
 public class JwtAuthenticationController {
 
+    @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
     private AuthenticationManager manager;
 
+    @Autowired
     private JwtHelper helper;
 
     @PostMapping("/authenticate")
