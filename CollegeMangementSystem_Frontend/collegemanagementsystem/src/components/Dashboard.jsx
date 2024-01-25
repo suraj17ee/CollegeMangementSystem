@@ -91,7 +91,10 @@ const Dashboard = () => {
                                             <th scope="col">User Id</th>
                                             <th scope="col">User Name</th>
                                             <th scope="col">Email</th>
+                                            <th scope="col">Mobile</th>
                                             <th scope="col">Address</th>
+                                            <th scope="col">DOB</th>
+                                            <th scope="col">Gender</th>
                                             <th scope="col">Role</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -104,7 +107,10 @@ const Dashboard = () => {
                                                     <td>{user.userId}</td>
                                                     <td>{user.userName}</td>
                                                     <td>{user.userEmail}</td>
+                                                    <td>{user.userMobile}</td>
                                                     <td>{user.userAddress}</td>
+                                                    <td>{user.userDob}</td>
+                                                    <td>{user.userGender}</td>
                                                     <td>{user.roles}</td>
                                                     <td>
                                                         <Link to={'/edituser/' + user.userId} className="btn btn-sm btn-primary m-1">Edit</Link>

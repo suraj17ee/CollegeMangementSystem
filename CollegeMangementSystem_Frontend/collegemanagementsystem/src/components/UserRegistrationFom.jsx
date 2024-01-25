@@ -82,7 +82,7 @@ const UserRegistrationFom = () => {
                     <h3><span className="bi bi-person-fill"></span> User Registration</h3>
                     {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
                     </div>
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         {/* <label className="form-label">User Name</label> */}
                         <div>
                             <input type="text"
@@ -95,7 +95,7 @@ const UserRegistrationFom = () => {
                         </div>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         {/* <label className="form-label">Password</label> */}
                         <div>
                             <input type="text"
@@ -108,7 +108,7 @@ const UserRegistrationFom = () => {
                         </div>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         {/* <label className="form-label">Email</label> */}
                         <div>
                             <input type="text"
@@ -121,7 +121,7 @@ const UserRegistrationFom = () => {
                         </div>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         {/* <label className="form-label">Address</label> */}
                         <div>
                             <input type="text"
@@ -134,7 +134,7 @@ const UserRegistrationFom = () => {
                         </div>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         {/* <label className="form-label">Mobile</label> */}
                         <div>
                             <input type="text"
@@ -147,7 +147,7 @@ const UserRegistrationFom = () => {
                         </div>
                     </div>
 
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         {/* <label className="form-label">DOB</label> */}
                         <div>
                             <input type="date"
@@ -159,8 +159,8 @@ const UserRegistrationFom = () => {
                         </div>
                     </div>
 
-                    <div className="form-group">
-                    <label className="form-label">Gender</label>
+                    <div className="form-group mt-3">
+                    {/* <label className="form-label">Gender</label> */}
                     <div className="form-check">
                         <input className="form-check-input"
                          type="radio" 
@@ -192,8 +192,8 @@ const UserRegistrationFom = () => {
                         <option value="USER">User</option>
                     </select>
 
-                    <div className="form-group">
-                        <button className='btn btn-primary mt-3 col-12'>Sign Up</button>
+                    <div className="form-group mt-3">
+                        <button className='btn btn-primary col-12'>Sign Up</button>
                     </div>
                 </form>
             </div>

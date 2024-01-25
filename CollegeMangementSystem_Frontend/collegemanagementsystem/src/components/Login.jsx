@@ -66,20 +66,20 @@ const Login = () => {
                 <form onSubmit={LoginClick} id='login-form'>
                     <h3><span className="bi bi-person-fill"></span> User Login</h3>
                     {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         <label className="form-label">Username</label>
                         <input type="text" className="form-control" id="username"
                             onChange={VerifyUserName}
                             value={userObject.username} />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group mt-3">
                         <label className="form-label">Password</label>
                         <input type="password" className="form-control" id="password"
                             onChange={VerifyUserPassword}
                             value={userObject.password} />
                     </div>
-                    <div className="form-group just">
-                        <button className="btn btn-primary col-12 mt-3">Sign in</button>
+                    <div className="form-group mt-3 just">
+                        <button className="btn btn-primary col-12">Sign in</button>
                     </div>
                 </form>
             </div>
