@@ -15,6 +15,8 @@ public interface UserService {
 	public String deleteUserDetails(String email);
 
 	public User fetchUserById(String id);
+	
+	public User fetchUserByEmail(String email);
 
 	public String deleteAllUsersData();
 	

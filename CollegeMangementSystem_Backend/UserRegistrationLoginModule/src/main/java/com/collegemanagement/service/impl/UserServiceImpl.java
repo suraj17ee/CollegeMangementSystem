@@ -76,6 +76,12 @@ public class UserServiceImpl implements UserService {
 		log.info("User service fetch by user id: {}", id);
 		return userDataRepo.findById(id).get();
 	}
+	
+	@Override
+	public User fetchUserByEmail(String email) {
+		log.info("User service fetch by user email: {}", email);
+		return userDataRepo.findByUserEmail(email).get();
+	}
 
 	@Override
 	public String deleteAllUsersData() {

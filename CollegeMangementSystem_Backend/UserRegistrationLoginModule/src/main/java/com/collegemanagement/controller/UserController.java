@@ -93,4 +93,15 @@ public class UserController {
 		log.info("Total time taken by User DELETE All API : {}", stopWatch.getTotalTimeSeconds() + " seconds");
 		return ResponseEntity.ok(msg);
 	}
+	
+	@GetMapping("/get/{email}")
+	private ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+		var stopWatch = new StopWatch(Thread.currentThread().getName());
+		log.info("User Get by email API called");
+		stopWatch.start();
+		User user = userService.fetchUserByEmail(email);
+		stopWatch.stop();
+		log.info("Total time taken by User GET BY EMAIL API : {}", stopWatch.getTotalTimeSeconds() + " seconds");
+		return ResponseEntity.ok(user);
+	}
 }
