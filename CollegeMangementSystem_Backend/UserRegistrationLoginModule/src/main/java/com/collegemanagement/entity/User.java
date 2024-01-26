@@ -62,7 +62,6 @@ import lombok.ToString;
 //for user authentication using database
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Setter
 @Getter
 @ToString
@@ -74,6 +73,7 @@ public class User implements UserDetails {
 	@GenericGenerator(name = "custom-sequence", strategy = "com.collegemanagement.entity.CustomIdGenerator")
 	private String userId;
 	private String userName;
+	@JsonIgnore
 	private String userPassword;
 	private String userEmail;
 	private String userAddress;
@@ -90,6 +90,11 @@ public class User implements UserDetails {
 	@Column(name = "role") // for extra column with roles in roles table
 	private Set<String> roles;
 	
+	public String getUserName() {
+		return this.userName;
+	}
+	
+	//spring security UserDetails methods
 	@JsonIgnore
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
