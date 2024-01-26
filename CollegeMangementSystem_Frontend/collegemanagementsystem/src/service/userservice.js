@@ -18,6 +18,12 @@ class UserService {
             'Authorization': `Bearer ${token}`,
           }});
     }
+    getUserByEmail(email) {
+        return axios.get(API_URL + "/get/" + email,{headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          }});
+    }
     deleteUser(email) {
         return axios.delete(API_URL + "/delete/" + email,{headers: {
             'Content-Type': 'application/json',
