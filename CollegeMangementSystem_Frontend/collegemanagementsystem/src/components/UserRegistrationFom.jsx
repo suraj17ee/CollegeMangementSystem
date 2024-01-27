@@ -70,8 +70,13 @@ const UserRegistrationFom = () => {
                 });
             })
             .catch((error) => {
-                console.log(error);
-            });
+                if (error.response.status == 400 | error.response.status == 401) {
+                    toast.error(error.response.data);
+                } else {
+                    toast.error("Error while connecting to server!!");
+                    console.log(error);
+                }
+            })
     }
 
     return (
