@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.collegemanagement.entity.JwtRequest;
 import com.collegemanagement.entity.JwtResponse;
+import com.collegemanagement.exception.UserCredenditalsException;
 import com.collegemanagement.security.jwt.JwtHelper;
 
 import lombok.AllArgsConstructor;
@@ -64,7 +65,7 @@ public class JwtAuthenticationController {
         try {
             manager.authenticate(authentication);
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("Credentials Invalid !!");
+            throw new UserCredenditalsException("Credentials Invalid !!");
         }
 
     }

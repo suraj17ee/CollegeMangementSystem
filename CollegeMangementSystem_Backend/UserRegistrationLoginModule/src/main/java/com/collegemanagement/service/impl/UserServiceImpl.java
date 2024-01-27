@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User registerUser(UserDto userDetails) {
 		if (ObjectUtils.isEmpty(userDetails) || userDetails != null) {
-			log.error("Error occured while saving user's detail !!");
-			throw new PersonNotFoundException("Please provide user's detail !!");
+			log.error("User details not provided !!");
+			throw new PersonNotFoundException("Please provide valid user details !!");
 		} else {
 			User user = new User();
 			user.setUserName(userDetails.getUserName());
