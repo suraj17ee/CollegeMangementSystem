@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 const UserDashboard = () => {
 
-    const [userData, setUserData] = useState({});
+    const [userData, setUserData] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,18 +40,23 @@ const UserDashboard = () => {
             <div>
                 <div className="card w-25 m-3">
                     <div className="card-header">
-                        <h3><span className="bi bi-person-fill"></span> {localStorage.getItem("username")} </h3>
+                        {/* <h3><span className="bi bi-person-fill"></span> {localStorage.getItem("username")} </h3> */}
+                        {userData ? (
+                            <h3><span className="bi bi-person-fill"></span>Welcome {userData.userName} </h3>
+                        ) : (
+                            <p>Loading...</p>
+                        )}
                     </div>
+                    {/* </div> */}
                     <div className="card-body">
-                        <h5 className="card-title">Your Details</h5>
+                        <h5 className="card-title">Your Details are as follows</h5>
                         <div>
                             {
-                                Object.entries(userData).map(([user,key]) => (
-                                   <div>
-                                     <p key={key+1}>{user.userId}</p>
-                                    <p key={key+1}>{user.userName}</p>
-                                   </div>
-                                ))
+                                userData ? (Object.entries(userData).map(([key, value]) => (
+                                    <li key={key} style={{ listStyleType: 'none' }}>
+                                        <strong>{key} : </strong>{value}
+                                    </li>
+                                ))) : (<p>Loading...</p>)
                             }
                         </div>
                     </div>
