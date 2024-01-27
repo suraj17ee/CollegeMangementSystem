@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	public User updateUserDetails(String id, UserDto userDeatils) {
 		User oldUserData = userDataRepo.findById(id).get();
 		oldUserData.setUserName(userDeatils.getUserName());
-		oldUserData.setUserPassword(userDeatils.getUserPassword());
+		oldUserData.setUserPassword(passwordEncoder.encode(userDeatils.getUserPassword()));
 		oldUserData.setUserEmail(userDeatils.getUserEmail());
 		oldUserData.setUserAddress(userDeatils.getUserAddress());
 		oldUserData.setRoles(userDeatils.getRoles());
