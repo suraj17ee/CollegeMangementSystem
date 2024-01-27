@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User registerUser(UserDto userDetails) {
-		if (ObjectUtils.isEmpty(userDetails) || userDetails != null) {
+		if (ObjectUtils.isEmpty(userDetails) || userDetails == null) {
 			log.error("User details not provided !!");
 			throw new PersonNotFoundException("Please provide valid user details !!");
 		} else {
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User updateUserDetails(String id, UserDto userDetails) {
-		if (ObjectUtils.isEmpty(userDetails) || userDetails != null) {
+		if (ObjectUtils.isEmpty(userDetails) || userDetails == null) {
 			log.error("Error occured while updating user !!");
 			throw new PersonNotFoundException("Please provide user's detail to update !!");
 		} else {
