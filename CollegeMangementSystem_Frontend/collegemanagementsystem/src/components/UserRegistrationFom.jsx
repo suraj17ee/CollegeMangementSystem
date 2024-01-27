@@ -10,9 +10,9 @@ const UserRegistrationFom = () => {
         userPassword: "",
         userEmail: "",
         userAddress: "",
-        userMobile:"",
-        userDob:"",
-        userGender:"",
+        userMobile: "",
+        userDob: "",
+        userGender: "",
         roles: []
     });
 
@@ -63,9 +63,9 @@ const UserRegistrationFom = () => {
                     userPassword: "",
                     userEmail: "",
                     userAddress: "",
-                    userMobile:"",
-                    userDob:"",
-                    userGender:"",
+                    userMobile: "",
+                    userDob: "",
+                    userGender: "",
                     roles: []
                 });
             })
@@ -79,8 +79,8 @@ const UserRegistrationFom = () => {
             <div className='reg-box'>
                 <form onSubmit={UserRegister} id='reg-form'>
                     <div className="formhead">
-                    <h3><span className="bi bi-person-fill"></span> User Registration</h3>
-                    {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
+                        <h3><span className="bi bi-person-fill"></span> User Registration</h3>
+                        {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
                     </div>
                     <div className="form-group mt-3">
                         {/* <label className="form-label">User Name</label> */}
@@ -95,7 +95,7 @@ const UserRegistrationFom = () => {
                         </div>
                     </div>
 
-                    <div className="form-group mt-3">
+                    <div className="form-group mt-1">
                         {/* <label className="form-label">Password</label> */}
                         <div>
                             <input type="text"
@@ -108,7 +108,7 @@ const UserRegistrationFom = () => {
                         </div>
                     </div>
 
-                    <div className="form-group mt-3">
+                    <div className="form-group mt-1">
                         {/* <label className="form-label">Email</label> */}
                         <div>
                             <input type="text"
@@ -121,7 +121,7 @@ const UserRegistrationFom = () => {
                         </div>
                     </div>
 
-                    <div className="form-group mt-3">
+                    <div className="form-group mt-1">
                         {/* <label className="form-label">Address</label> */}
                         <div>
                             <input type="text"
@@ -134,7 +134,7 @@ const UserRegistrationFom = () => {
                         </div>
                     </div>
 
-                    <div className="form-group mt-3">
+                    <div className="form-group mt-1">
                         {/* <label className="form-label">Mobile</label> */}
                         <div>
                             <input type="text"
@@ -147,7 +147,7 @@ const UserRegistrationFom = () => {
                         </div>
                     </div>
 
-                    <div className="form-group mt-3">
+                    <div className="form-group mt-1">
                         {/* <label className="form-label">DOB</label> */}
                         <div>
                             <input type="date"
@@ -159,40 +159,37 @@ const UserRegistrationFom = () => {
                         </div>
                     </div>
 
-                    <div className="form-group mt-3">
-                    {/* <label className="form-label">Gender</label> */}
                     <div className="form-check">
                         <input className="form-check-input"
-                         type="radio" 
-                         name="gender" 
-                         id="radi1" 
-                         value="male"
-                         onChange={VerifyUserGender} />
-                            <label className="form-check-label">
-                                Male
-                            </label>
+                            type="radio"
+                            name="gender"
+                            id="radi1"
+                            value="male"
+                            onChange={VerifyUserGender} />
+                        <label className="form-check-label">
+                            Male
+                        </label>
                     </div>
 
                     <div className="form-check">
-                    <input className="form-check-input"
-                     type="radio" 
-                     name="gender" 
-                     id="radio2" 
-                     value="female"
-                     onChange={VerifyUserGender}
-                     />
-                            <label className="form-check-label">
-                                Female
-                            </label>
-                    </div>
+                        <input className="form-check-input"
+                            type="radio"
+                            name="gender"
+                            id="radio2"
+                            value="female"
+                            onChange={VerifyUserGender}
+                        />
+                        <label className="form-check-label">
+                            Female
+                        </label>
                     </div>
 
-                    <select className='form-select mt-3' onChange={VerifyRole}>
+                    <select className='form-select mt-1' onChange={VerifyRole}>
                         <option value="norole">Please select a role</option>
                         <option value="ROLE_USER">User</option>
                     </select>
 
-                    <div className="form-group mt-3">
+                    <div className="form-group mt-1">
                         <button className='btn btn-primary col-12'>Sign Up</button>
                     </div>
                 </form>

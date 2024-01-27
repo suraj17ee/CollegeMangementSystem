@@ -15,7 +15,7 @@ import './App.css';
 function App() {
     return (
         <div className='body-container'>
-            <ToastContainer position='bottom-center' autoClose={2000} />
+            <ToastContainer position='top-right' autoClose={2000} />
             <header>
                 <NavBar />
             </header>
@@ -31,7 +31,7 @@ function App() {
                 </Routes>
             </section>
             <footer>
-                {/* <Footer /> */}
+                <Footer />
             </footer>
         </div>
     );
