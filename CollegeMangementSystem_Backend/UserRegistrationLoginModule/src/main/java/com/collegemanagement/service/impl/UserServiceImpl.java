@@ -24,20 +24,22 @@ public class UserServiceImpl implements UserService {
 	private UserDataRepository userDataRepo;
 
 	@Override
-	public User registerUser(UserDto userDetails) {
-		if (ObjectUtils.isEmpty(userDetails) || userDetails == null) {
+	public User registerUser(UserDto userData) {
+		if(userData.getUserEmail() == null || userData.getUserEmail()=="" || userData.getUserPassword() == null || userData.getUserPassword()=="") {
 			log.error("User details not provided !!");
-			throw new PersonNotFoundException("Please provide valid user details !!");
+			throw new PersonNotFoundException("Please provide valid user details! Email and Password must required !!");
+		} else if (userDataRepo.findByUserEmail(userData.getUserEmail()).isPresent()) {
+			throw new PersonNotFoundException("User details already exists !!");
 		} else {
 			User user = new User();
-			user.setUserName(userDetails.getUserName());
-			user.setUserPassword(passwordEncoder.encode(userDetails.getUserPassword()));
-			user.setUserEmail(userDetails.getUserEmail());
-			user.setUserAddress(userDetails.getUserAddress());
-			user.setUserMobile(userDetails.getUserMobile());
-			user.setUserGender(userDetails.getUserGender());
-			user.setUserDob(userDetails.getUserDob());
-			user.setRoles(userDetails.getRoles());
+			user.setUserName(userData.getUserName());
+			user.setUserPassword(passwordEncoder.encode(userData.getUserPassword()));
+			user.setUserEmail(userData.getUserEmail());
+			user.setUserAddress(userData.getUserAddress());
+			user.setUserMobile(userData.getUserMobile());
+			user.setUserGender(userData.getUserGender());
+			user.setUserDob(userData.getUserDob());
+			user.setRoles(userData.getRoles());
 			User dbUser = userDataRepo.save(user);
 			log.info("User service register user : {}", dbUser.getUserId());
 			return dbUser;
@@ -57,17 +59,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateUserDetails(String id, UserDto userDetails) {
-		if (ObjectUtils.isEmpty(userDetails) || userDetails == null) {
+	public User updateUserDetails(String id, UserDto userData) {
+		if(userData.getUserEmail() == null || userData.getUserEmail()=="" || userData.getUserPassword() == null || userData.getUserPassword()=="") {
 			log.error("Error occured while updating user !!");
-			throw new PersonNotFoundException("Please provide user's detail to update !!");
+			throw new PersonNotFoundException("Please provide valid user details to update !!");
 		} else {
 			User oldUserData = userDataRepo.findById(id).get();
-			oldUserData.setUserName(userDetails.getUserName());
-			oldUserData.setUserPassword(passwordEncoder.encode(userDetails.getUserPassword()));
-			oldUserData.setUserEmail(userDetails.getUserEmail());
-			oldUserData.setUserAddress(userDetails.getUserAddress());
-			oldUserData.setRoles(userDetails.getRoles());
+			oldUserData.setUserName(userData.getUserName());
+			oldUserData.setUserPassword(passwordEncoder.encode(userData.getUserPassword()));
+			oldUserData.setUserEmail(userData.getUserEmail());
+			oldUserData.setUserAddress(userData.getUserAddress());
+			oldUserData.setRoles(userData.getRoles());
 			User updatedUserData = userDataRepo.save(oldUserData);
 			log.info("User service update user by id: {}", updatedUserData.getUserId());
 			return updatedUserData;
