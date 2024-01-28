@@ -1,9 +1,6 @@
 package com.collegemanagement.entity.dto;
 
 import java.util.Set;
-
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import lombok.Data;
 
 @Data
