@@ -116,7 +116,7 @@ const UserRegistrationFom = () => {
                     <div className="form-group mt-1">
                         {/* <label className="form-label">Email</label> */}
                         <div>
-                            <input type="text"
+                            <input type="email"
                                 name="email"
                                 className='form-control'
                                 onChange={VerifyUserEmail}

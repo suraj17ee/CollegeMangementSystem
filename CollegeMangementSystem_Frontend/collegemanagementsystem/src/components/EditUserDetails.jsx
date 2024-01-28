@@ -39,16 +39,16 @@ const EditUserDetails = () => {
     const navigate = useNavigate();
 
     const VerifyUserName = (e) => {
-        setUser({ ...user, userName: e.target.value });
+        setUser({ ...user, userName: e.target.value.trim() });
     }
     const VerifyUserPassword = (e) => {
-        setUser({ ...user, userPassword: e.target.value });
+        setUser({ ...user, userPassword: e.target.value.trim() });
     }
     const VerifyUserEmail = (e) => {
-        setUser({ ...user, userEmail: e.target.value });
+        setUser({ ...user, userEmail: e.target.value.trim() });
     }
     const VerifyUserAddress = (e) => {
-        setUser({ ...user, userAddress: e.target.value });
+        setUser({ ...user, userAddress: e.target.value.trim() });
     }
     // const VerifyUserGender = (e) => {
     //     setUser({ ...user, userGender: e.target.value });
@@ -57,7 +57,7 @@ const EditUserDetails = () => {
         setUser({ ...user, userDob: e.target.value });
     }
     const VerifyUserMobile = (e) => {
-        setUser({ ...user, userMobile: e.target.value });
+        setUser({ ...user, userMobile: e.target.value.trim() });
     }
     // const VerifyRole = (e) => {
     //     setUser({ ...user, roles: e.target.value.split(',') });
@@ -116,7 +116,7 @@ const EditUserDetails = () => {
                     <div className="form-group mt-1">
                         {/* <label className="form-label">Email</label> */}
                         <div>
-                            <input type="text"
+                            <input type="email"
                                 name="email"
                                 className='form-control'
                                 onChange={VerifyUserEmail}
@@ -169,7 +169,7 @@ const EditUserDetails = () => {
                         <div>
                             <input type="text" readOnly
                                 className='form-control'
-                                // onChange={VerifyRole}
+                                // onChange={VerifyGender}
                                 value={user.userGender}
                             />
                         </div>

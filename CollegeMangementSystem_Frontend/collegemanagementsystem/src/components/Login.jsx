@@ -31,18 +31,19 @@ const Login = () => {
             userservice.generateToken(userObject)
                 .then((res) => {
                     // setMsg("User credentials sent successfully!!");
-                    toast.success("User Logged in as "+res.data.username.toUpperCase());
                     console.log(res.data);
                     //save the data to localstorage
                     doLogin(res.data,()=>{
                         console.log("login details saved in local storage!");
                     })
+                    const role = localStorage.getItem("userrole");
+                    toast.success("User LoggedIn as an "+role.substring('ROLE_'.length).toUpperCase());
                     setResponseData(res.data);
                     // setUserObject({
                     //     username: "",
                     //     password: "",
                     // });
-                    if(localStorage.getItem("userrole")=="ROLE_ADMIN"){
+                    if(role=="ROLE_ADMIN"){
                         navigate("/dashboard");
                     }else{
                         navigate("/profile")
@@ -68,7 +69,7 @@ const Login = () => {
                     {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
                     <div className="form-group mt-3">
                         {/* <label className="form-label">Username</label> */}
-                        <input type="text" className="form-control" id="username"
+                        <input type="email" className="form-control" id="username"
                             onChange={VerifyUserName}
                             value={userObject.username}
                             placeholder='Enter Your Email'
