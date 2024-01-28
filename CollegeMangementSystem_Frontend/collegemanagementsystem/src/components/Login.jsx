@@ -67,16 +67,20 @@ const Login = () => {
                     <h3><span className="bi bi-person-fill"></span> User Login</h3>
                     {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
                     <div className="form-group mt-3">
-                        <label className="form-label">Username</label>
+                        {/* <label className="form-label">Username</label> */}
                         <input type="text" className="form-control" id="username"
                             onChange={VerifyUserName}
-                            value={userObject.username} />
+                            value={userObject.username}
+                            placeholder='Enter Your Email'
+                             />
                     </div>
                     <div className="form-group mt-3">
-                        <label className="form-label">Password</label>
+                        {/* <label className="form-label">Password</label> */}
                         <input type="password" className="form-control" id="password"
                             onChange={VerifyUserPassword}
-                            value={userObject.password} />
+                            value={userObject.password} 
+                            placeholder='Enter Your Password'
+                            />
                     </div>
                     <div className="form-group mt-3 just">
                         <button className="btn btn-primary col-12">Sign in</button>

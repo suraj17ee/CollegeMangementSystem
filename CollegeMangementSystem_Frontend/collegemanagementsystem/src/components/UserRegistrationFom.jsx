@@ -19,16 +19,16 @@ const UserRegistrationFom = () => {
     // const [msg, setMsg] = useState("");// instead of using msg now using toasts
 
     const VerifyUserName = (e) => {
-        setUser({ ...user, userName: e.target.value });
+        setUser({ ...user, userName: e.target.value.trim() });
     }
     const VerifyUserPassword = (e) => {
-        setUser({ ...user, userPassword: e.target.value });
+        setUser({ ...user, userPassword: e.target.value.trim() });
     }
     const VerifyUserEmail = (e) => {
-        setUser({ ...user, userEmail: e.target.value });
+        setUser({ ...user, userEmail: e.target.value.trim() });
     }
     const VerifyUserAddress = (e) => {
-        setUser({ ...user, userAddress: e.target.value });
+        setUser({ ...user, userAddress: e.target.value.trim() });
     }
     const VerifyUserGender = (e) => {
         setUser({ ...user, userGender: e.target.value });
@@ -37,7 +37,7 @@ const UserRegistrationFom = () => {
         setUser({ ...user, userDob: e.target.value });
     }
     const VerifyUserMobile = (e) => {
-        setUser({ ...user, userMobile: e.target.value });
+        setUser({ ...user, userMobile: e.target.value.trim() });
     }
 
     function VerifyRole(e) {
@@ -95,7 +95,7 @@ const UserRegistrationFom = () => {
                                 className='form-control'
                                 onChange={VerifyUserName}
                                 value={user.userName}
-                                placeholder='Enter User Name'
+                                placeholder='Enter Your Username'
                             />
                         </div>
                     </div>
@@ -108,7 +108,7 @@ const UserRegistrationFom = () => {
                                 className='form-control'
                                 onChange={VerifyUserPassword}
                                 value={user.userPassword}
-                                placeholder='Enter Password'
+                                placeholder='Enter Your Password'
                             />
                         </div>
                     </div>
@@ -147,7 +147,7 @@ const UserRegistrationFom = () => {
                                 className='form-control'
                                 onChange={VerifyUserMobile}
                                 value={user.userMobile}
-                                placeholder='Enter Phone Number:'
+                                placeholder='Enter Your Phone Number:'
                             />
                         </div>
                     </div>
