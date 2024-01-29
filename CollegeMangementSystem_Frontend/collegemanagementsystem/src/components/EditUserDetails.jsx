@@ -108,7 +108,9 @@ const EditUserDetails = () => {
         <div className='conrtainer mt-3'>
             <div className="edit-box">
                 <form onSubmit={UserUpdate} id="edit-form">
+                    <div className="formhead">
                     <h3><span className="bi bi-person-fill"></span> Update User</h3>
+                    </div>
                     {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
                     <div className="form-group mt-1">
                         {/* <label className="form-label">User Name</label> */}
