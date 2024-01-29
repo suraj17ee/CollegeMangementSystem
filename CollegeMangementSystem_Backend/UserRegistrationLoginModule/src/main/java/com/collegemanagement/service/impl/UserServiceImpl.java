@@ -69,7 +69,10 @@ public class UserServiceImpl implements UserService {
 			oldUserData.setUserPassword(passwordEncoder.encode(userData.getUserPassword()));
 			oldUserData.setUserEmail(userData.getUserEmail());
 			oldUserData.setUserAddress(userData.getUserAddress());
-			oldUserData.setRoles(userData.getRoles());
+			oldUserData.setUserMobile(userData.getUserMobile());
+//			oldUserData.setUserGender(userData.getUserGender());
+			oldUserData.setUserDob(userData.getUserDob());
+//			oldUserData.setRoles(userData.getRoles());
 			User updatedUserData = userDataRepo.save(oldUserData);
 			log.info("User service update user by id: {}", updatedUserData.getUserId());
 			return updatedUserData;
