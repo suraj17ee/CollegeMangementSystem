@@ -18,7 +18,7 @@ const Login = () => {
     const navigate = useNavigate();
 
     const VerifyUserName = (e) => {
-        setUserObject({ ...userObject, username: e.target.value.trim() });
+        setUserObject({ ...userObject, username: e.target.value });
     }
     const VerifyUserPassword = (e) => {
         setUserObject({ ...userObject, password: e.target.value.trim() });

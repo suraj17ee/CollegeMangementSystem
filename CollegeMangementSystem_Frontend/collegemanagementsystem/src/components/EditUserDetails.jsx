@@ -43,10 +43,10 @@ const EditUserDetails = () => {
         setUser({ ...user, userName: e.target.value.trim() });
     }
     const VerifyUserPassword = (e) => {
-        setUser({ ...user, userPassword: e.target.value.trim() });
+        setUser({ ...user, userPassword: e.target.value });
     }
     const VerifyUserEmail = (e) => {
-        setUser({ ...user, userEmail: e.target.value.trim() });
+        setUser({ ...user, userEmail: e.target.value });
     }
     const VerifyUserAddress = (e) => {
         setUser({ ...user, userAddress: e.target.value.trim() });
@@ -76,9 +76,9 @@ const EditUserDetails = () => {
     };
 
     const handlePasswordBlur = () => {
-        const { userEmail } = user;
-        const gmailPattern = /^[a-zA-Z0-9]{5,10}$/;
-        if (gmailPattern.test(userEmail)) {
+        const { userPassword } = user;
+        const passwordPattern = /^.{5,10}$/;
+        if (passwordPattern.test(userPassword)) {
             setValidPassword(true);
         } else {
             toast.error("Invalid password !! Password must contain 5-10 characters");
@@ -109,7 +109,7 @@ const EditUserDetails = () => {
             <div className="edit-box">
                 <form onSubmit={UserUpdate} id="edit-form">
                     <div className="formhead">
-                    <h3><span className="bi bi-person-fill"></span> Update User</h3>
+                        <h3><span className="bi bi-person-fill"></span> Update User</h3>
                     </div>
                     {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
                     <div className="form-group mt-1">
