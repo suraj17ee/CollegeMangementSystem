@@ -19,6 +19,8 @@ const EditUserDetails = () => {
     // const [msg, setMsg] = useState("");
     const [validEmail, setValidEmail] = useState(false);
     const [validPassword, setValidPassword] = useState(false);
+    const [validMobile, setValidMobile] = useState(false);
+
     const { id } = useParams();
     // console.log(email);
 
@@ -66,7 +68,7 @@ const EditUserDetails = () => {
 
     const handleEmailBlur = () => {
         const { userEmail } = user;
-        const gmailPattern = /.*@gmail\.com/;
+        const gmailPattern = /.*@gmail\.com$/;
         if (gmailPattern.test(userEmail)) {
             setValidEmail(true);
         } else {
@@ -83,6 +85,17 @@ const EditUserDetails = () => {
         } else {
             toast.error("Invalid password !! Password must contain 5-10 characters");
             setValidPassword(false);
+        }
+    };
+
+    const handleMobileBlur = () => {
+        const { userMobile } = user;
+        const mobilePattern = /^\+91\d{10}$/;
+        if (mobilePattern.test(userMobile)) {
+            setValidMobile(true);
+        } else {
+            toast.error("Invalid mobile number!! Starts with +91");
+            setValidMobile(false);
         }
     };
 
@@ -173,6 +186,7 @@ const EditUserDetails = () => {
                                 name="mobile"
                                 className='form-control'
                                 onChange={VerifyUserMobile}
+                                onBlur={handleMobileBlur}
                                 value={user.userMobile}
                                 placeholder='Enter Phone Number:'
                             />
@@ -214,7 +228,7 @@ const EditUserDetails = () => {
                     </div>
 
                     <div className="form-group mt-1">
-                        <button className='btn btn-primary col-12' disabled={!validEmail || !validPassword}>Update</button>
+                        <button className='btn btn-primary col-12' disabled={!validEmail || !validPassword || !validMobile}>Update</button>
                     </div>
                 </form>
             </div>
