@@ -17,7 +17,8 @@ const EditUserDetails = () => {
         roles: []
     });
     // const [msg, setMsg] = useState("");
-
+    const [validEmail, setValidEmail] = useState(false);
+    const [validPassword, setValidPassword] = useState(false);
     const { id } = useParams();
     // console.log(email);
 
@@ -63,6 +64,28 @@ const EditUserDetails = () => {
     //     setUser({ ...user, roles: e.target.value.split(',') });
     // }
 
+    const handleEmailBlur = () => {
+        const { userEmail } = user;
+        const gmailPattern = /.*@gmail\.com/;
+        if (gmailPattern.test(userEmail)) {
+            setValidEmail(true);
+        } else {
+            toast.error("Invalid email address !!");
+            setValidEmail(false);
+        }
+    };
+
+    const handlePasswordBlur = () => {
+        const { userEmail } = user;
+        const gmailPattern = /^[a-zA-Z0-9]{5,10}$/;
+        if (gmailPattern.test(userEmail)) {
+            setValidPassword(true);
+        } else {
+            toast.error("Invalid password !! Password must contain 5-10 characters");
+            setValidPassword(false);
+        }
+    };
+
     const UserUpdate = (e) => {
         e.preventDefault();
         // console.log(user);
@@ -107,6 +130,7 @@ const EditUserDetails = () => {
                                 name="password"
                                 className='form-control'
                                 onChange={VerifyUserPassword}
+                                onBlur={handlePasswordBlur}
                                 value={user.userPassword}
                                 placeholder="Enter new password"
                             />
@@ -120,6 +144,7 @@ const EditUserDetails = () => {
                                 name="email"
                                 className='form-control'
                                 onChange={VerifyUserEmail}
+                                onBlur={handleEmailBlur}
                                 value={user.userEmail}
                                 placeholder="Update your email"
                             />
@@ -187,7 +212,7 @@ const EditUserDetails = () => {
                     </div>
 
                     <div className="form-group mt-1">
-                        <button className='btn btn-primary col-12'>Update</button>
+                        <button className='btn btn-primary col-12' disabled={!validEmail || !validPassword}>Update</button>
                     </div>
                 </form>
             </div>
