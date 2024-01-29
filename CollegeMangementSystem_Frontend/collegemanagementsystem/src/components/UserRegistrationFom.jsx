@@ -17,10 +17,12 @@ const UserRegistrationFom = () => {
     });
 
     // const [msg, setMsg] = useState("");// instead of using msg now using toasts
+    const [validEmail, setValidEmail] = useState(false);
+    const [validMobile, setValidMobile] = useState(false);
 
     const VerifyUserName = (e) => {
-        setUser({ ...user, userName: e.target.value.trim() });
-    }
+        setUser({ ...user, userName: e.target.value });
+    };
     const VerifyUserPassword = (e) => {
         setUser({ ...user, userPassword: e.target.value.trim() });
     }
@@ -37,8 +39,30 @@ const UserRegistrationFom = () => {
         setUser({ ...user, userDob: e.target.value });
     }
     const VerifyUserMobile = (e) => {
-        setUser({ ...user, userMobile: e.target.value.trim() });
+        setUser({ ...user, userMobile: e.target.value });
     }
+
+    const handleEmailBlur = () => {
+        const { userEmail } = user;
+        const gmailPattern = /.*@gmail\.com/;
+        if (gmailPattern.test(userEmail)) {
+            setValidEmail(true);
+        } else {
+            toast("Invalid email address !!");
+            setValidEmail(false);
+        }
+    };
+    
+    const handleMobileBlur = () => {
+        const { userMobile } = user;
+        const mobilePattern = /^\+91\d{10}$/;
+        if (mobilePattern.test(userMobile)) {
+            setValidMobile(true);
+        } else {
+            toast("Invalid mobile number!! Starts with +91");
+            setValidMobile(false);
+        }
+    };
 
     function VerifyRole(e) {
         if (e.target.value == 'norole') {
@@ -120,6 +144,7 @@ const UserRegistrationFom = () => {
                                 name="email"
                                 className='form-control'
                                 onChange={VerifyUserEmail}
+                                onBlur={handleEmailBlur}
                                 value={user.userEmail}
                                 placeholder='Enter Your Email'
                             />
@@ -146,6 +171,7 @@ const UserRegistrationFom = () => {
                                 name="mobile"
                                 className='form-control'
                                 onChange={VerifyUserMobile}
+                                onBlur={handleMobileBlur}
                                 value={user.userMobile}
                                 placeholder='Enter Your Phone Number:'
                             />
@@ -195,7 +221,7 @@ const UserRegistrationFom = () => {
                     </select>
 
                     <div className="form-group mt-1">
-                        <button className='btn btn-primary col-12'>Sign Up</button>
+                        <button className='btn btn-primary col-12' disabled={!validEmail || !validMobile}>Sign Up</button>
                     </div>
                 </form>
             </div>
