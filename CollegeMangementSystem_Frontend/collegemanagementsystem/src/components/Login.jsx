@@ -13,15 +13,27 @@ const Login = () => {
     });
 
     // const [msg, setMsg] = useState(""); // instead of using msg now using toasts
+    const [validEmail, setValidEmail] = useState(false);
     const [responseData, setResponseData] = useState();
     const navigate = useNavigate();
 
     const VerifyUserName = (e) => {
-            setUserObject({ ...userObject, username: e.target.value.trim() });
+        setUserObject({ ...userObject, username: e.target.value.trim() });
     }
     const VerifyUserPassword = (e) => {
         setUserObject({ ...userObject, password: e.target.value.trim() });
     }
+
+    const handleEmailBlur = () => {
+        const { username } = userObject;
+        const gmailPattern = /.*@gmail\.com/;
+        if (gmailPattern.test(username)) {
+            setValidEmail(true);
+        } else {
+            toast.error("Invalid email address !!");
+            setValidEmail(false);
+        }
+    };
 
     const LoginClick = (e) => {
         e.preventDefault();
@@ -33,22 +45,22 @@ const Login = () => {
                     // setMsg("User credentials sent successfully!!");
                     console.log(res.data);
                     //save the data to localstorage
-                    doLogin(res.data,()=>{
+                    doLogin(res.data, () => {
                         console.log("login details saved in local storage!");
                     })
                     const role = localStorage.getItem("userrole");
-                    toast.success("User LoggedIn as an "+role.substring('ROLE_'.length).toUpperCase());
+                    toast.success("User LoggedIn as an " + role.substring('ROLE_'.length).toUpperCase());
                     setResponseData(res.data);
                     // setUserObject({
                     //     username: "",
                     //     password: "",
                     // });
-                    if(role=="ROLE_ADMIN"){
+                    if (role == "ROLE_ADMIN") {
                         navigate("/dashboard");
-                    }else{
+                    } else {
                         navigate("/profile")
                     }
-                    
+
                 })
                 .catch((error) => {
                     if (error.response.status == 400 | error.response.status == 401) {
@@ -71,20 +83,21 @@ const Login = () => {
                         {/* <label className="form-label">Username</label> */}
                         <input type="email" className="form-control" id="username"
                             onChange={VerifyUserName}
+                            onBlur={handleEmailBlur}
                             value={userObject.username}
                             placeholder='Enter Your Email'
-                             />
+                        />
                     </div>
                     <div className="form-group mt-3">
                         {/* <label className="form-label">Password</label> */}
                         <input type="password" className="form-control" id="password"
                             onChange={VerifyUserPassword}
-                            value={userObject.password} 
+                            value={userObject.password}
                             placeholder='Enter Your Password'
-                            />
+                        />
                     </div>
                     <div className="form-group mt-3 just">
-                        <button className="btn btn-primary col-12">Sign in</button>
+                        <button className="btn btn-primary col-12" disabled={!validEmail}>Sign in</button>
                     </div>
                 </form>
             </div>

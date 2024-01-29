@@ -48,18 +48,18 @@ const UserRegistrationFom = () => {
         if (gmailPattern.test(userEmail)) {
             setValidEmail(true);
         } else {
-            toast("Invalid email address !!");
+            toast.error("Invalid email address !!");
             setValidEmail(false);
         }
     };
-    
+
     const handleMobileBlur = () => {
         const { userMobile } = user;
         const mobilePattern = /^\+91\d{10}$/;
         if (mobilePattern.test(userMobile)) {
             setValidMobile(true);
         } else {
-            toast("Invalid mobile number!! Starts with +91");
+            toast.error("Invalid mobile number!! Starts with +91");
             setValidMobile(false);
         }
     };
