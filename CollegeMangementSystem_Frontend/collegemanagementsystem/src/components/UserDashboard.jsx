@@ -37,7 +37,7 @@ const UserDashboard = () => {
 
     if (isLoggedIn()) {
         return (
-            <div>
+            <div  className='container-fluid'>
                 <div className="card w-25 m-3">
                     <div className="card-header">
                         {/* <h3><span className="bi bi-person-fill"></span> {localStorage.getItem("username")} </h3> */}

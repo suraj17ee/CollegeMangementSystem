@@ -118,7 +118,7 @@ const EditUserDetails = () => {
     }
 
     return (
-        <div className='conrtainer mt-3'>
+        <div className='container mt-3'>
             {/* <div className="edit-box"> */}
             <form onSubmit={UserUpdate} id="edit-form" className='w-50 m-auto border border-1 border-dark rounded p-3'>
                 <div className="formhead text-center">

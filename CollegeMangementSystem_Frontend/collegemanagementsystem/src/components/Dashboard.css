@@ -1,0 +1,9 @@
+.table-container {
+    max-height: 200px; /* Set a maximum height for the container */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+
+  table thead th {
+    position: sticky;
+    top: 0;
+  }

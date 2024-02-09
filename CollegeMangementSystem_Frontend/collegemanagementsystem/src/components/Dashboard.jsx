@@ -3,6 +3,7 @@ import userservice from "../service/userservice";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { doLogout } from "../service/auth";
+import './Dashboard.css';
 
 const Dashboard = () => {
 
@@ -84,48 +85,48 @@ const Dashboard = () => {
                                 </div>
                             </div>
                             <div className="card-body">
-                                <table className="table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Sl No</th>
-                                            <th scope="col">User Id</th>
-                                            <th scope="col">User Name</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Mobile</th>
-                                            <th scope="col">Address</th>
-                                            <th scope="col">DOB</th>
-                                            <th scope="col">Gender</th>
-                                            <th scope="col">Role</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            userList.map((user, num) =>
-                                                <tr key={num}>
-                                                    <td>{num + 1}</td>
-                                                    <td>{user.userId}</td>
-                                                    <td>{user.userName}</td>
-                                                    <td>{user.userEmail}</td>
-                                                    <td>{user.userMobile}</td>
-                                                    <td>{user.userAddress}</td>
-                                                    <td>{user.userDob}</td>
-                                                    <td>{user.userGender}</td>
-                                                    <td>{user.roles}</td>
-                                                    <td>
-                                                        <Link to={'/edituser/' + user.userId} className="btn btn-sm btn-primary m-1">Edit</Link>
-                                                        <button onClick={(e) => (deleteUserDetails(user.userEmail))} className="btn btn-sm btn-danger m-1">Delete</button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        }
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <button onClick={(e) => (deleteAllUserDetails())} className="btn btn-warning m-1 text-dark fw-bold">Clear All</button>
-                                        </tr>
-                                    </tfoot>
-                                </table>
+                                <div className="table-container">
+                                    <table className="table">
+                                        <thead>
+                                            <tr className="table-primary">
+                                                <th scope="col">Sl No</th>
+                                                <th scope="col">User Id</th>
+                                                <th scope="col">User Name</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Mobile</th>
+                                                <th scope="col">Address</th>
+                                                <th scope="col">DOB</th>
+                                                <th scope="col">Gender</th>
+                                                <th scope="col">Role</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                userList.map((user, num) =>
+                                                    <tr key={num}>
+                                                        <td>{num + 1}</td>
+                                                        <td>{user.userId}</td>
+                                                        <td>{user.userName}</td>
+                                                        <td>{user.userEmail}</td>
+                                                        <td>{user.userMobile}</td>
+                                                        <td>{user.userAddress}</td>
+                                                        <td>{user.userDob}</td>
+                                                        <td>{user.userGender}</td>
+                                                        <td>{user.roles}</td>
+                                                        <td>
+                                                            <Link to={'/edituser/' + user.userId} className="btn btn-sm btn-primary m-1">Edit</Link>
+                                                            <button onClick={(e) => (deleteUserDetails(user.userEmail))} className="btn btn-sm btn-danger m-1">Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div className="card-footer">
+                                <button onClick={(e) => (deleteAllUserDetails())} className="btn btn-warning m-1 text-dark fw-bold">Clear All</button>
                             </div>
                         </div>
                     </div>
