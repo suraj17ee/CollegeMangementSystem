@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Login.css';
+// import './Login.css';
 import userservice from '../service/userservice';
 import { toast } from 'react-toastify';
 import { doLogin } from "../service/auth";
@@ -75,32 +75,32 @@ const Login = () => {
 
     return (
         <div className='container mt-3'>
-            <div className="login-box">
-                <form onSubmit={LoginClick} id='login-form'>
+            <form onSubmit={LoginClick} id='login-form' className='w-50 m-auto border border-1 border-dark rounded p-3'>
+                <div className="formhead text-center">
                     <h3><span className="bi bi-person-fill"></span> User Login</h3>
                     {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
-                    <div className="form-group mt-3">
-                        {/* <label className="form-label">Username</label> */}
-                        <input type="email" className="form-control" id="username"
-                            onChange={VerifyUserName}
-                            onBlur={handleEmailBlur}
-                            value={userObject.username}
-                            placeholder='Enter Your Email'
-                        />
-                    </div>
-                    <div className="form-group mt-3">
-                        {/* <label className="form-label">Password</label> */}
-                        <input type="password" className="form-control" id="password"
-                            onChange={VerifyUserPassword}
-                            value={userObject.password}
-                            placeholder='Enter Your Password'
-                        />
-                    </div>
-                    <div className="form-group mt-3 just">
-                        <button className="btn btn-primary col-12" disabled={!validEmail}>Sign in</button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div className="form-group mt-3">
+                    {/* <label className="form-label">Username</label> */}
+                    <input type="email" className="form-control" id="username"
+                        onChange={VerifyUserName}
+                        onBlur={handleEmailBlur}
+                        value={userObject.username}
+                        placeholder='Enter Your Email'
+                    />
+                </div>
+                <div className="form-group mt-3">
+                    {/* <label className="form-label">Password</label> */}
+                    <input type="password" className="form-control" id="password"
+                        onChange={VerifyUserPassword}
+                        value={userObject.password}
+                        placeholder='Enter Your Password'
+                    />
+                </div>
+                <div className="form-group mt-3">
+                    <button className="btn btn-primary col-12" disabled={!validEmail}>Sign in</button>
+                </div>
+            </form>
         </div>
     )
 }

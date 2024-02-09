@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import userservice from "../service/userservice";
 import { useNavigate, useParams } from "react-router-dom";
-import './EditUserDetails.css';
+// import './EditUserDetails.css';
 import { toast } from 'react-toastify';
 
 const EditUserDetails = () => {
@@ -119,119 +119,119 @@ const EditUserDetails = () => {
 
     return (
         <div className='conrtainer mt-3'>
-            <div className="edit-box">
-                <form onSubmit={UserUpdate} id="edit-form">
-                    <div className="formhead">
-                        <h3><span className="bi bi-person-fill"></span> Update User</h3>
+            {/* <div className="edit-box"> */}
+            <form onSubmit={UserUpdate} id="edit-form" className='w-50 m-auto border border-1 border-dark rounded p-3'>
+                <div className="formhead text-center">
+                    <h3><span className="bi bi-person-fill"></span> Update User</h3>
+                </div>
+                {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
+                <div className="form-group mt-1">
+                    {/* <label className="form-label">User Name</label> */}
+                    <div>
+                        <input type="text"
+                            name="userName"
+                            className='form-control'
+                            onChange={VerifyUserName}
+                            value={user.userName}
+                            placeholder="Update your username"
+                        />
                     </div>
-                    {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
-                    <div className="form-group mt-1">
-                        {/* <label className="form-label">User Name</label> */}
-                        <div>
-                            <input type="text"
-                                name="userName"
-                                className='form-control'
-                                onChange={VerifyUserName}
-                                value={user.userName}
-                                placeholder="Update your username"
-                            />
-                        </div>
-                    </div>
+                </div>
 
-                    <div className="form-group mt-1">
-                        {/* <label className="form-label">Password</label> */}
-                        <div>
-                            <input type="text"
-                                name="password"
-                                className='form-control'
-                                onChange={VerifyUserPassword}
-                                onBlur={handlePasswordBlur}
-                                value={user.userPassword}
-                                placeholder="Enter new password"
-                            />
-                        </div>
+                <div className="form-group mt-1">
+                    {/* <label className="form-label">Password</label> */}
+                    <div>
+                        <input type="text"
+                            name="password"
+                            className='form-control'
+                            onChange={VerifyUserPassword}
+                            onBlur={handlePasswordBlur}
+                            value={user.userPassword}
+                            placeholder="Enter new password"
+                        />
                     </div>
+                </div>
 
-                    <div className="form-group mt-1">
-                        {/* <label className="form-label">Email</label> */}
-                        <div>
-                            <input type="email"
-                                name="email"
-                                className='form-control'
-                                onChange={VerifyUserEmail}
-                                onBlur={handleEmailBlur}
-                                value={user.userEmail}
-                                placeholder="Update your email"
-                            />
-                        </div>
+                <div className="form-group mt-1">
+                    {/* <label className="form-label">Email</label> */}
+                    <div>
+                        <input type="email"
+                            name="email"
+                            className='form-control'
+                            onChange={VerifyUserEmail}
+                            onBlur={handleEmailBlur}
+                            value={user.userEmail}
+                            placeholder="Update your email"
+                        />
                     </div>
+                </div>
 
-                    <div className="form-group mt-1">
-                        {/* <label className="form-label">Address</label> */}
-                        <div>
-                            <input type="text"
-                                name="address"
-                                className='form-control'
-                                onChange={VerifyUserAddress}
-                                value={user.userAddress}
-                                placeholder="Update your address"
-                            />
-                        </div>
+                <div className="form-group mt-1">
+                    {/* <label className="form-label">Address</label> */}
+                    <div>
+                        <input type="text"
+                            name="address"
+                            className='form-control'
+                            onChange={VerifyUserAddress}
+                            value={user.userAddress}
+                            placeholder="Update your address"
+                        />
                     </div>
+                </div>
 
-                    <div className="form-group mt-1">
-                        {/* <label className="form-label">Mobile</label> */}
-                        <div>
-                            <input type="text"
-                                name="mobile"
-                                className='form-control'
-                                onChange={VerifyUserMobile}
-                                onBlur={handleMobileBlur}
-                                value={user.userMobile}
-                                placeholder='Enter Phone Number:'
-                            />
-                        </div>
+                <div className="form-group mt-1">
+                    {/* <label className="form-label">Mobile</label> */}
+                    <div>
+                        <input type="text"
+                            name="mobile"
+                            className='form-control'
+                            onChange={VerifyUserMobile}
+                            onBlur={handleMobileBlur}
+                            value={user.userMobile}
+                            placeholder='Enter Phone Number:'
+                        />
                     </div>
+                </div>
 
-                    <div className="form-group mt-1">
-                        {/* <label className="form-label">DOB</label> */}
-                        <div>
-                            <input type="date"
-                                name="dob"
-                                className='form-control'
-                                onChange={VerifyUserDob}
-                                value={user.userDob}
-                            />
-                        </div>
+                <div className="form-group mt-1">
+                    {/* <label className="form-label">DOB</label> */}
+                    <div>
+                        <input type="date"
+                            name="dob"
+                            className='form-control'
+                            onChange={VerifyUserDob}
+                            value={user.userDob}
+                        />
                     </div>
+                </div>
 
-                    <div className="form-group mt-1">
-                        {/* <label className="form-label">Gender</label> */}
-                        <div>
-                            <input type="text" readOnly
-                                className='form-control'
-                                // onChange={VerifyGender}
-                                value={user.userGender}
-                            />
-                        </div>
+                <div className="form-group mt-1">
+                    {/* <label className="form-label">Gender</label> */}
+                    <div>
+                        <input type="text" readOnly
+                            className='form-control'
+                            // onChange={VerifyGender}
+                            value={user.userGender}
+                        />
                     </div>
+                </div>
 
-                    <div className="form-group mt-1">
-                        {/* <label className="form-label">Role</label> */}
-                        <div>
-                            <input type="text" readOnly
-                                className='form-control'
-                                // onChange={VerifyRole}
-                                value={user.roles.at(0)}
-                            />
-                        </div>
+                <div className="form-group mt-1">
+                    {/* <label className="form-label">Role</label> */}
+                    <div>
+                        <input type="text" readOnly
+                            className='form-control'
+                            // onChange={VerifyRole}
+                            value={user.roles.at(0)}
+                        />
                     </div>
+                </div>
 
-                    <div className="form-group mt-1">
-                        <button className='btn btn-primary col-12' disabled={!validEmail || !validPassword || !validMobile}>Update</button>
-                    </div>
-                </form>
-            </div>
+                <div className="form-group mt-1">
+                    <button className='btn btn-primary col-12' disabled={!validEmail || !validPassword || !validMobile}>Update</button>
+                </div>
+            </form>
+            {/* </div> */}
         </div>
     );
 }

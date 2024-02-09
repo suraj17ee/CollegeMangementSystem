@@ -14,7 +14,7 @@ import './App.css';
 
 function App() {
     return (
-        <div className='body-container'>
+        <div className='container-fluid p-0'>
             <ToastContainer position='top-right' autoClose={2000} />
             <header>
                 <NavBar />

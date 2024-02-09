@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './UserRegistrationFom.css';
+// import './UserRegistrationFom.css';
 import userservice from '../service/userservice';
 import { toast } from 'react-toastify';
 
@@ -105,126 +105,126 @@ const UserRegistrationFom = () => {
 
     return (
         <div className='container mt-3'>
-            <div className='reg-box'>
-                <form onSubmit={UserRegister} id='reg-form'>
-                    <div className="formhead">
-                        <h3><span className="bi bi-person-fill"></span> User Registration</h3>
-                        {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
-                    </div>
-                    <div className="form-group mt-3">
-                        {/* <label className="form-label">User Name</label> */}
-                        <div>
-                            <input type="text"
-                                name="userName"
-                                className='form-control'
-                                onChange={VerifyUserName}
-                                value={user.userName}
-                                placeholder='Enter Your Username'
-                            />
-                        </div>
-                    </div>
-
-                    <div className="form-group mt-1">
-                        {/* <label className="form-label">Password</label> */}
-                        <div>
-                            <input type="text"
-                                name="password"
-                                className='form-control'
-                                onChange={VerifyUserPassword}
-                                value={user.userPassword}
-                                placeholder='Enter Your Password'
-                            />
-                        </div>
-                    </div>
-
-                    <div className="form-group mt-1">
-                        {/* <label className="form-label">Email</label> */}
-                        <div>
-                            <input type="email"
-                                name="email"
-                                className='form-control'
-                                onChange={VerifyUserEmail}
-                                onBlur={handleEmailBlur}
-                                value={user.userEmail}
-                                placeholder='Enter Your Email'
-                            />
-                        </div>
-                    </div>
-
-                    <div className="form-group mt-1">
-                        {/* <label className="form-label">Address</label> */}
-                        <div>
-                            <input type="text"
-                                name="address"
-                                className='form-control'
-                                onChange={VerifyUserAddress}
-                                value={user.userAddress}
-                                placeholder='Enter Your Address'
-                            />
-                        </div>
-                    </div>
-
-                    <div className="form-group mt-1">
-                        {/* <label className="form-label">Mobile</label> */}
-                        <div>
-                            <input type="text"
-                                name="mobile"
-                                className='form-control'
-                                onChange={VerifyUserMobile}
-                                onBlur={handleMobileBlur}
-                                value={user.userMobile}
-                                placeholder='Enter Your Phone Number:'
-                            />
-                        </div>
-                    </div>
-
-                    <div className="form-group mt-1">
-                        {/* <label className="form-label">DOB</label> */}
-                        <div>
-                            <input type="date"
-                                name="dob"
-                                className='form-control'
-                                onChange={VerifyUserDob}
-                                value={user.userDob}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="form-check">
-                        <input className="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="radi1"
-                            value="male"
-                            onChange={VerifyUserGender} />
-                        <label className="form-check-label">
-                            Male
-                        </label>
-                    </div>
-
-                    <div className="form-check">
-                        <input className="form-check-input"
-                            type="radio"
-                            name="gender"
-                            id="radio2"
-                            value="female"
-                            onChange={VerifyUserGender}
+            {/* <div className='reg-box'> */}
+            <form onSubmit={UserRegister} id='reg-form' className='w-50 m-auto border border-1 border-dark rounded p-3 align-items-center'>
+                <div className="formhead text-center">
+                    <h3><span className="bi bi-person-fill"></span> User Registration</h3>
+                    {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
+                </div>
+                <div className="form-group mt-3">
+                    {/* <label className="form-label">User Name</label> */}
+                    <div>
+                        <input type="text"
+                            name="userName"
+                            className='form-control'
+                            onChange={VerifyUserName}
+                            value={user.userName}
+                            placeholder='Enter Your Username'
                         />
-                        <label className="form-check-label">
-                            Female
-                        </label>
                     </div>
+                </div>
 
-                    <select className='form-select mt-1' onChange={VerifyRole}>
-                        <option value="norole">Please select a role</option>
-                        <option value="ROLE_USER">User</option>
-                    </select>
-
-                    <div className="form-group mt-1">
-                        <button className='btn btn-primary col-12' disabled={!validEmail || !validMobile}>Sign Up</button>
+                <div className="form-group mt-1">
+                    {/* <label className="form-label">Password</label> */}
+                    <div>
+                        <input type="text"
+                            name="password"
+                            className='form-control'
+                            onChange={VerifyUserPassword}
+                            value={user.userPassword}
+                            placeholder='Enter Your Password'
+                        />
                     </div>
-                </form>
-            </div>
+                </div>
+
+                <div className="form-group mt-1">
+                    {/* <label className="form-label">Email</label> */}
+                    <div>
+                        <input type="email"
+                            name="email"
+                            className='form-control'
+                            onChange={VerifyUserEmail}
+                            onBlur={handleEmailBlur}
+                            value={user.userEmail}
+                            placeholder='Enter Your Email'
+                        />
+                    </div>
+                </div>
+
+                <div className="form-group mt-1">
+                    {/* <label className="form-label">Address</label> */}
+                    <div>
+                        <input type="text"
+                            name="address"
+                            className='form-control'
+                            onChange={VerifyUserAddress}
+                            value={user.userAddress}
+                            placeholder='Enter Your Address'
+                        />
+                    </div>
+                </div>
+
+                <div className="form-group mt-1">
+                    {/* <label className="form-label">Mobile</label> */}
+                    <div>
+                        <input type="text"
+                            name="mobile"
+                            className='form-control'
+                            onChange={VerifyUserMobile}
+                            onBlur={handleMobileBlur}
+                            value={user.userMobile}
+                            placeholder='Enter Your Phone Number:'
+                        />
+                    </div>
+                </div>
+
+                <div className="form-group mt-1">
+                    {/* <label className="form-label">DOB</label> */}
+                    <div>
+                        <input type="date"
+                            name="dob"
+                            className='form-control'
+                            onChange={VerifyUserDob}
+                            value={user.userDob}
+                        />
+                    </div>
+                </div>
+
+                <div className="form-check">
+                    <input className="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="radi1"
+                        value="male"
+                        onChange={VerifyUserGender} />
+                    <label className="form-check-label">
+                        Male
+                    </label>
+                </div>
+
+                <div className="form-check">
+                    <input className="form-check-input"
+                        type="radio"
+                        name="gender"
+                        id="radio2"
+                        value="female"
+                        onChange={VerifyUserGender}
+                    />
+                    <label className="form-check-label">
+                        Female
+                    </label>
+                </div>
+
+                <select className='form-select mt-1' onChange={VerifyRole}>
+                    <option value="norole">Please select a role</option>
+                    <option value="ROLE_USER">User</option>
+                </select>
+
+                <div className="form-group mt-1">
+                    <button className='btn btn-primary col-12' disabled={!validEmail || !validMobile}>Sign Up</button>
+                </div>
+            </form>
+            {/* </div> */}
         </div>
     );
 };
