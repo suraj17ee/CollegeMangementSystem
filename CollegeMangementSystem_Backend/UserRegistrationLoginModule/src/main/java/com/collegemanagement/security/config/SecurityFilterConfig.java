@@ -19,13 +19,10 @@ import lombok.AllArgsConstructor;
 @EnableMethodSecurity(securedEnabled = true, prePostEnabled = false)
 public class SecurityFilterConfig {
 	
-    @Autowired
     private JwtAuthenticationEntryPoint point;
     
-    @Autowired
     private JwtAuthenticationFilter filter;
 
-    @Autowired
     private SecurityConfig securityConfig;
     
     @Bean
