@@ -40,7 +40,7 @@ public class SecurityFilterConfig {
 	                        .anyRequest().authenticated())
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(point))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class)//used for verifying user from 2nd request onwards
                 .authenticationProvider(securityConfig.daoAuthenticationProvider())//for authentication using database we have to add this line
                 .build();
     }
