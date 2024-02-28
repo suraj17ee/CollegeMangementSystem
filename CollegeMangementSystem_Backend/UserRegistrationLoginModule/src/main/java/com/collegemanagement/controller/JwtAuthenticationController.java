@@ -40,9 +40,11 @@ public class JwtAuthenticationController {
     @Autowired
     private JwtHelper helper;
 
+    //validate user with database
     @PostMapping("/authenticate")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
 
+    	log.info("calling doAuthenticate() method");
         this.doAuthenticate(request.getUsername(), request.getPassword());
 
 
