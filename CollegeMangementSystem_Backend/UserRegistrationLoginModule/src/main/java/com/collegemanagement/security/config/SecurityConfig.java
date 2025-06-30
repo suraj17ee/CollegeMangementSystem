@@ -125,4 +125,12 @@ public class SecurityConfig {
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
 		return configuration.getAuthenticationManager();
 	}
+
+	//generate encrypted password - utility method // suraj@gmail.com, suraj@123
+//		public static void main(String[] args) {
+//			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//			String rawPassword = "suraj@123";
+//			String hashedPassword = encoder.encode(rawPassword);
+//			System.out.println(hashedPassword);
+//		}
 }
