@@ -15,6 +15,7 @@ const Login = () => {
     // const [msg, setMsg] = useState(""); // instead of using msg now using toasts
     const [validEmail, setValidEmail] = useState(false);
     const [responseData, setResponseData] = useState();
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     const VerifyUserName = (e) => {
@@ -89,14 +90,30 @@ const Login = () => {
                         placeholder='Enter Your Email'
                     />
                 </div>
-                <div className="form-group mt-3">
-                    {/* <label className="form-label">Password</label> */}
-                    <input type="password" className="form-control" id="password"
+               <div className="form-group mt-3 position-relative">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        className="form-control"
+                        id="password"
                         onChange={VerifyUserPassword}
                         value={userObject.password}
-                        placeholder='Enter Your Password'
+                        placeholder="Enter Your Password"
                     />
+                    <span
+                        className="position-absolute"
+                        style={{
+                            top: "50%",
+                            right: "15px",
+                            transform: "translateY(-50%)",
+                            cursor: "pointer",
+                            color: "#6c757d"
+                        }}
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        <i className={`bi ${showPassword ? "bi-eye-fill" : "bi-eye-slash-fill"}`}></i>
+                    </span>
                 </div>
+
                 <div className="form-group mt-3">
                     <button className="btn btn-primary col-12" disabled={!validEmail}>Sign in</button>
                 </div>
