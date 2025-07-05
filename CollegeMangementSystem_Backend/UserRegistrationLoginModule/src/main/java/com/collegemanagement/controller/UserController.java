@@ -28,6 +28,11 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+	@GetMapping("/cmsapp")
+	private ResponseEntity<String> getLoaded(){
+		return new ResponseEntity<>("backend application is up now!!", HttpStatus.OK);
+	}
+
 	@PostMapping("/signup")
 	private ResponseEntity<User> saveUser(@RequestBody UserDto user) {
 		var stopWatch = new StopWatch(Thread.currentThread().getName());

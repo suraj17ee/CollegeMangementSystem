@@ -1,0 +1,40 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: collegemanagementapp
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - backend-network
+
+  backend:
+    build:
+      context: .
+    image: cms-backend
+    container_name: cms-backend-container
+    ports:
+      - "8001:8001"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge
+
+#Bridge driver = default for Linux containers
+#it will create a network named backend-network
+#All containers (services) that use this network can talk to each other by name
+#Containers not in the network can’t access them
