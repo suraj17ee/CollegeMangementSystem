@@ -1,19 +1,20 @@
+#To switch from MySQL Docker container to AWS RDS MySQL the below mysql section has to be commented out
 services:
-  mysql:
-    image: mysql:8
-    container_name: mysql-container
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: collegemanagementapp
-    ports:
-      - "3306:3306"
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - backend-network
+#  mysql:
+#    image: mysql:8
+#    container_name: mysql-container
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: collegemanagementapp
+#    ports:
+#      - "3306:3306"
+#    healthcheck:
+#      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+#    networks:
+#      - backend-network
 
   backend:
     build:
