@@ -78,7 +78,7 @@ Step5: run the image inside container
 		***Note: default port number is 80 for frontend, to run the app in custom port you have to add nginx.conf file inside root
 
 Step6: login into docker
-		> docker login 
+		> docker login
 
 Step7: tag the image to repository
 		> docker tag cms-frontend kumarsurajp22/cms-frontend
@@ -167,3 +167,7 @@ networks:
 #All containers (services) that use this network can talk to each other by name
 #Containers not in the network can’t access them
 ---------------------------------------------------------
+RDS
+admin
+suraj123
+database-1.c0nmceyawexx.us-east-1.rds.amazonaws.com
