@@ -11,6 +11,7 @@ import Home from './components/Home';
 import About from './components/About';
 import Footer from './components/Footer';
 import './App.css';
+import ChatWidget from './components/ChatWidget';
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
             </section>
             <footer>
                 <Footer />
+                <ChatWidget />
             </footer>
         </div>
     );
