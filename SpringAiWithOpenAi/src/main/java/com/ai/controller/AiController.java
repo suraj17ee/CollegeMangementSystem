@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/ai")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AiController {
 
 	Logger logger = LoggerFactory.getLogger(AiController.class);
