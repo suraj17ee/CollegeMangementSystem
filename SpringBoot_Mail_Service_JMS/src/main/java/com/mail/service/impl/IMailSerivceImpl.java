@@ -15,8 +15,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.mail.controller.MailController;
 import com.mail.service.IMailSerivce;
-import com.mail.service.MailController;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
