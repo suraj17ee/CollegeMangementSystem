@@ -12,12 +12,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
-import com.mail.controller.MailController;
 import com.mail.service.IMailSerivce;
-
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
@@ -36,6 +32,7 @@ public class IMailSerivceImpl implements IMailSerivce {
 	private JavaMailSender mailSender;
 
 	private final Map<String, String> otpStore = new HashMap<>();
+	private static final long OTP_VALIDITY_MS = 5 * 60 * 1000; // 5 minutes
 
 	public String generateOtp() {
 		SecureRandom random = new SecureRandom();
@@ -48,7 +45,9 @@ public class IMailSerivceImpl implements IMailSerivce {
 		logger.info("preparing email to send to customer");
 		try {
 			String otp = generateOtp();
-			otpStore.put(emailId, otp);
+			long timestamp = System.currentTimeMillis();
+			otpStore.put(emailId+":otp", otp);
+			otpStore.put(emailId+":time", String.valueOf(timestamp));
 			// create SimpleMailMessage
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setFrom(senderEmail);
@@ -68,11 +67,16 @@ public class IMailSerivceImpl implements IMailSerivce {
 
 	// Verify OTP
 	public boolean verifyOtp(String email, String otp) {
-		String storedOtp = otpStore.get(email);
-		if (storedOtp != null && storedOtp.equals(otp)) {
-			otpStore.remove(email); // Optional: clear after successful verification
-			logger.info("OTP verified successfully");
-			return true;
+		String storedOtp = otpStore.get(email+":otp");
+		String storedTime = otpStore.get(email+":time");
+		if (storedOtp != null && storedTime!=null) {
+			long time = Long.parseLong(storedTime);
+			if (System.currentTimeMillis() - time <= OTP_VALIDITY_MS && storedOtp.equals(otp)) {
+				otpStore.remove(email + ":otp");
+				otpStore.remove(email + ":time");
+				logger.info("OTP verified successfully");
+				return true;
+			}
 		}
 		logger.info("Invalid OTP provided");
 		return false;
