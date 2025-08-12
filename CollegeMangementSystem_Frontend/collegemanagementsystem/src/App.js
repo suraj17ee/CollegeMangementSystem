@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import UserRegistrationFom from './components/UserRegistrationFom';
 import EditUserDetails from './components/EditUserDetails';
 import Login from './components/Login';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Dashboard from './components/Dashboard';
 import UserDashboard from './components/UserDashboard';
@@ -15,27 +15,31 @@ import ChatWidget from './components/ChatWidget';
 
 function App() {
     return (
-        <div className='container-fluid p-0'>
-            <ToastContainer position='top-right' autoClose={2000} />
+        <div className="app-container container-fluid p-0">
+            <ToastContainer position="top-right" autoClose={2000} />
+            
             <header>
                 <NavBar />
             </header>
-            <section>
+
+            <main className="main-content">
                 <Routes>
-                    <Route path='/' element={<Home />}></Route>
-                    <Route path='/login' element={<Login />}></Route>
-                    <Route path='/dashboard' element={<Dashboard />}></Route>
-                    <Route path='/user' element={<UserRegistrationFom />}></Route>
-                    <Route path='/edituser/:id' element={<EditUserDetails />}></Route>
-                    <Route path='/profile' element={<UserDashboard />}></Route>
-                    <Route path='/about' element={<About />}></Route>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/user" element={<UserRegistrationFom />} />
+                    <Route path="/edituser/:id" element={<EditUserDetails />} />
+                    <Route path="/profile" element={<UserDashboard />} />
+                    <Route path="/about" element={<About />} />
                 </Routes>
-            </section>
+            </main>
+
             <footer>
                 <Footer />
                 <ChatWidget />
             </footer>
         </div>
     );
-};
+}
+
 export default App;

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-// import './UserRegistrationFom.css';
 import userservice from '../service/userservice';
 import { toast } from 'react-toastify';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import './UserRegistrationFom.css'; // custom styling
 
 const UserRegistrationFom = () => {
-
     const [user, setUser] = useState({
         userName: "",
         userPassword: "",
@@ -16,31 +16,12 @@ const UserRegistrationFom = () => {
         roles: []
     });
 
-    // const [msg, setMsg] = useState("");// instead of using msg now using toasts
     const [validEmail, setValidEmail] = useState(false);
     const [validMobile, setValidMobile] = useState(false);
 
-    const VerifyUserName = (e) => {
-        setUser({ ...user, userName: e.target.value });
+    const handleChange = (e) => {
+        setUser({ ...user, [e.target.name]: e.target.value.trim() });
     };
-    const VerifyUserPassword = (e) => {
-        setUser({ ...user, userPassword: e.target.value.trim() });
-    }
-    const VerifyUserEmail = (e) => {
-        setUser({ ...user, userEmail: e.target.value.trim() });
-    }
-    const VerifyUserAddress = (e) => {
-        setUser({ ...user, userAddress: e.target.value.trim() });
-    }
-    const VerifyUserGender = (e) => {
-        setUser({ ...user, userGender: e.target.value });
-    }
-    const VerifyUserDob = (e) => {
-        setUser({ ...user, userDob: e.target.value });
-    }
-    const VerifyUserMobile = (e) => {
-        setUser({ ...user, userMobile: e.target.value });
-    }
 
     const handleEmailBlur = () => {
         const { userEmail } = user;
@@ -64,23 +45,18 @@ const UserRegistrationFom = () => {
         }
     };
 
-    function VerifyRole(e) {
-        if (e.target.value == 'norole') {
-            alert('please select a role');
+    const VerifyRole = (e) => {
+        if (e.target.value === 'norole') {
+            alert('Please select a role');
         } else {
-            setUser({
-                ...user,
-                roles: e.target.value.split(',')
-            });
+            setUser({ ...user, roles: e.target.value.split(',') });
         }
-    }
+    };
 
     const UserRegister = (e) => {
         e.preventDefault();
-        // console.log(user);
         userservice.registerUser(user)
-            .then((res) => {
-                // setMsg("User registered successfully!!");
+            .then(() => {
                 toast.success("User registered successfully!!");
                 setUser({
                     userName: "",
@@ -94,138 +70,125 @@ const UserRegistrationFom = () => {
                 });
             })
             .catch((error) => {
-                if (error.response.status == 400 | error.response.status == 401) {
+                if (error.response?.status === 400 || error.response?.status === 401) {
                     toast.error(error.response.data);
                 } else {
                     toast.error("Error while connecting to server!!");
-                    console.log(error);
                 }
-            })
-    }
+            });
+    };
 
     return (
-        <div className='container mt-3'>
-            {/* <div className='reg-box'> */}
-            <form onSubmit={UserRegister} id='reg-form' className='w-50 m-auto border border-1 border-dark rounded p-3 align-items-center'>
-                <div className="formhead text-center">
-                    <h3><span className="bi bi-person-fill"></span> User Registration</h3>
-                    {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
+        <div className="container mt-5">
+            <div className="card shadow-lg border-0 rounded-4 p-4 reg-card">
+                <div className="text-center mb-4">
+                    <i className="bi bi-person-plus-fill text-primary fs-1"></i>
+                    <h3 className="fw-bold mt-2">Create an Account</h3>
+                    <p className="text-muted">Fill out the form below to register</p>
                 </div>
-                <div className="form-group mt-3">
-                    {/* <label className="form-label">User Name</label> */}
-                    <div>
+                <form onSubmit={UserRegister} id="reg-form">
+                    <div className="mb-3">
                         <input type="text"
                             name="userName"
-                            className='form-control'
-                            onChange={VerifyUserName}
+                            className="form-control rounded-pill"
+                            onChange={handleChange}
                             value={user.userName}
-                            placeholder='Enter Your Username'
+                            placeholder="👤 Username"
                         />
                     </div>
-                </div>
 
-                <div className="form-group mt-1">
-                    {/* <label className="form-label">Password</label> */}
-                    <div>
-                        <input type="text"
-                            name="password"
-                            className='form-control'
-                            onChange={VerifyUserPassword}
+                    <div className="mb-3">
+                        <input type="password"
+                            name="userPassword"
+                            className="form-control rounded-pill"
+                            onChange={handleChange}
                             value={user.userPassword}
-                            placeholder='Enter Your Password'
+                            placeholder="🔑 Password"
                         />
                     </div>
-                </div>
 
-                <div className="form-group mt-1">
-                    {/* <label className="form-label">Email</label> */}
-                    <div>
+                    <div className="mb-3">
                         <input type="email"
-                            name="email"
-                            className='form-control'
-                            onChange={VerifyUserEmail}
+                            name="userEmail"
+                            className="form-control rounded-pill"
+                            onChange={handleChange}
                             onBlur={handleEmailBlur}
                             value={user.userEmail}
-                            placeholder='Enter Your Email'
+                            placeholder="📧 Email"
                         />
                     </div>
-                </div>
 
-                <div className="form-group mt-1">
-                    {/* <label className="form-label">Address</label> */}
-                    <div>
+                    <div className="mb-3">
                         <input type="text"
-                            name="address"
-                            className='form-control'
-                            onChange={VerifyUserAddress}
+                            name="userAddress"
+                            className="form-control rounded-pill"
+                            onChange={handleChange}
                             value={user.userAddress}
-                            placeholder='Enter Your Address'
+                            placeholder="🏠 Address"
                         />
                     </div>
-                </div>
 
-                <div className="form-group mt-1">
-                    {/* <label className="form-label">Mobile</label> */}
-                    <div>
+                    <div className="mb-3">
                         <input type="text"
-                            name="mobile"
-                            className='form-control'
-                            onChange={VerifyUserMobile}
+                            name="userMobile"
+                            className="form-control rounded-pill"
+                            onChange={handleChange}
                             onBlur={handleMobileBlur}
                             value={user.userMobile}
-                            placeholder='Enter Your Phone Number:'
+                            placeholder="📱 Mobile (+91...)"
                         />
                     </div>
-                </div>
 
-                <div className="form-group mt-1">
-                    {/* <label className="form-label">DOB</label> */}
-                    <div>
+                    <div className="mb-3">
                         <input type="date"
-                            name="dob"
-                            className='form-control'
-                            onChange={VerifyUserDob}
+                            name="userDob"
+                            className="form-control rounded-pill"
+                            onChange={handleChange}
                             value={user.userDob}
                         />
                     </div>
-                </div>
 
-                <div className="form-check">
-                    <input className="form-check-input"
-                        type="radio"
-                        name="gender"
-                        id="radi1"
-                        value="male"
-                        onChange={VerifyUserGender} />
-                    <label className="form-check-label">
-                        Male
-                    </label>
-                </div>
+                    <div className="d-flex gap-3 mb-3">
+                        <div className="form-check">
+                            <input className="form-check-input"
+                                type="radio"
+                                name="userGender"
+                                id="radioMale"
+                                value="male"
+                                onChange={handleChange} />
+                            <label className="form-check-label" htmlFor="radioMale">
+                                Male
+                            </label>
+                        </div>
+                        <div className="form-check">
+                            <input className="form-check-input"
+                                type="radio"
+                                name="userGender"
+                                id="radioFemale"
+                                value="female"
+                                onChange={handleChange} />
+                            <label className="form-check-label" htmlFor="radioFemale">
+                                Female
+                            </label>
+                        </div>
+                    </div>
 
-                <div className="form-check">
-                    <input className="form-check-input"
-                        type="radio"
-                        name="gender"
-                        id="radio2"
-                        value="female"
-                        onChange={VerifyUserGender}
-                    />
-                    <label className="form-check-label">
-                        Female
-                    </label>
-                </div>
+                    <div className="mb-3">
+                        <select className="form-select rounded-pill" onChange={VerifyRole}>
+                            <option value="norole">Please select a role</option>
+                            <option value="ROLE_USER">User</option>
+                        </select>
+                    </div>
 
-                <select className='form-select mt-1' onChange={VerifyRole}>
-                    <option value="norole">Please select a role</option>
-                    <option value="ROLE_USER">User</option>
-                </select>
-
-                <div className="form-group mt-1">
-                    <button className='btn btn-primary col-12' disabled={!validEmail || !validMobile}>Sign Up</button>
-                </div>
-            </form>
-            {/* </div> */}
+                    <button
+                        className="btn btn-primary w-100 rounded-pill fw-bold"
+                        disabled={!validEmail || !validMobile}>
+                        Sign Up
+                    </button>
+                </form>
+            </div>
         </div>
     );
 };
+
 export default UserRegistrationFom;

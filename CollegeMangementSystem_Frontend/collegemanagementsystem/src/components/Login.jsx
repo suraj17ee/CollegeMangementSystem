@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-// import './Login.css';
 import userservice from '../service/userservice';
 import { toast } from 'react-toastify';
 import { doLogin } from "../service/auth";
 import { useNavigate } from "react-router-dom";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import './Login.css'; // optional custom styling
 
 const Login = () => {
-
     const [userObject, setUserObject] = useState({
         username: "",
         password: "",
     });
 
-    // const [msg, setMsg] = useState(""); // instead of using msg now using toasts
     const [validEmail, setValidEmail] = useState(false);
     const [responseData, setResponseData] = useState();
     const [showPassword, setShowPassword] = useState(false);
@@ -20,10 +19,10 @@ const Login = () => {
 
     const VerifyUserName = (e) => {
         setUserObject({ ...userObject, username: e.target.value });
-    }
+    };
     const VerifyUserPassword = (e) => {
         setUserObject({ ...userObject, password: e.target.value.trim() });
-    }
+    };
 
     const handleEmailBlur = () => {
         const { username } = userObject;
@@ -38,88 +37,91 @@ const Login = () => {
 
     const LoginClick = (e) => {
         e.preventDefault();
-        if (userObject.username == '' || userObject.password == '') {
+        if (userObject.username === '' || userObject.password === '') {
             toast.error("Username and Password required!!");
         } else {
             userservice.generateToken(userObject)
                 .then((res) => {
-                    // setMsg("User credentials sent successfully!!");
-                    console.log(res.data);
-                    //save the data to localstorage
                     doLogin(res.data, () => {
                         console.log("login details saved in local storage!");
-                    })
+                    });
                     const role = localStorage.getItem("userrole");
                     toast.success("User LoggedIn as an " + role.substring('ROLE_'.length).toUpperCase());
                     setResponseData(res.data);
-                    // setUserObject({
-                    //     username: "",
-                    //     password: "",
-                    // });
-                    if (role == "ROLE_ADMIN") {
+
+                    if (role === "ROLE_ADMIN") {
                         navigate("/dashboard");
                     } else {
-                        navigate("/profile")
+                        navigate("/profile");
                     }
-
                 })
                 .catch((error) => {
-                    if (error.response.status == 400 | error.response.status == 401) {
+                    if (error.response?.status === 400 || error.response?.status === 401) {
                         toast.error(error.response.data);
                     } else {
                         toast.error("Error while connecting to server!!");
                         console.log(error);
                     }
-                })
+                });
         }
-    }
+    };
 
     return (
-        <div className='container mt-3'>
-            <form onSubmit={LoginClick} id='login-form' className='w-50 m-auto border border-1 border-dark rounded p-3'>
-                <div className="formhead text-center">
-                    <h3><span className="bi bi-person-fill"></span> User Login</h3>
-                    {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
+        <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: "80vh" }}>
+            <div className="card shadow-lg border-0 rounded-4 p-4" style={{ maxWidth: "400px", width: "100%" }}>
+                <div className="text-center mb-4">
+                    <i className="bi bi-person-circle text-primary" style={{ fontSize: "3rem" }}></i>
+                    <h3 className="fw-bold mt-2">Sign In</h3>
+                    <p className="text-muted small">Access your account</p>
                 </div>
-                <div className="form-group mt-3">
-                    {/* <label className="form-label">Username</label> */}
-                    <input type="email" className="form-control" id="username"
-                        onChange={VerifyUserName}
-                        onBlur={handleEmailBlur}
-                        value={userObject.username}
-                        placeholder='Enter Your Email'
-                    />
-                </div>
-               <div className="form-group mt-3 position-relative">
-                    <input
-                        type={showPassword ? "text" : "password"}
-                        className="form-control"
-                        id="password"
-                        onChange={VerifyUserPassword}
-                        value={userObject.password}
-                        placeholder="Enter Your Password"
-                    />
-                    <span
-                        className="position-absolute"
-                        style={{
-                            top: "50%",
-                            right: "15px",
-                            transform: "translateY(-50%)",
-                            cursor: "pointer",
-                            color: "#6c757d"
-                        }}
-                        onClick={() => setShowPassword(!showPassword)}
-                    >
-                        <i className={`bi ${showPassword ? "bi-eye-fill" : "bi-eye-slash-fill"}`}></i>
-                    </span>
-                </div>
+                <form onSubmit={LoginClick} id="login-form">
+                    <div className="form-group mb-3">
+                        <div className="input-group">
+                            <span className="input-group-text bg-light">
+                                <i className="bi bi-envelope-fill"></i>
+                            </span>
+                            <input
+                                type="email"
+                                className="form-control"
+                                id="username"
+                                onChange={VerifyUserName}
+                                onBlur={handleEmailBlur}
+                                value={userObject.username}
+                                placeholder="Enter Your Email"
+                            />
+                        </div>
+                    </div>
 
-                <div className="form-group mt-3">
-                    <button className="btn btn-primary col-12" disabled={!validEmail}>Sign in</button>
-                </div>
-            </form>
+                    <div className="form-group mb-3 position-relative">
+                        <div className="input-group">
+                            <span className="input-group-text bg-light">
+                                <i className="bi bi-lock-fill"></i>
+                            </span>
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                className="form-control"
+                                id="password"
+                                onChange={VerifyUserPassword}
+                                value={userObject.password}
+                                placeholder="Enter Your Password"
+                            />
+                            <span
+                                className="input-group-text bg-light"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                <i className={`bi ${showPassword ? "bi-eye-fill" : "bi-eye-slash-fill"}`}></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <button className="btn btn-primary w-100 rounded-pill fw-bold" disabled={!validEmail}>
+                        Sign In
+                    </button>
+                </form>
+            </div>
         </div>
-    )
-}
+    );
+};
 
 export default Login;

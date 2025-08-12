@@ -1,21 +1,29 @@
-/* header{
-
-} */
-section {
-    height: 70vh;
-    display: flex;
-    align-items: center;
+html, body {
+    height: 100%;
+    margin: 0;
 }
 
-/* footer{
+#root {
+    height: 100%;
+}
 
-} */
-
-/* .body-container {
-    margin: 0;
-    padding: 0;
+.app-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-} */
-/* Ensure the body takes at least the full viewport height */
+    min-height: 100vh; /* full height */
+}
+
+header {
+    flex-shrink: 0;
+}
+
+.main-content {
+    flex: 1; /* pushes footer down */
+    display: flex;
+    flex-direction: column;
+    padding: 20px; /* optional */
+}
+
+footer {
+    flex-shrink: 0;
+}

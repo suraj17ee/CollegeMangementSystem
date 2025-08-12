@@ -1,0 +1,15 @@
+.reg-card {
+    max-width: 500px;
+    margin: auto;
+    background: #ffffff;
+}
+
+.form-control:focus, 
+.form-select:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+button:disabled {
+    background-color: #ccc !important;
+    border: none;
+}

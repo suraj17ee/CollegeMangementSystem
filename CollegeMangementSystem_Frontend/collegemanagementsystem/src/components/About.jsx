@@ -1,26 +1,52 @@
 import React from "react";
+import './About.css';
 
 const About = () => {
     return (
-        <div className="container-fluid">
-            <div className="card border border-3 rounded">
-                <div className="card-header">
-                    <h5>Hii everyone !</h5>
-                </div>
-                <div className="card-body">
-                    <p className="card-text">I am a Software Engineer by profession with 3+ yrs of experience in Java, Spring, Spring Boot, Microservices, SQL, MongoDB etc. Currently i am exploring frontend technologies like HTML5, CSS3, JavaScript, React.</p>
+        <div className="about-page container py-5">
+            <div className="row justify-content-center">
+                <div className="col-lg-8">
+                    <div className="card shadow-lg border-0 rounded-4">
+                        <div className="card-header bg-light text-black text-center rounded-top-4">
+                            <h3 className="mb-0">Hi Everyone! 👋</h3>
+                        </div>
+                        <div className="card-body p-4">
+                            <p className="fw-bold text-dark">
+                                I am a <strong>Software Engineer</strong> with 3+ years of experience in 
+                                Java, Spring Boot, Microservices, SQL, and MongoDB. 
+                                Recently, I’ve been exploring modern frontend technologies such as 
+                                HTML5, CSS3, JavaScript, and React.
+                            </p>
 
-                    <p className="card-text">In this project for backend developement java8, spring boot 3, for security spring security 6, for database SQL, for front end React i have used.</p>
-                    <p className="card-text"><h6 className="card-title">About CMS</h6>
-                        CMS stand for college management sytem. The name itself signifies that the application is about to deal with users data. A user can able to register itself and using their email and password (they have given at the time of registration), they can be able to login. In terms of successful authentication user can be able to see their profile with all the details they have provided.</p>
-                    <p className="card-text"> An Admin user is also there, who has the authority to update and delete user details. If a user is logging in, at the time login itself their role will be authorised. If the role is USER then user can be able to see thier profile and if the user is an ADMIN then they can be able to see the dashboard specifically designed for ADMIN.</p>
-                </div>
-                <div className="card-footer">
-                    Thanks ! Feel free to explore the content and enjoy your stay!
+                            <hr />
+
+                            <h5 className="fw-bold text-dark">Tech Stack for this Project</h5>
+                            <ul className="list-group list-group-flush mb-4">
+                                <li className="list-group-item">Java 8, Spring Boot 3</li>
+                                <li className="list-group-item">Spring Security 6</li>
+                                <li className="list-group-item">SQL Database</li>
+                                <li className="list-group-item">React Frontend</li>
+                            </ul>
+
+                            <h5 className="fw-bold text-dark">About CMS</h5>
+                            <p>
+                                CMS stands for <strong>College Management System</strong>. 
+                                This application manages user data, allowing students to register, 
+                                log in, and view their profiles. An <strong>Admin</strong> can 
+                                update and delete user details, while role-based authentication 
+                                ensures users see only what they’re authorized to.
+                            </p>
+                        </div>
+                        <div className="card-footer text-center bg-light rounded-bottom-4">
+                            <p className="mb-0 fw-bold text-secondary">
+                                🚀 Thanks for visiting! Feel free to explore the content.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default About;
