@@ -11,7 +11,7 @@ const Footer = () => {
                     <div className="col-md-3 mb-3">
                         <h4 className="brand-title fw-bold">CMS</h4>
                         <div className="d-flex gap-3 mt-2">
-                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-light">
+                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-light fs-4">
                                 <i className="bi bi-facebook"></i>
                             </a>
                             <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-light fs-4">
