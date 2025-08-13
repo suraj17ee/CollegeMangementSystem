@@ -6,12 +6,11 @@ import { doLogout } from "../service/auth";
 import './Dashboard.css';
 
 const Dashboard = () => {
-
     const [userList, setUserList] = useState([]);
-    // const [msg, setMsg] = useState("");// instead of using msg now using toasts
+
     useEffect(() => {
         init();
-    }, [])
+    }, []);
 
     const init = () => {
         userservice.getAllUsers()
@@ -19,114 +18,142 @@ const Dashboard = () => {
                 setUserList(res.data);
             })
             .catch((error) => {
-                if (error.response.status == 400 | error.response.status == 401) {
+                if (error.response.status === 400 || error.response.status === 401) {
                     toast.error(error.response.data);
                     toast.error("Sorry!! You are not authorized for dashboard view!");
                 } else {
                     toast.error("Error while connecting to server!!");
-                    console.log(error);
+                    console.error(error);
                 }
-            })
-    }
+            });
+    };
 
     const deleteUserDetails = (userEmail) => {
         userservice.deleteUser(userEmail)
-            .then((res) => {
-                // setMsg("User details removed successfully!");
+            .then(() => {
                 toast.success("User details removed successfully!");
                 init();
             })
             .catch((error) => {
-                if (error.response.status == 400 | error.response.status == 401) {
+                if (error.response.status === 400 || error.response.status === 401) {
                     toast.error(error.response.data);
                 } else {
                     toast.error("Error while connecting to server!!");
-                    console.log(error);
+                    console.error(error);
                 }
-            })
-    }
+            });
+    };
 
     const deleteAllUserDetails = () => {
         userservice.deleteAllUsers()
-            .then((res) => {
-                // setMsg("All user details removed successfully!");
+            .then(() => {
                 toast.success("All user details removed successfully!");
                 init();
             })
             .catch((error) => {
-                if (error.response.status == 400 | error.response.status == 401) {
+                if (error.response.status === 400 || error.response.status === 401) {
                     toast.error(error.response.data);
                 } else {
                     toast.error("Error while connecting to server!!");
-                    console.log(error);
+                    console.error(error);
                 }
-            })
-    }
+            });
+    };
 
     const navigate = useNavigate();
 
     const handleLogout = () => {
         doLogout();
-        console.log("logout clicked");
         navigate("/login");
-    }
+    };
 
     return (
-        <div className="container mt-3">
+        <div className="container py-4">
             <div className="dashboard">
                 <div className="row">
                     <div className="col-md-12">
-                        <div className="card">
-                            <div className="card-header text-center fw-bold fs-5">
-                                User Details
-                                {/* <p className='text-success'>{msg}</p> */}
-                                <div className="d-flex justify-content-md-end">
-                                    <button onClick={handleLogout} className="btn btn-warning m-1 text-dark fw-bold">Logout</button>
-                                </div>
+                        <div className="card shadow-lg border-0 rounded-4 overflow-hidden">
+                            <div className="card-header dashboard-header d-flex justify-content-between align-items-center">
+                                <h5 className="mb-0 fw-bold">📋 User Details</h5>
+                                <button onClick={handleLogout} className="btn btn-dark btn-sm fw-bold shadow-sm">
+                                    🚪 Logout
+                                </button>
                             </div>
-                            <div className="card-body">
-                                <div className="table-container">
-                                    <table className="table">
-                                        <thead>
-                                            <tr className="table-primary">
-                                                <th scope="col">Sl No</th>
-                                                <th scope="col">User Id</th>
-                                                <th scope="col">User Name</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Mobile</th>
-                                                <th scope="col">Address</th>
-                                                <th scope="col">DOB</th>
-                                                <th scope="col">Gender</th>
-                                                <th scope="col">Role</th>
-                                                <th scope="col">Action</th>
+
+                            <div className="card-body p-0">
+                                <div className="table-responsive">
+                                    <table className="table table-hover align-middle mb-0">
+                                        <thead className="dashboard-table-header">
+                                            <tr>
+                                                <th>Sl No</th>
+                                                <th>User Id</th>
+                                                <th>User Name</th>
+                                                <th>Email</th>
+                                                <th>Mobile</th>
+                                                <th>Address</th>
+                                                <th>DOB</th>
+                                                <th>Gender</th>
+                                                <th>Role</th>
+                                                <th className="text-center">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {
-                                                userList.map((user, num) =>
-                                                    <tr key={num}>
-                                                        <td>{num + 1}</td>
-                                                        <td>{user.userId}</td>
-                                                        <td>{user.userName}</td>
-                                                        <td>{user.userEmail}</td>
-                                                        <td>{user.userMobile}</td>
-                                                        <td>{user.userAddress}</td>
-                                                        <td>{user.userDob}</td>
-                                                        <td>{user.userGender}</td>
-                                                        <td>{user.roles}</td>
-                                                        <td>
-                                                            <Link to={'/edituser/' + user.userId} className="btn btn-sm btn-primary m-1">Edit</Link>
-                                                            <button onClick={(e) => (deleteUserDetails(user.userEmail))} className="btn btn-sm btn-danger m-1">Delete</button>
-                                                        </td>
-                                                    </tr>
-                                                )
-                                            }
+                                            {userList.length > 0 ? (
+                                                userList.map((user, num) => {
+                                                    const isFirstRow = num === 0;
+                                                    return (
+                                                        <tr key={num} className={isFirstRow ? "table-warning" : ""}>
+                                                            <td>{num + 1}</td>
+                                                            <td>{user.userId}</td>
+                                                            <td>{user.userName}</td>
+                                                            <td>{user.userEmail}</td>
+                                                            <td>{user.userMobile}</td>
+                                                            <td>{user.userAddress}</td>
+                                                            <td>{user.userDob}</td>
+                                                            <td>{user.userGender}</td>
+                                                            <td>
+                                                                <span className="badge bg-info text-dark">{user.roles}</span>
+                                                            </td>
+                                                            <td className="text-center">
+                                                                {!isFirstRow && (
+                                                                    <>
+                                                                        <Link
+                                                                            to={`/edituser/${user.userId}`}
+                                                                            className="btn btn-sm btn-outline-primary me-1"
+                                                                        >
+                                                                            ✏️ Edit
+                                                                        </Link>
+                                                                        <button
+                                                                            onClick={() => deleteUserDetails(user.userEmail)}
+                                                                            className="btn btn-sm btn-outline-danger"
+                                                                        >
+                                                                            🗑️ Delete
+                                                                        </button>
+                                                                    </>
+                                                                )}
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan="10" className="text-center text-muted py-4">
+                                                        No users found
+                                                    </td>
+                                                </tr>
+                                            )}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                            <div className="card-footer">
-                                <button onClick={(e) => (deleteAllUserDetails())} className="btn btn-warning m-1 text-dark fw-bold">Clear All</button>
+
+                            <div className="card-footer dashboard-footer text-end">
+                                <button
+                                    onClick={deleteAllUserDetails}
+                                    className="btn btn-dark fw-bold shadow-sm"
+                                >
+                                    🧹 Clear All
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -134,5 +161,6 @@ const Dashboard = () => {
             </div>
         </div>
     );
-}
+};
+
 export default Dashboard;

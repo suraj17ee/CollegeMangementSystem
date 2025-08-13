@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import userservice from "../service/userservice";
 import { useNavigate, useParams } from "react-router-dom";
-// import './EditUserDetails.css';
 import { toast } from 'react-toastify';
+import './EditUserDetails.css'; // We'll add styling here
 
 const EditUserDetails = () => {
     const [user, setUser] = useState({
@@ -16,84 +16,53 @@ const EditUserDetails = () => {
         userGender: "",
         roles: []
     });
-    // const [msg, setMsg] = useState("");
+
     const [validEmail, setValidEmail] = useState(false);
     const [validPassword, setValidPassword] = useState(false);
     const [validMobile, setValidMobile] = useState(false);
 
     const { id } = useParams();
-    // console.log(email);
+    const navigate = useNavigate();
 
     useEffect(() => {
         userservice.getUserById(id)
-            .then((res) => {
-                setUser(res.data);
-            })
-            .catch((error) => {
-                if (error.response.status == 400 | error.response.status == 401) {
+            .then(res => setUser(res.data))
+            .catch(error => {
+                if (error.response?.status === 400 || error.response?.status === 401) {
                     toast.error(error.response.data);
                 } else {
                     toast.error("Error while connecting to server!!");
-                    console.log(error);
+                    console.error(error);
                 }
-            })
-    }, []);
+            });
+    }, [id]);
 
-    const navigate = useNavigate();
-
-    const VerifyUserName = (e) => {
-        setUser({ ...user, userName: e.target.value.trim() });
-    }
-    const VerifyUserPassword = (e) => {
-        setUser({ ...user, userPassword: e.target.value });
-    }
-    const VerifyUserEmail = (e) => {
-        setUser({ ...user, userEmail: e.target.value });
-    }
-    const VerifyUserAddress = (e) => {
-        setUser({ ...user, userAddress: e.target.value.trim() });
-    }
-    // const VerifyUserGender = (e) => {
-    //     setUser({ ...user, userGender: e.target.value });
-    // }
-    const VerifyUserDob = (e) => {
-        setUser({ ...user, userDob: e.target.value });
-    }
-    const VerifyUserMobile = (e) => {
-        setUser({ ...user, userMobile: e.target.value.trim() });
-    }
-    // const VerifyRole = (e) => {
-    //     setUser({ ...user, roles: e.target.value.split(',') });
-    // }
+    const handleChange = (field, value) => {
+        setUser({ ...user, [field]: value });
+    };
 
     const handleEmailBlur = () => {
-        const { userEmail } = user;
         const gmailPattern = /.*@gmail\.com$/;
-        if (gmailPattern.test(userEmail)) {
-            setValidEmail(true);
-        } else {
+        if (gmailPattern.test(user.userEmail)) setValidEmail(true);
+        else {
             toast.error("Invalid email address !!");
             setValidEmail(false);
         }
     };
 
     const handlePasswordBlur = () => {
-        const { userPassword } = user;
         const passwordPattern = /^.{5,10}$/;
-        if (passwordPattern.test(userPassword)) {
-            setValidPassword(true);
-        } else {
+        if (passwordPattern.test(user.userPassword)) setValidPassword(true);
+        else {
             toast.error("Invalid password !! Password must contain 5-10 characters");
             setValidPassword(false);
         }
     };
 
     const handleMobileBlur = () => {
-        const { userMobile } = user;
         const mobilePattern = /^\+91\d{10}$/;
-        if (mobilePattern.test(userMobile)) {
-            setValidMobile(true);
-        } else {
+        if (mobilePattern.test(user.userMobile)) setValidMobile(true);
+        else {
             toast.error("Invalid mobile number!! Starts with +91");
             setValidMobile(false);
         }
@@ -101,138 +70,101 @@ const EditUserDetails = () => {
 
     const UserUpdate = (e) => {
         e.preventDefault();
-        // console.log(user);
         userservice.updateUser(id, user)
-            .then((res) => {
-                toast.success(user.userName + "'s details updated successfully!!");
+            .then(() => {
+                toast.success(`${user.userName}'s details updated successfully!!`);
                 navigate("/dashboard");
             })
-            .catch((error) => {
-                if (error.response.status == 400 | error.response.status == 401) {
+            .catch(error => {
+                if (error.response?.status === 400 || error.response?.status === 401) {
                     toast.error(error.response.data);
                 } else {
                     toast.error("Error while connecting to server!!");
-                    console.log(error);
+                    console.error(error);
                 }
-            })
-    }
+            });
+    };
 
     return (
-        <div className='container mt-3'>
-            {/* <div className="edit-box"> */}
-            <form onSubmit={UserUpdate} id="edit-form" className='w-50 m-auto border border-1 border-dark rounded p-3'>
-                <div className="formhead text-center">
+        <div className="container py-4">
+            <div className="card shadow-lg rounded-4 edit-card mx-auto p-4" style={{ maxWidth: '600px' }}>
+                <div className="card-header text-center bg-success text-white rounded-top">
                     <h3><span className="bi bi-person-fill"></span> Update User</h3>
                 </div>
-                {/* <p className='text-success fs-5 fw-bold'>{msg}</p> */}
-                <div className="form-group mt-1">
-                    {/* <label className="form-label">User Name</label> */}
-                    <div>
+                <form onSubmit={UserUpdate} className="card-body">
+                    <div className="mb-3">
                         <input type="text"
-                            name="userName"
-                            className='form-control'
-                            onChange={VerifyUserName}
-                            value={user.userName}
+                            className="form-control shadow-sm"
                             placeholder="Update your username"
+                            value={user.userName}
+                            onChange={e => handleChange("userName", e.target.value)}
                         />
                     </div>
-                </div>
-
-                <div className="form-group mt-1">
-                    {/* <label className="form-label">Password</label> */}
-                    <div>
-                        <input type="text"
-                            name="password"
-                            className='form-control'
-                            onChange={VerifyUserPassword}
-                            onBlur={handlePasswordBlur}
-                            value={user.userPassword}
+                    <div className="mb-3">
+                        <input type="password"
+                            className="form-control shadow-sm"
                             placeholder="Enter new password"
+                            value={user.userPassword}
+                            onChange={e => handleChange("userPassword", e.target.value)}
+                            onBlur={handlePasswordBlur}
                         />
                     </div>
-                </div>
-
-                <div className="form-group mt-1">
-                    {/* <label className="form-label">Email</label> */}
-                    <div>
+                    <div className="mb-3">
                         <input type="email"
-                            name="email"
-                            className='form-control'
-                            onChange={VerifyUserEmail}
-                            onBlur={handleEmailBlur}
-                            value={user.userEmail}
+                            className="form-control shadow-sm"
                             placeholder="Update your email"
+                            value={user.userEmail}
+                            onChange={e => handleChange("userEmail", e.target.value)}
+                            onBlur={handleEmailBlur}
                         />
                     </div>
-                </div>
-
-                <div className="form-group mt-1">
-                    {/* <label className="form-label">Address</label> */}
-                    <div>
+                    <div className="mb-3">
                         <input type="text"
-                            name="address"
-                            className='form-control'
-                            onChange={VerifyUserAddress}
-                            value={user.userAddress}
+                            className="form-control shadow-sm"
                             placeholder="Update your address"
+                            value={user.userAddress}
+                            onChange={e => handleChange("userAddress", e.target.value)}
                         />
                     </div>
-                </div>
-
-                <div className="form-group mt-1">
-                    {/* <label className="form-label">Mobile</label> */}
-                    <div>
+                    <div className="mb-3">
                         <input type="text"
-                            name="mobile"
-                            className='form-control'
-                            onChange={VerifyUserMobile}
-                            onBlur={handleMobileBlur}
+                            className="form-control shadow-sm"
+                            placeholder="Enter Phone Number"
                             value={user.userMobile}
-                            placeholder='Enter Phone Number:'
+                            onChange={e => handleChange("userMobile", e.target.value)}
+                            onBlur={handleMobileBlur}
                         />
                     </div>
-                </div>
-
-                <div className="form-group mt-1">
-                    {/* <label className="form-label">DOB</label> */}
-                    <div>
+                    <div className="mb-3">
                         <input type="date"
-                            name="dob"
-                            className='form-control'
-                            onChange={VerifyUserDob}
+                            className="form-control shadow-sm"
                             value={user.userDob}
+                            onChange={e => handleChange("userDob", e.target.value)}
                         />
                     </div>
-                </div>
-
-                <div className="form-group mt-1">
-                    {/* <label className="form-label">Gender</label> */}
-                    <div>
-                        <input type="text" readOnly
-                            className='form-control'
-                            // onChange={VerifyGender}
+                    <div className="mb-3">
+                        <input type="text"
+                            className="form-control shadow-sm bg-light"
                             value={user.userGender}
+                            readOnly
                         />
                     </div>
-                </div>
-
-                <div className="form-group mt-1">
-                    {/* <label className="form-label">Role</label> */}
-                    <div>
-                        <input type="text" readOnly
-                            className='form-control'
-                            // onChange={VerifyRole}
+                    <div className="mb-3">
+                        <input type="text"
+                            className="form-control shadow-sm bg-light"
                             value={user.roles.at(0)}
+                            readOnly
                         />
                     </div>
-                </div>
-
-                <div className="form-group mt-1">
-                    <button className='btn btn-primary col-12' disabled={!validEmail || !validPassword || !validMobile}>Update</button>
-                </div>
-            </form>
-            {/* </div> */}
+                    <button type="submit"
+                        className="btn btn-success w-100 fw-bold shadow-sm"
+                        disabled={!validEmail || !validPassword || !validMobile}>
+                        Update
+                    </button>
+                </form>
+            </div>
         </div>
     );
-}
+};
+
 export default EditUserDetails;

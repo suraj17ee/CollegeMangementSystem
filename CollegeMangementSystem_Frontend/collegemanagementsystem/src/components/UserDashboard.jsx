@@ -3,74 +3,95 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { isLoggedIn, doLogout } from "../service/auth";
 import userservice from '../service/userservice';
 import { toast } from 'react-toastify';
+import './UserDashboard.css';
 
 const UserDashboard = () => {
-
     const [userData, setUserData] = useState(null);
+    const [showProfile, setShowProfile] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
         init();
-    }, [])
+    }, []);
 
     const init = () => {
         userservice.getUserByEmail(localStorage.getItem("username"))
-            .then((res) => {
-                setUserData(res.data);
-            })
+            .then((res) => setUserData(res.data))
             .catch((error) => {
-                if (error.response.status == 400 | error.response.status == 401) {
+                if (error.response.status === 400 || error.response.status === 401) {
                     toast.error(error.response.data);
                     toast.error("Sorry!! You are not authorized for dashboard view!");
                 } else {
                     toast.error("Error while connecting to server!!");
                     console.log(error);
                 }
-            })
-    }
+            });
+    };
 
     const HandleLogout = () => {
         doLogout();
-        console.log("logout clicked");
         navigate("/login");
+    };
+
+    if (!isLoggedIn()) {
+        return <Navigate to={"/login"} />;
     }
 
-    if (isLoggedIn()) {
-        return (
-            <div  className='container-fluid'>
-                <div className="card w-25 m-3">
-                    <div className="card-header">
-                        {/* <h3><span className="bi bi-person-fill"></span> {localStorage.getItem("username")} </h3> */}
+    return (
+        <div className="dashboard-container">
+            {/* Left Section - Dashboard Content */}
+            <div className={`default-section ${!showProfile ? 'full-width' : ''}`}>
+                <div className="top-bar">
+                    <button 
+                        className="toggle-btn" 
+                        onClick={() => setShowProfile(!showProfile)}
+                    >
+                        {showProfile ? "Hide Profile" : "Show Profile"}
+                    </button>
+                </div>
+                <h2>Welcome to Your Dashboard 🎯</h2>
+                <p>Here you can view your profile details, manage your account, and explore features.</p>
+                <div className="placeholder-box">
+                    <span className="bi bi-bar-chart-fill"></span>
+                    <p>Some stats or charts can go here...</p>
+                </div>
+            </div>
+
+            {/* Right Section - Profile Panel */}
+            {showProfile && (
+                <div className="profile-section">
+                    <div className="profile-card">
                         {userData ? (
-                            <h3><span className="bi bi-person-fill"></span>Welcome {userData.userName} </h3>
+                            <>
+                                <div className="profile-header">
+                                    <span className="bi bi-person-circle profile-icon"></span>
+                                    <h3>{userData.userName}</h3>
+                                    <p className="profile-email">{userData.userEmail}</p>
+                                </div>
+                                <div className="profile-actions">
+                                    <button 
+                                        className="btn btn-danger" 
+                                        onClick={HandleLogout}
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                                <div className="profile-details">
+                                    {Object.entries(userData).map(([key, value]) => (
+                                        <li key={key}>
+                                            <strong>{key}:</strong> {value}
+                                        </li>
+                                    ))}
+                                </div>
+                            </>
                         ) : (
                             <p>Loading...</p>
                         )}
                     </div>
-                    {/* </div> */}
-                    <div className="card-body">
-                        <h5 className="card-title">Your Details are as follows</h5>
-                        <div>
-                            {
-                                userData ? (Object.entries(userData).map(([key, value]) => (
-                                    <li key={key} style={{ listStyleType: 'none' }}>
-                                        <strong>{key} : </strong>{value}
-                                    </li>
-                                ))) : (<p>Loading...</p>)
-                            }
-                        </div>
-                    </div>
-                    <div className="card-footer">
-                        <button className="btn btn-primary col-3 mt-3" onClick={HandleLogout}>Logout</button>
-                    </div>
                 </div>
-
-            </div>
-        )
-    } else {
-        return <Navigate to={"/login"} />;
-    }
-    // return isLoggedIn() ? <div><h1>user profile</h1></div> : <Navigate to={"/login"}/>
-}
+            )}
+        </div>
+    );
+};
 
 export default UserDashboard;

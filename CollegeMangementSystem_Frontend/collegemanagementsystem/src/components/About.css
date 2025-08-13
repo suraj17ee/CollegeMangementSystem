@@ -1,13 +1,45 @@
-/* .about-page {
-    background: linear-gradient(135deg, #f0f4ff, #e8f0ff);
-    min-height: 80vh;
-} */
-
-.card {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+.about-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-} */
+.about-header {
+    background: linear-gradient(90deg, #6a11cb, #2575fc);
+    padding: 1.5rem;
+}
+
+.about-text {
+    font-size: 1.05rem;
+    color: #333;
+    line-height: 1.6;
+}
+
+.about-subtitle {
+    color: #444;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.about-list li {
+    background: transparent;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.about-list li:hover {
+    background: #f5f8ff;
+    transform: translateX(5px);
+}
+
+.about-divider {
+    border-top: 2px solid #ddd;
+    margin: 1.5rem 0;
+}
+
+.about-footer {
+    background: #f7f9fc;
+    color: #555;
+    padding: 1rem;
+}
+
+.animate-fade {
+    animation: fadeIn 1s ease-in-out;
+}

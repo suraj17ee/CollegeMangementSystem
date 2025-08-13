@@ -45,5 +45,17 @@ class UserService {
     generateToken(userObject){
         return axios.post(API_URL+"/authenticate",userObject);
     }
+    sendOtp(emailId) {
+        return axios.post(`http://localhost:9095/mail/send?emailId=${encodeURIComponent(emailId)}`);
+    }
+    verifyOtp(emailId, otp) {
+        return axios.post(
+            `http://localhost:9095/mail/verify?emailId=${encodeURIComponent(emailId)}&otp=${encodeURIComponent(otp)}`
+        );
+    }
+    sendRegistrationMail(email) {
+        return axios.post(`http://localhost:9095/mail/sendmail?emailId=${email}`);
+    }
+
 }
 export default new UserService;

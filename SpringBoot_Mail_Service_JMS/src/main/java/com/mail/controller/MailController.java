@@ -14,6 +14,7 @@ import com.mail.service.IMailSerivce;
 
 @RestController
 @RequestMapping("/mail")
+@CrossOrigin(origins = "http://localhost:3000")
 public class MailController {
 
 	Logger logger = LoggerFactory.getLogger(MailController.class);

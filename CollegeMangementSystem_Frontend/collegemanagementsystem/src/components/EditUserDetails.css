@@ -1,0 +1,19 @@
+.edit-card {
+    border: 2px solid #cef011;
+}
+
+.form-control:focus {
+    border-color: #cef011;
+    box-shadow: 0 0 8px rgba(206, 240, 17, 0.5);
+}
+
+.btn-dark:hover {
+    background-color: #444;
+    transform: translateY(-2px);
+    transition: 0.2s;
+}
+
+.card-header h3 {
+    font-weight: 700;
+    letter-spacing: 1px;
+}

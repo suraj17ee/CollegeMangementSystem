@@ -1,9 +1,32 @@
-.table-container {
-    max-height: 200px; /* Set a maximum height for the container */
-    overflow-y: auto; /* Enable vertical scrolling */
-  }
+/* Match brand colors */
+.dashboard-header {
+  background-color: #67d120;
+  color: #212529; /* dark text */
+}
 
-  table thead th {
-    position: sticky;
-    top: 0;
-  }
+.dashboard-footer {
+  background-color: #67d120;
+  padding: 10px;
+}
+
+.dashboard-table-header {
+  background-color: #bcf97b; /* lighter shade of lime */
+  color: #212529;
+}
+
+.dashboard .card {
+  transition: all 0.3s ease-in-out;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(206, 240, 17, 0.1); /* subtle hover effect */
+}
+
+.btn {
+  border-radius: 8px;
+}
+
+.badge {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
