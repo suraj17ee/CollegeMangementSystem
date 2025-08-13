@@ -47,9 +47,8 @@ const Footer = () => {
                     <div className="col-md-3 mb-3">
                         <h5 className="footer-title fw-bold">CONTACT</h5>
                         <address>
-                            <a href="tel:+12025550105" className="d-block text-light">📞 1-202-555-0105</a>
-                            <a href="tel:+12025550106" className="d-block text-light">📞 1-202-555-0106</a>
-                            <a href="mailto:help@cms.com" className="d-block text-light">✉ help@cms.com</a>
+                            <a href="tel:+917008963848" className="d-block text-light">📞 +917008963848</a>
+                            <a href="mailto:kumarsuraj.p22@gmail.com" className="d-block text-light">✉ kumarsuraj.p22@gmail.com</a>
                         </address>
                     </div>
                 </div>
