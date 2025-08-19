@@ -30,7 +30,7 @@ const About = () => {
 
                             <h5 className="fw-bold about-subtitle">📚 About CMS</h5>
                             <p className="about-text">
-                                CMS stands for <strong>College Management System</strong>. 
+                                CMS stands for <strong>Content Management System</strong>. 
                                 This application manages user data, allowing students to register, 
                                 log in, and view their profiles. An <strong>Admin</strong> can 
                                 update and delete user details, while role-based authentication 
