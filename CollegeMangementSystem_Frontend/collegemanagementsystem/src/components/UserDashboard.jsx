@@ -12,7 +12,11 @@ const MAX_IMAGES = 10;
 const UserDashboard = () => {
     const [userData, setUserData] = useState(null);
     const [activeSection, setActiveSection] = useState('profile');
-    const [uploadedImages, setUploadedImages] = useState([]);
+
+    // Separate states
+    const [uploadedImages, setUploadedImages] = useState([]); // local before upload
+    const [serverImages, setServerImages] = useState([]); // from API after upload
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -61,18 +65,37 @@ const UserDashboard = () => {
         uploadedImages.forEach(img => formData.append("images", img.file));
 
         try {
-            const res = await axios.post("http://localhost:8001/v1/user/image", formData, {
+            await axios.post("http://localhost:8001/v1/user/image", formData, {
                 headers: { "Content-Type": "multipart/form-data" }
             });
             toast.success("Images uploaded successfully!");
-            setUploadedImages([]); // Clear after upload
+            setUploadedImages([]); // Clear local selection
+            fetchServerImages(); // Refresh images from backend
         } catch (err) {
             console.error(err);
             toast.error("Error uploading images!");
         }
     };
 
-    const uploadedCount = uploadedImages.length;
+    // Fetch images from server
+    const fetchServerImages = async () => {
+        try {
+            const res = await axios.get("http://localhost:8001/v1/user/getimages");
+            setServerImages(res.data || []);
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to load images from server");
+        }
+    };
+
+    // Whenever Docs or Analytics tab is opened, fetch fresh images
+    useEffect(() => {
+        if (activeSection === "docs" || activeSection === "analytics") {
+            fetchServerImages();
+        }
+    }, [activeSection]);
+
+    const uploadedCount = serverImages.length;
     const remainingCount = MAX_IMAGES - uploadedCount;
 
     if (!isLoggedIn()) return <Navigate to={"/login"} />;
@@ -135,10 +158,10 @@ const UserDashboard = () => {
                     <div className="docs-section">
                         <h2>Your Documents</h2>
                         <div className="image-preview-grid">
-                            {uploadedImages.length > 0 ? uploadedImages.map((img, index) => (
+                            {serverImages.length > 0 ? serverImages.map((img, index) => (
                                 <div key={index} className="image-card">
-                                    <img src={img.url} alt={img.name} />
-                                    <p className="image-name">{img.name}</p>
+                                    <img src={img.url} alt={img.name || `Image ${index}`} />
+                                    <p className="image-name">{img.name || `Image ${index + 1}`}</p>
                                 </div>
                             )) : <p>No documents uploaded yet.</p>}
                         </div>
@@ -162,7 +185,7 @@ const UserDashboard = () => {
                                     disabled={uploadedImages.length >= MAX_IMAGES}
                                 />
                             </label>
-                            <p className="upload-count">{uploadedImages.length} / {MAX_IMAGES} images uploaded</p>
+                            <p className="upload-count">{uploadedImages.length} / {MAX_IMAGES} images selected</p>
                         </div>
 
                         <button className="upload-btn" onClick={handleUploadToServer}>Upload</button>

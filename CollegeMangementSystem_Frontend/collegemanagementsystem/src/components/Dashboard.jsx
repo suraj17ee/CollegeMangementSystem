@@ -68,94 +68,77 @@ const Dashboard = () => {
     };
 
     return (
-        <div className="container py-4">
+        <div className="container-fluid py-4"> {/* full-width base */}
             <div className="dashboard">
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="card shadow-lg border-0 rounded-4 overflow-hidden">
-                            <div className="card-header dashboard-header d-flex justify-content-between align-items-center">
-                                <h5 className="mb-0 fw-bold">📋 User Details</h5>
-                                <button onClick={handleLogout} className="btn btn-dark btn-sm fw-bold shadow-sm">
-                                    🚪 Logout
-                                </button>
-                            </div>
+                <div className="card shadow-lg border-0 rounded-4 overflow-hidden">
+                    <div className="card-header dashboard-header d-flex justify-content-between align-items-center">
+                        <h5 className="mb-0 fw-bold">📋 Welcome to ADMIN view {userList.length > 0 ? userList[0].userName.toUpperCase() : "Admin"} !</h5>
+                        <button onClick={handleLogout} className="btn btn-dark btn-sm fw-bold shadow-sm">
+                            🚪 Logout
+                        </button>
+                    </div>
 
-                            <div className="card-body p-0">
-                                <div className="table-responsive">
-                                    <table className="table table-hover align-middle mb-0">
-                                        <thead className="dashboard-table-header">
-                                            <tr>
-                                                <th>Sl No</th>
-                                                <th>User Id</th>
-                                                <th>User Name</th>
-                                                <th>Email</th>
-                                                <th>Mobile</th>
-                                                <th>Address</th>
-                                                <th>DOB</th>
-                                                <th>Gender</th>
-                                                <th>Role</th>
-                                                <th className="text-center">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {userList.length > 0 ? (
-                                                userList.map((user, num) => {
-                                                    const isFirstRow = num === 0;
-                                                    return (
-                                                        <tr key={num} className={isFirstRow ? "table-warning" : ""}>
-                                                            <td>{num + 1}</td>
-                                                            <td>{user.userId}</td>
-                                                            <td>{user.userName}</td>
-                                                            <td>{user.userEmail}</td>
-                                                            <td>{user.userMobile}</td>
-                                                            <td>{user.userAddress}</td>
-                                                            <td>{user.userDob}</td>
-                                                            <td>{user.userGender}</td>
-                                                            <td>
-                                                                <span className="badge bg-info text-dark">{user.roles}</span>
-                                                            </td>
-                                                            <td className="text-center">
-                                                                {!isFirstRow && (
-                                                                    <>
-                                                                        <Link
-                                                                            to={`/edituser/${user.userId}`}
-                                                                            className="btn btn-sm btn-outline-primary me-1"
-                                                                        >
-                                                                            ✏️ Edit
-                                                                        </Link>
-                                                                        <button
-                                                                            onClick={() => deleteUserDetails(user.userEmail)}
-                                                                            className="btn btn-sm btn-outline-danger"
-                                                                        >
-                                                                            🗑️ Delete
-                                                                        </button>
-                                                                    </>
-                                                                )}
-                                                            </td>
-                                                        </tr>
-                                                    );
-                                                })
-                                            ) : (
-                                                <tr>
-                                                    <td colSpan="10" className="text-center text-muted py-4">
-                                                        No users found
-                                                    </td>
-                                                </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
-                                </div>
+                    <div className="card-body">
+                        {userList.length > 0 ? (
+                            <div className="row g-3">
+                                {userList.map((user, num) => {
+                                    const isFirstRow = num === 0;
+                                    return (
+                                        <div key={num} className="col-12 col-md-6 col-lg-4">
+                                            <div
+                                                className={`card shadow-sm border-0 rounded-4 h-100 ${
+                                                    isFirstRow ? "border-warning border-3" : ""
+                                                }`}
+                                            >
+                                                <div className="card-body d-flex flex-column justify-content-between">
+                                                    <div>
+                                                        <h5 className="card-title fw-bold mb-2">{user.userName}</h5>
+                                                        <p className="card-text text-muted mb-1"><strong>User ID:</strong> {user.userId}</p>
+                                                        <p className="card-text text-muted mb-1"><strong>Email:</strong> {user.userEmail}</p>
+                                                        <p className="card-text text-muted mb-1"><strong>Mobile:</strong> {user.userMobile}</p>
+                                                        <p className="card-text text-muted mb-1"><strong>Address:</strong> {user.userAddress}</p>
+                                                        <p className="card-text text-muted mb-1"><strong>DOB:</strong> {user.userDob}</p>
+                                                        <p className="card-text text-muted mb-1"><strong>Gender:</strong> {user.userGender}</p>
+                                                        <p className="mb-0">
+                                                            <span className="badge bg-info text-dark">{user.roles}</span>
+                                                        </p>
+                                                    </div>
+                                                    <div className="mt-3 text-end">
+                                                        {!isFirstRow && (
+                                                            <>
+                                                                <Link
+                                                                    to={`/edituser/${user.userId}`}
+                                                                    className="btn btn-sm btn-outline-primary me-2"
+                                                                >
+                                                                    ✏️ Edit
+                                                                </Link>
+                                                                <button
+                                                                    onClick={() => deleteUserDetails(user.userEmail)}
+                                                                    className="btn btn-sm btn-outline-danger"
+                                                                >
+                                                                    🗑️ Delete
+                                                                </button>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                             </div>
+                        ) : (
+                            <p className="text-center text-muted py-4">No users found</p>
+                        )}
+                    </div>
 
-                            <div className="card-footer dashboard-footer text-end">
-                                <button
-                                    onClick={deleteAllUserDetails}
-                                    className="btn btn-dark fw-bold shadow-sm"
-                                >
-                                    🧹 Clear All
-                                </button>
-                            </div>
-                        </div>
+                    <div className="card-footer dashboard-footer text-end">
+                        <button
+                            onClick={deleteAllUserDetails}
+                            className="btn btn-dark fw-bold shadow-sm"
+                        >
+                            🧹 Clear All
+                        </button>
                     </div>
                 </div>
             </div>
