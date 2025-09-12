@@ -1,5 +1,6 @@
 package com.collegemanagement.entity.dto;
 
+import java.time.LocalDate;
 import java.util.Set;
 import lombok.Data;
 
@@ -11,6 +12,6 @@ public class UserDto {
 	private String userAddress;
 	private String userMobile;
 	private String userGender;
-	private String userDob;
+	private LocalDate userDob;
 	private Set<String> roles;
 }

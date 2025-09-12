@@ -34,7 +34,7 @@ public class SecurityFilterConfig {
                 		auth ->
 							auth.requestMatchers("/v1/user/authenticate").permitAll()
 	                		.requestMatchers("/v1/user/signup").permitAll()
-	                		.requestMatchers("/v1/user/update/**","/v1/user/get/**").hasAnyRole("USER","ADMIN")
+	                		.requestMatchers("/v1/user/update/**","/v1/user/get/**","user/*/upload","user/files/**").hasAnyRole("USER","ADMIN")
 	                		.requestMatchers("/v1/user/delete","/v1/user/delete/**","/v1/user/all").hasRole("ADMIN")
 							.requestMatchers("/ai/api/**").permitAll()
 	                		.requestMatchers(HttpMethod.GET).hasRole("ADMIN")

@@ -29,5 +29,10 @@ public class CustomExceptionHandler {
 	public ResponseEntity<String> handleUserCredenditalsException(UserCredenditalsException userCredentialsException) {
 		return new ResponseEntity<>(userCredentialsException.getMessage(), HttpStatus.BAD_REQUEST);
 	}
+
+	@ExceptionHandler(ImageLimitExceedException.class)
+	public ResponseEntity<String> handleImageLimitExceedException(ImageLimitExceedException imageLimitExceedException) {
+		return new ResponseEntity<>(imageLimitExceedException.getMessage(), HttpStatus.BAD_REQUEST);
+	}
 	
 }

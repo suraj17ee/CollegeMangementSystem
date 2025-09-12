@@ -1,8 +1,18 @@
 package com.collegemanagement.service.impl;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import com.collegemanagement.entity.UserImage;
+import com.collegemanagement.exception.ImageLimitExceedException;
+import com.collegemanagement.repository.UserImageRepository;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -12,6 +22,7 @@ import com.collegemanagement.exception.PersonNotFoundException;
 import com.collegemanagement.repository.UserDataRepository;
 import com.collegemanagement.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @Service("userService")
@@ -22,6 +33,12 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDataRepository userDataRepo;
+
+	@Autowired
+	private UserImageRepository imageDataRepo;
+
+	@Value("${file.upload-dir}")
+	private String uploadDir;
 
 	@Override
 	public User registerUser(UserDto userData) {
@@ -121,6 +138,56 @@ public class UserServiceImpl implements UserService {
 		userDataRepo.deleteAllInBatch();
 		log.info("User service delete all users");
 		return "All user's details removed";
+	}
+
+	@Override
+	public String saveUploadedImages(String userId, List<MultipartFile> files) {
+		log.info("Started uploading files to database..");
+		User user = userDataRepo.findById(userId)
+				.orElseThrow(() -> new PersonNotFoundException("User details not found !!"));
+
+		if (files.size() > 5 || user.getImages().size() > 5) {
+			throw new ImageLimitExceedException("Limit exceeded!! You can only upload up to 5 files!");
+		}
+		Path filePath = null;
+		try {
+			for (MultipartFile file : files) {
+				String uniqueName = userId + "_" + RandomStringUtils.randomAlphanumeric(6) + "_" + file.getOriginalFilename().replaceAll("\\s+", "_");
+				filePath = Paths.get(uploadDir, uniqueName);
+
+				// Ensure folder exists
+				Files.createDirectories(filePath.getParent());
+
+				// Save file locally
+				Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+				// Save metadata in DB
+				UserImage image = new UserImage();
+				image.setFileName(uniqueName);
+				image.setFileUrl("/uploads/" + uniqueName);
+				image.setUser(user);
+
+				imageDataRepo.save(image);
+			}
+		} catch (Exception e) {
+			log.error("Exception occured while saving images in to db for user: {}", user.getUserEmail());
+		}
+		log.info("File saved at location: {}", filePath.toString());
+		return "File saved at location: " + filePath.toString();
+	}
+
+	@Override
+	public List<String> fetchUploadedImages(String userId) {
+		log.info("Getting all the files present inside database..");
+		User user = userDataRepo.findById(userId)
+				.orElseThrow(() -> new PersonNotFoundException("User details not found !!"));
+
+		List<String> images = imageDataRepo.findByUser(user)
+				.stream()
+				.map(UserImage::getFileUrl)
+				.collect(Collectors.toList());
+		log.info("Files present for {} inside database are: {}", user.getUserEmail(), images);
+		return images;
 	}
 
 }

@@ -1,27 +1,18 @@
 package com.collegemanagement.entity;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -72,15 +63,33 @@ public class User implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "custom-sequence")
 	@GenericGenerator(name = "custom-sequence", strategy = "com.collegemanagement.entity.CustomIdGenerator")
 	private String userId;
+
+	@Column(name = "user_name")
 	private String userName;
+
 	@JsonIgnore
 	private String userPassword;
+
+	@Column(name = "user_email")
 	private String userEmail;
+
+	@Column(name = "user_address")
 	private String userAddress;
+
+	@Column(name = "user_mobile")
 	private String userMobile;
+
+	@Column(name = "user_gender")
 	private String userGender;
-	@Temporal(TemporalType.DATE)
-	private String userDob;
+
+	@Column(name = "user_dob")
+	private LocalDate userDob;
+
+	@OneToMany(mappedBy = "user",
+			cascade = CascadeType.ALL,
+			orphanRemoval = true,
+			fetch = FetchType.LAZY)
+	private List<UserImage> images = new ArrayList<>();
 
 //	using element roles collection 
 	@ElementCollection(fetch = FetchType.EAGER)
