@@ -1,5 +1,6 @@
 package com.mail.controller;
 
+import com.mail.Entity.RegistrationRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,15 +40,19 @@ public class MailController {
 		String response = isValid ? "OTP Verified Successfully!" : "Invalid OTP!";
 		stopWatch.stop();
 		logger.info("Total time taken by verifyOtp API : {}", stopWatch.getTotalTimeSeconds() + " seconds");
-		return new ResponseEntity<String>(response, HttpStatus.OK);
+		if(isValid==true){
+			return new ResponseEntity<String>(response, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@PostMapping("/sendmail")
-	public ResponseEntity<String> sendRegistrationEmail(@RequestParam String emailId) {
+	public ResponseEntity<String> sendRegistrationEmail(@RequestBody RegistrationRequest request) {
 		var stopWatch = new StopWatch(Thread.currentThread().getName());
 		logger.info("inside sendRegistrationEmail");
 		stopWatch.start();
-		String response = mailService.sendRegistrationEmailToUser(emailId);
+		String response = mailService.sendRegistrationEmailToUser(request);
 		stopWatch.stop();
 		logger.info("Total time taken by sendRegistrationEmail API : {}", stopWatch.getTotalTimeSeconds() + " seconds");
 		return new ResponseEntity<String>(response, HttpStatus.OK);

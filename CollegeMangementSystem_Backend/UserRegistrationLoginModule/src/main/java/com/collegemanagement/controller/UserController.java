@@ -1,6 +1,9 @@
 package com.collegemanagement.controller;
 
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -116,15 +119,41 @@ public class UserController {
 		return new ResponseEntity<>(message, HttpStatus.CREATED);
 	}
 
+	//used to store static file path like "/uploads/USER-002_6tcG2s_Thankyou.jpg"
+//	@GetMapping("/files/{userId}")
+//	public ResponseEntity<List<String>> getUserImages(@PathVariable String userId) {
+//		var stopWatch = new StopWatch(Thread.currentThread().getName());
+//		log.info("User getUserImages API called");
+//		stopWatch.start();
+//		List<String> imageUrls = userService.fetchUploadedImages(userId);
+//		stopWatch.stop();
+//		log.info("Total time taken by User getUserImages API : {}", stopWatch.getTotalTimeSeconds() + " seconds");
+//		return ResponseEntity.ok(imageUrls);
+//	}
+
+	/**
+	 * used to store static file path like shown below
+	 *
+	 [{
+		"name": "USER-002_6tcG2s_Thankyou.jpg",
+			"url": "http://localhost:8001/v1/user/file/USER-002_6tcG2s_Thankyou.jpg"
+	}]
+	 */
 	@GetMapping("/files/{userId}")
-	public ResponseEntity<List<String>> getUserImages(@PathVariable String userId) {
+	public ResponseEntity<List<Map<String, String>>> getUserImages(@PathVariable String userId) {
 		var stopWatch = new StopWatch(Thread.currentThread().getName());
 		log.info("User getUserImages API called");
 		stopWatch.start();
-		List<String> imageUrls = userService.fetchUploadedImages(userId);
+		List<String> filePaths = userService.fetchUploadedImages(userId);
+		List<Map<String, String>> files = filePaths.stream().map(path -> {
+			String fileName = Paths.get(path).getFileName().toString();
+			String url = "http://localhost:8001/v1/user/file/" + fileName;
+			return Map.of("name", fileName, "url", url);
+		}).toList();
 		stopWatch.stop();
 		log.info("Total time taken by User getUserImages API : {}", stopWatch.getTotalTimeSeconds() + " seconds");
-		return ResponseEntity.ok(imageUrls);
+		return ResponseEntity.ok(files);
 	}
+
 
 }

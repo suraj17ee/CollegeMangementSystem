@@ -4,6 +4,8 @@ import java.security.SecureRandom;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.mail.Entity.RegistrationRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +57,7 @@ public class IMailSerivceImpl implements IMailSerivce {
 			message.setSubject("Your OTP code");
 			message.setSentDate(new Date());
 			String username = emailId.substring(0, emailId.indexOf("@"));
-			message.setText("Hi " + username + ", your OTP is: " + otp + "\nValid for 5 minutes.");
+			message.setText("Hi " + username + ", \nYour OTP is: " + otp + ", valid for 5 minutes.");
 			mailSender.send(message);
 			logger.info("Email sent successfully to " + username);
 			return "Email sent successfully";
@@ -67,13 +69,13 @@ public class IMailSerivceImpl implements IMailSerivce {
 
 	// Verify OTP
 	public boolean verifyOtp(String email, String otp) {
-		String storedOtp = otpStore.get(email+":otp");
-		String storedTime = otpStore.get(email+":time");
+		String storedOtp = otpStore.getOrDefault(email+":otp",null);
+		String storedTime = otpStore.getOrDefault(email+":time",null);
 		if (storedOtp != null && storedTime!=null) {
 			long time = Long.parseLong(storedTime);
 			if (System.currentTimeMillis() - time <= OTP_VALIDITY_MS && storedOtp.equals(otp)) {
-				otpStore.remove(email + ":otp");
-				otpStore.remove(email + ":time");
+//				otpStore.remove(email + ":otp");
+//				otpStore.remove(email + ":time");
 				logger.info("OTP verified successfully");
 				return true;
 			}
@@ -83,8 +85,15 @@ public class IMailSerivceImpl implements IMailSerivce {
 	}
 
 	@Override
-	public String sendRegistrationEmailToUser(String emailId) {
-		logger.info("preparing registration email to send to customer");
+	public String sendRegistrationEmailToUser(RegistrationRequest request) {
+		logger.info("verifying OTP before sending registration email");
+
+		String otp = request.getOtp();
+		String emailId = request.getEmail();
+		if (!verifyOtp(emailId, otp)) {
+			logger.warn("OTP verification failed for {}", emailId);
+			return "Invalid or expired OTP. Please try to register again.";
+		}
 		try {
 			// create Mimemessage
 			MimeMessage mimeMessage = mailSender.createMimeMessage();
