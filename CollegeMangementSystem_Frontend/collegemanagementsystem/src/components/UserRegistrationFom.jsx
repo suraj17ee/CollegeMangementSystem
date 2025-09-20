@@ -86,38 +86,54 @@ const UserRegistrationFom = () => {
         }
 
         userservice.verifyOtp(user.userEmail, otp)
-            .then(() => {
-                toast.success("OTP verified successfully!");
-                setOtpVerified(true);
+            .then((res) => {
+                if (res.status === 200 && res.data === "OTP Verified Successfully!") {
+                    toast.success(res.data);
+                    setOtpVerified(true);   // ✅ only set true if backend confirms
+                }
             })
-            .catch(() => {
-                toast.error("OTP verification failed!");
+            .catch((error) => {
+                if (error.response) {
+                    toast.error(error.response.data); // shows "Invalid OTP!" from backend
+                } else {
+                    toast.error("OTP verification failed!");
+                }
+                setOtpVerified(false);
             });
     };
 
     // Step 3 & 4: Register User -> Send Registration Mail
     const registerUser = (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        userservice.registerUser(user)
-            .then(() => {
-                toast.success("User registered successfully!!");
+    userservice.registerUser(user)
+        .then((res) => {
+            toast.success(res.data);
 
-                // Step 4: Send Registration Mail
-                return userservice.sendRegistrationMail(user.userEmail);
-            })
-            .then(() => {
-                toast.success("Registration email sent!");
+            // Step 4: Send Registration Mail with OTP
+            const request = {
+                userEmail: user.userEmail,
+                otp: otp
+            };
+            return userservice.sendRegistrationMail(request);
+        })
+        .then((res) => {
+            if (res.data.includes("successfully")) {
+                toast.success(res.data);
                 resetForm();
-            })
-            .catch((error) => {
-                if (error.response?.status === 400 || error.response?.status === 401) {
-                    toast.error(error.response.data);
-                } else {
-                    toast.error("Error while connecting to server!!");
-                }
-            });
-    };
+            } else {
+                toast.error(res.data); // ✅ handle invalid OTP case
+            }
+        })
+        .catch((error) => {
+            if (error.response?.status === 400 || error.response?.status === 401) {
+                toast.error(error.response.data);
+            } else {
+                toast.error("Error while connecting to server!!");
+            }
+        });
+};
+
 
     // Reset form
     const resetForm = () => {
@@ -288,7 +304,7 @@ const UserRegistrationFom = () => {
                             ? "Send OTP"
                             : !otpVerified
                                 ? "Verify OTP"
-                                : "Register User"}
+                                : "Register"}
                     </button>
                 </form>
             </div>

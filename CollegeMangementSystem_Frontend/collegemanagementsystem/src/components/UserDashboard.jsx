@@ -7,7 +7,7 @@ import './UserDashboard.css';
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import axios from 'axios';
 
-const MAX_IMAGES = 10;
+const MAX_IMAGES = 5;
 
 const UserDashboard = () => {
     const [userData, setUserData] = useState(null);
@@ -55,22 +55,16 @@ const UserDashboard = () => {
         setUploadedImages(prev => [...prev, ...newImages]);
     };
 
+    // upload images to server
     const handleUploadToServer = async () => {
         if (uploadedImages.length === 0) {
             toast.warning("No images to upload!");
             return;
         }
-
-        const formData = new FormData();
-        uploadedImages.forEach(img => formData.append("images", img.file));
-
         try {
-            await axios.post("http://localhost:8001/v1/user/image", formData, {
-                headers: { "Content-Type": "multipart/form-data" }
-            });
+            await userservice.uploadUserImages(userData.userId, uploadedImages);
             toast.success("Images uploaded successfully!");
-            setUploadedImages([]); // Clear local selection
-            fetchServerImages(); // Refresh images from backend
+            setUploadedImages([]);
         } catch (err) {
             console.error(err);
             toast.error("Error uploading images!");
@@ -80,7 +74,7 @@ const UserDashboard = () => {
     // Fetch images from server
     const fetchServerImages = async () => {
         try {
-            const res = await axios.get("http://localhost:8001/v1/user/getimages");
+            const res = await userservice.getUserImages(userData.userId);
             setServerImages(res.data || []);
         } catch (err) {
             console.error(err);
@@ -153,8 +147,8 @@ const UserDashboard = () => {
                     </div>
                 )}
 
-                {/* Docs */}
-                {activeSection === 'docs' && (
+                {/* Docs: this code works with static file path like "/uploads/USER-002_6tcG2s_Thankyou.jpg */}
+                {/* {activeSection === 'docs' && (
                     <div className="docs-section">
                         <h2>Your Documents</h2>
                         <div className="image-preview-grid">
@@ -162,6 +156,26 @@ const UserDashboard = () => {
                                 <div key={index} className="image-card">
                                     <img src={img.url} alt={img.name || `Image ${index}`} />
                                     <p className="image-name">{img.name || `Image ${index + 1}`}</p>
+                                </div>
+                            )) : <p>No documents uploaded yet.</p>}
+                        </div>
+                    </div>
+                )} */}
+
+                {/* Docs */}
+                {activeSection === 'docs' && (
+                    <div className="docs-section">
+                        <h2>Your Documents</h2>
+                        <div className="image-preview-grid">
+                            {serverImages.length > 0 ? serverImages.map((file, index) => (
+                                <div key={index} className="image-card">
+                                    {/* Use url from backend */}
+                                    <img
+                                        src={file.url}
+                                        alt={`Document ${index + 1}`}
+                                    />
+                                    {/* Show file name from backend */}
+                                    <p className="image-name">{file.name}</p>
                                 </div>
                             )) : <p>No documents uploaded yet.</p>}
                         </div>
