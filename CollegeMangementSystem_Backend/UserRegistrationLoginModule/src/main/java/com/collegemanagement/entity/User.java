@@ -85,6 +85,7 @@ public class User implements UserDetails {
 	@Column(name = "user_dob")
 	private LocalDate userDob;
 
+    @JsonIgnore
 	@OneToMany(mappedBy = "user",
 			cascade = CascadeType.ALL,
 			orphanRemoval = true,

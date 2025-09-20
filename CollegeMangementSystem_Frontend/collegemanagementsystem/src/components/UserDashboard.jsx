@@ -5,7 +5,6 @@ import userservice from '../service/userservice';
 import { toast } from 'react-toastify';
 import './UserDashboard.css';
 import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
-import axios from 'axios';
 
 const MAX_IMAGES = 5;
 
@@ -13,9 +12,10 @@ const UserDashboard = () => {
     const [userData, setUserData] = useState(null);
     const [activeSection, setActiveSection] = useState('profile');
 
-    // Separate states
-    const [uploadedImages, setUploadedImages] = useState([]); // local before upload
-    const [serverImages, setServerImages] = useState([]); // from API after upload
+    // Local before upload
+    const [uploadedImages, setUploadedImages] = useState([]);
+    // From API after upload
+    const [serverImages, setServerImages] = useState([]);
 
     const navigate = useNavigate();
 
@@ -41,7 +41,8 @@ const UserDashboard = () => {
     const handleImageUpload = (e) => {
         const files = Array.from(e.target.files);
 
-        if (uploadedImages.length + files.length > MAX_IMAGES) {
+        // total = already on server + selected locally
+        if (serverImages.length + uploadedImages.length + files.length > MAX_IMAGES) {
             toast.error(`You can upload only up to ${MAX_IMAGES} images.`);
             return;
         }
@@ -65,6 +66,7 @@ const UserDashboard = () => {
             await userservice.uploadUserImages(userData.userId, uploadedImages);
             toast.success("Images uploaded successfully!");
             setUploadedImages([]);
+            // fetchServerImages(); // refresh after upload
         } catch (err) {
             console.error(err);
             toast.error("Error uploading images!");
@@ -82,9 +84,9 @@ const UserDashboard = () => {
         }
     };
 
-    // Whenever Docs or Analytics tab is opened, fetch fresh images
+    // Whenever Docs, Upload or Analytics tab is opened, fetch fresh images
     useEffect(() => {
-        if (activeSection === "docs" || activeSection === "analytics") {
+        if (activeSection === "docs" || activeSection === "upload" || activeSection === "analytics") {
             fetchServerImages();
         }
     }, [activeSection]);
@@ -147,21 +149,6 @@ const UserDashboard = () => {
                     </div>
                 )}
 
-                {/* Docs: this code works with static file path like "/uploads/USER-002_6tcG2s_Thankyou.jpg */}
-                {/* {activeSection === 'docs' && (
-                    <div className="docs-section">
-                        <h2>Your Documents</h2>
-                        <div className="image-preview-grid">
-                            {serverImages.length > 0 ? serverImages.map((img, index) => (
-                                <div key={index} className="image-card">
-                                    <img src={img.url} alt={img.name || `Image ${index}`} />
-                                    <p className="image-name">{img.name || `Image ${index + 1}`}</p>
-                                </div>
-                            )) : <p>No documents uploaded yet.</p>}
-                        </div>
-                    </div>
-                )} */}
-
                 {/* Docs */}
                 {activeSection === 'docs' && (
                     <div className="docs-section">
@@ -169,12 +156,7 @@ const UserDashboard = () => {
                         <div className="image-preview-grid">
                             {serverImages.length > 0 ? serverImages.map((file, index) => (
                                 <div key={index} className="image-card">
-                                    {/* Use url from backend */}
-                                    <img
-                                        src={file.url}
-                                        alt={`Document ${index + 1}`}
-                                    />
-                                    {/* Show file name from backend */}
+                                    <img src={file.url} alt={`Document ${index + 1}`} />
                                     <p className="image-name">{file.name}</p>
                                 </div>
                             )) : <p>No documents uploaded yet.</p>}
@@ -186,37 +168,59 @@ const UserDashboard = () => {
                 {activeSection === 'upload' && (
                     <div className="docs-section">
                         <h2>Upload Your Documents</h2>
-                        <div className="upload-section">
-                            <label className="upload-label">
-                                {uploadedImages.length < MAX_IMAGES
-                                    ? `Click or drag images here (Max ${MAX_IMAGES})`
-                                    : "Upload limit reached!"}
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    multiple
-                                    onChange={handleImageUpload}
-                                    disabled={uploadedImages.length >= MAX_IMAGES}
-                                />
-                            </label>
-                            <p className="upload-count">{uploadedImages.length} / {MAX_IMAGES} images selected</p>
-                        </div>
 
-                        <button className="upload-btn" onClick={handleUploadToServer}>Upload</button>
-
-                        <div className="image-preview-grid">
-                            {uploadedImages.map((img, index) => (
-                                <div key={index} className="image-card">
-                                    <img src={img.url} alt={img.name} />
-                                    <div className="image-overlay">
-                                        <button className="remove-btn" onClick={() => {
-                                            setUploadedImages(uploadedImages.filter((_, i) => i !== index));
-                                        }}>×</button>
-                                    </div>
-                                    <p className="image-name">{img.name}</p>
+                        {serverImages.length >= MAX_IMAGES ? (
+                            <div className="alert-box">
+                                You have reached the maximum upload limit of {MAX_IMAGES} images.
+                            </div>
+                        ) : (
+                            <>
+                                <div className="upload-section">
+                                    <label className="upload-label">
+                                        {serverImages.length + uploadedImages.length < MAX_IMAGES
+                                            ? `Click or drag images here (Max ${MAX_IMAGES})`
+                                            : "Upload limit reached!"}
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            multiple
+                                            onChange={handleImageUpload}
+                                            disabled={serverImages.length + uploadedImages.length >= MAX_IMAGES}
+                                        />
+                                    </label>
+                                    <p className="upload-count">
+                                        {serverImages.length + uploadedImages.length} / {MAX_IMAGES} images selected
+                                    </p>
                                 </div>
-                            ))}
-                        </div>
+
+                                <button
+                                    className="upload-btn"
+                                    onClick={handleUploadToServer}
+                                    disabled={uploadedImages.length === 0 || serverImages.length >= MAX_IMAGES}
+                                >
+                                    Upload
+                                </button>
+
+                                <div className="image-preview-grid">
+                                    {uploadedImages.map((img, index) => (
+                                        <div key={index} className="image-card">
+                                            <img src={img.url} alt={img.name} />
+                                            <div className="image-overlay">
+                                                <button
+                                                    className="remove-btn"
+                                                    onClick={() => {
+                                                        setUploadedImages(uploadedImages.filter((_, i) => i !== index));
+                                                    }}
+                                                >
+                                                    ×
+                                                </button>
+                                            </div>
+                                            <p className="image-name">{img.name}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        )}
                     </div>
                 )}
 
