@@ -1,5 +1,7 @@
 package com.collegemanagement.controller;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @AllArgsConstructor
 @Slf4j
-@CrossOrigin(origins = {"http://localhost:3000", "http://54.92.176.47:8002"})
+@CrossOrigin(origins = {"http://localhost:3000", "http://54.92.176.47:8002", "http://localhost:4200"})
 @RequestMapping("/v1/user")
 public class JwtAuthenticationController {
 
@@ -54,11 +56,14 @@ public class JwtAuthenticationController {
         //fetch role from user details
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
         String role = authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()).get(0);
-        
+
+        ZoneId zone = ZoneId.of("Asia/Kolkata");
         JwtResponse response = JwtResponse.builder()
         		.username(userDetails.getUsername())
                 .token(token)
-                .userrole(role).build();
+                .userrole(role)
+                .issuedAt(LocalDateTime.now(zone))
+                .expiresAt(helper.getExpirationDateFromToken(token).toInstant().atZone(zone).toLocalDateTime()).build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

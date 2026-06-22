@@ -37,6 +37,7 @@ public class SecurityFilterConfig {
 							.requestMatchers("/v1/user/file/**").permitAll()
 	                		.requestMatchers("/v1/user/update/**","/v1/user/get/**","/v1/user/*/upload","/v1/user/files/**").hasAnyRole("USER","ADMIN")
 	                		.requestMatchers("/v1/user/delete","/v1/user/delete/**","/v1/user/all").hasRole("ADMIN")
+							.requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
 							.requestMatchers("/ai/api/**").permitAll()
 	                		.requestMatchers(HttpMethod.GET).hasRole("ADMIN")
 	                        .anyRequest().authenticated())

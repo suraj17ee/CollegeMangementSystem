@@ -18,7 +18,7 @@ import io.jsonwebtoken.security.Keys;
 public class JwtHelper {
 
     //requirement :
-    public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60; // this is 5hr * 60min * 60 seconds
+    public static final long JWT_TOKEN_VALIDITY = 60 * 60; // set for 3600secs
 
     //set secret key
     @Value("${app.secret}")

@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000", "http://54.92.176.47:8002"})
+@CrossOrigin(origins = {"http://localhost:3000", "http://54.92.176.47:8002", "http://localhost:4200"})
 @RequestMapping("/v1/user")
 public class UserController {
 
